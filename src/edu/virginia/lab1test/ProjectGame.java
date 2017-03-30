@@ -38,7 +38,7 @@ public class LabSixGame extends Game {
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
     ArrayList<Coin> coinArray = new ArrayList<Coin>();
     private AnimatedSprite animation;
-    private AnimatedSprite enemy;
+    private Enemy enemy;
     int coinCount = 0;
     ArrayList<Double> listArray = new ArrayList<Double>();
     ArrayList<Tween> coinTweenArray = new ArrayList<>();
@@ -77,7 +77,7 @@ public class LabSixGame extends Game {
 
 
         animation = new AnimatedSprite("animate");
-        enemy = new AnimatedSprite("enemy");
+
         platform.setPositionX(50);
         platform.setPositionY(550);
 
@@ -92,6 +92,11 @@ public class LabSixGame extends Game {
         animation.setPositionY(450);
         scatterCoins();
         addListeners();
+
+        enemy = new Enemy("enemy","Mario.png");
+        enemy.setPositionX(20);
+        enemy.setPositionY(50);
+        enemy.addroute(20,-20);
 
 
         //tweenJuggler = new TweenJuggler();
@@ -227,13 +232,6 @@ public class LabSixGame extends Game {
 
         }
         */
-        for (int i = 0; i < coinTweenArray.size(); i++) {
-            if (coinTweenArray.get(i).isFinished()) {
-                coinTweenArray.get(i).setFinished(false);
-                dispatchEvent(fadeOutEvent, coinArray.get(i));
-            }
-        }
-        System.out.println(coinArray.get(0).getPositionX());
         if (myCoin != null && animation != null) {
             for (int i = 0; i < coinArray.size(); i++) {
                 if (!coinArray.get(i).isTouched()) {
@@ -265,7 +263,8 @@ public class LabSixGame extends Game {
 
             }
         }
-
+        enemy.setPositionY(enemy.getPositionY()+enemy.getPathY());
+        enemy.setPositionX(enemy.getPositionX()+enemy.getPathX());
 
     }
 
@@ -287,6 +286,7 @@ public class LabSixGame extends Game {
             coinArray.get(i).setPositionY(ny * 7);
 
         }
+
 
     }
 
@@ -359,6 +359,9 @@ public class LabSixGame extends Game {
         if (animation != null) {
             animation.draw(g);
 
+        }
+        if (enemy != null) {
+            enemy.draw(g);
         }
 
         if (myCoin != null) {
