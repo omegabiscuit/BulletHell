@@ -107,7 +107,7 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	
-	public void walkRight(){
+	public void walkEast(){
 		setFrames(walkingSpriteRight);
 		setDelay(100);
 		
@@ -119,7 +119,7 @@ public class AnimatedSprite extends Sprite {
 		
 		
 	}
-	public void walkLeft(){
+	public void walkWest(){
 		setFrames(walkingSprite);
 		setDelay(100);
 		setPositionX(getPositionX()-10);
@@ -130,12 +130,12 @@ public class AnimatedSprite extends Sprite {
 		setDelay(1);
 		setPositionX(getPositionX()+10);
 	}
-	public void jump(){
+	public void walkNorth(){
 		setFrames(jumpingSprite);
 		setDelay(500);
 		setPositionY(getPositionY()-10);
 	}
-	public void fall(){
+	public void walkSouth(){
 		setFrames(fallingSprite);
 		setDelay(500);
 		setPositionY(getPositionY()+10);
@@ -143,29 +143,9 @@ public class AnimatedSprite extends Sprite {
 		
 			
 	}
-	public void falling(){
-		
-		if(isJumping == false) {
-            this.verticalSpeed = this.verticalSpeed + gravity;
-            if (this.verticalSpeed > terminalVelocity) {
-                this.verticalSpeed = terminalVelocity;
-                this.canJump= true;
-            }
-            this.positionY = this.positionY + this.verticalSpeed;
-        }
-	}
+
 	
-	public void jumping(){
-        if(isJumping == true) {
-            this.canJump = false;
-            this.verticalSpeed = this.verticalSpeed + gravity;
-            this.positionY = this.positionY - this.verticalSpeed;
-            if (this.verticalSpeed > terminalVelocity) {
-                this.isJumping = false;
-            }
-        }
-       
-    }
+
 
 	
 	public long getDelay(){

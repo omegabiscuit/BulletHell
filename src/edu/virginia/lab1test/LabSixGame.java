@@ -21,17 +21,7 @@ public class LabSixGame extends Game {
 
     /* Create a sprite object for our game. We'll use mario */
     Sprite mario = new Sprite("Mario", "Mario.png");
-    Coin myCoin0 = new Coin("Coin", "Coin4.png");
     Coin myCoin = new Coin("Coin", "Coin4.png");
-    Coin myCoin1 = new Coin("Coin", "Coin4.png");
-    Coin myCoin2 = new Coin("Coin", "Coin4.png");
-    Coin myCoin3 = new Coin("Coin", "Coin4.png");
-    Coin myCoin4 = new Coin("Coin", "Coin4.png");
-    Coin myCoin5 = new Coin("Coin", "Coin4.png");
-    Coin myCoin6 = new Coin("Coin", "Coin4.png");
-    Coin myCoin7 = new Coin("Coin", "Coin4.png");
-    Coin myCoin8 = new Coin("Coin", "Coin4.png");
-    Coin myCoin9 = new Coin("Coin", "Coin4.png");
     //TweenJuggler tweenJuggler;
 
     QuestManager myQuestManager = new QuestManager();
@@ -42,24 +32,13 @@ public class LabSixGame extends Game {
     Event collidedEvent;
     Platformer platform = new Platformer("Rectangele", "platform.png");
     Platformer platform1 = new Platformer("Rectangele", "platform.png");
-    Platformer platform2 = new Platformer("Rectangele", "platform.png");
-    Platformer platform3 = new Platformer("Rectangele", "platform.png");
-    Platformer platform4 = new Platformer("Rectangele", "platform.png");
-    Platformer platform5 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
     SoundManagerClass music = new SoundManagerClass();
     Sprite marioBackground = new Sprite("Background", "BowserCastle3.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
     ArrayList<Coin> coinArray = new ArrayList<Coin>();
-    boolean collision = false;
     private AnimatedSprite animation;
-    Rectangle intersection;
-    double defaultDistance1;
-    double defaultDistance2;
-    double defaultDistance3;
-    double defaultDistance4;
-    double defaultDistance5;
-    double defaultDistance6;
+    private AnimatedSprite enemy;
     int coinCount = 0;
     ArrayList<Double> listArray = new ArrayList<Double>();
     ArrayList<Tween> coinTweenArray = new ArrayList<>();
@@ -90,43 +69,21 @@ public class LabSixGame extends Game {
         myCoin.setPositionX(400);
 
         collisionArray.add(platform);
-        collisionArray.add(platform1);
-        collisionArray.add(platform2);
-        collisionArray.add(platform3);
-        collisionArray.add(platform4);
-        collisionArray.add(platform5);
+
 
 
         coinArray.add(myCoin);
-        coinArray.add(myCoin1);
-        coinArray.add(myCoin3);
-        coinArray.add(myCoin4);
-        coinArray.add(myCoin5);
-        coinArray.add(myCoin6);
-        coinArray.add(myCoin7);
-        coinArray.add(myCoin8);
-        coinArray.add(myCoin9);
+
 
 
         animation = new AnimatedSprite("animate");
+        enemy = new AnimatedSprite("enemy");
         platform.setPositionX(50);
         platform.setPositionY(550);
 
 
         platform1.setPositionX(150);
         platform1.setPositionY(150);
-
-        platform2.setPositionX(350);
-        platform2.setPositionY(430);
-
-        platform3.setPositionX(600);
-        platform3.setPositionY(250);
-
-        platform4.setPositionX(820);
-        platform4.setPositionY(600);
-
-        platform5.setPositionX(670);
-        platform5.setPositionY(40);
 
         music.playMusic("resources/bowsersound.mp3");
 
@@ -144,9 +101,7 @@ public class LabSixGame extends Game {
 
 
         TweenTransitions coinCatch = new TweenTransitions("easeInOut");
-        for (int i = 0; i < 9; i++) {
-            coinTweenArray.add(new Tween(coinArray.get(i), coinCatch));
-        }
+
 
         TweenJuggler.getInstance().add(animationTween);
         //tweenJuggler.add(animationTween);
@@ -161,13 +116,13 @@ public class LabSixGame extends Game {
         }
     }
 
+
+
     /**
      * Engine will automatically call sprite update method once per frame and pass to us
      * the set of keys (as strings) that are currently being pressed down
      */
     @Override
-
-
     public void update(ArrayList<String> pressedKeys) {
         super.update(pressedKeys);
         if (start) {
@@ -180,7 +135,6 @@ public class LabSixGame extends Game {
             mario.update(pressedKeys);
 
             animation.update();
-            animation.falling();
             checkCollisions(animation);
             TweenJuggler.getInstance().nextFrame();
 
@@ -188,22 +142,14 @@ public class LabSixGame extends Game {
 
 
         if (pressedKeys.contains("Up")) {
-            start = true;
-            if (animation.canJump) {
-                animation.isJumping = true;
-                animation.jumping();
-
-                animation.jump();
-            } else {
-                animation.isJumping = false;
-            }
+           animation.walkNorth();
 
         }
 
         if (pressedKeys.contains("Down")) {
 
 
-            animation.fall();
+            animation.walkSouth();
 
 
             music.playSoundEffect("resources/song100.wav");
@@ -213,17 +159,14 @@ public class LabSixGame extends Game {
 
             mario.setPositionX(mario.getPositionX() + 10);
 
-            animation.walkRight();
+            animation.walkEast();
 
 
         }
         if (pressedKeys.contains("Left")) {
-
-
-            animation.walkLeft();
-
+            animation.walkWest();
         }
-
+        /*
         if (pressedKeys.contains("A")) {
             mario.setScaleX(mario.getScaleX() + 0.1);
             animation.setScaleX(animation.getScaleX() + 0.1);
@@ -283,6 +226,7 @@ public class LabSixGame extends Game {
 
 
         }
+        */
         for (int i = 0; i < coinTweenArray.size(); i++) {
             if (coinTweenArray.get(i).isFinished()) {
                 coinTweenArray.get(i).setFinished(false);
@@ -295,8 +239,6 @@ public class LabSixGame extends Game {
                 if (!coinArray.get(i).isTouched()) {
                     if (animation.collidesWith(coinArray.get(i))) {
                         coinArray.get(i).setTouched(true);
-                        coinTweenArray.get(i).animate(TweenableParams.X, coinArray.get(i).getPositionX(), 600, 1);
-                        coinTweenArray.get(i).animate(TweenableParams.Y, coinArray.get(i).getPositionY(), 450, 1);
                         //coinTweenArray.get(i).animate(TweenableParams.SCALE_X, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleX() + 1, 2);
                         //coinTweenArray.get(i).animate(TweenableParams.SCALE_Y, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleY() + 1, 2);
 
@@ -307,7 +249,6 @@ public class LabSixGame extends Game {
                         //dispatchEvent(fadeOutEvent, coinArray.get(i));
                         //dispatchEvent(collidedEvent);
                         TweenJuggler.getInstance().add(tweenEnlarge);
-                        TweenJuggler.getInstance().add(coinTweenArray.get(i));
                         music.playSoundEffect("resources/smw_coin.wav");
                     }
                 }
