@@ -39,13 +39,6 @@ public class AnimatedSprite extends Sprite {
 	public int currentFrame;
 	private long startTime;
 	private long delay;
-	
-	long terminalSpeed = 100;
-	public boolean isJumping = false;
-	public boolean canJump = true;
-	int gravity = 1;
-	    int terminalVelocity = 10;
-	    int verticalSpeed = 0;
 
 	
 

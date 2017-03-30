@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,7 +15,7 @@ import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.events.Event;
 import edu.virginia.engine.util.GameClock;
 
-public class LabSixGame extends Game {
+public class ProjectGame extends Game {
 
 
     /* Create a sprite object for our game. We'll use mario */
@@ -51,7 +50,7 @@ public class LabSixGame extends Game {
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
      */
-    public LabSixGame() {
+    public ProjectGame() {
         super("Lab Four Test Game", 1200, 900);
 
         fadeOutEvent = new Event();
@@ -94,9 +93,15 @@ public class LabSixGame extends Game {
         addListeners();
 
         enemy = new Enemy("enemy","Mario.png");
-        enemy.setPositionX(20);
-        enemy.setPositionY(50);
-        enemy.addroute(20,-20);
+        enemy.setPositionX(300);
+        enemy.setPositionY(150);
+        enemy.addRoute(500,0);//create square route
+        enemy.addRoute(0,-500);
+        enemy.addRoute(-500,0);
+        enemy.addRoute(0,500);
+
+
+        enemy.setSpeed(4);
 
 
         //tweenJuggler = new TweenJuggler();
@@ -437,7 +442,7 @@ public class LabSixGame extends Game {
     public static void main(String[] args) {
         clock = new GameClock();
 
-        LabSixGame game = new LabSixGame();
+        ProjectGame game = new ProjectGame();
 
 
         game.start();
