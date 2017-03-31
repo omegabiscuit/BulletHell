@@ -145,6 +145,10 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (animation != null) {
+            if (animation.collidesWith(enemy)){
+                animation.toggleVisibility();
+                complete = true;
+            }
             float deltaX = (float) (mousePosition.getX()-animation.getPositionX());
             float deltaY = (float) (mousePosition.getY()-animation.getPositionY());
             mario.update(pressedKeys);
@@ -181,11 +185,7 @@ public class ProjectGame extends Game {
         if (pressedKeys.contains("A")) {
             animation.walkWest();
         }
-        if (animation.collidesWith(enemy)){
-            animation.toggleVisibility();
-            complete = true;
 
-        }
 
         /*
         if (pressedKeys.contains("A")) {
@@ -282,6 +282,7 @@ public class ProjectGame extends Game {
         if (enemy != null) {
             enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
+
         }
 
     }
