@@ -1,4 +1,4 @@
-package main.engine.display;
+package main.java.engine.display;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

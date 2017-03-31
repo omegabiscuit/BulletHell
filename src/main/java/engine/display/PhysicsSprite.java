@@ -1,4 +1,4 @@
-package main.engine.display;
+package main.java.engine.display;
 
 public class PhysicsSprite extends Sprite{
 

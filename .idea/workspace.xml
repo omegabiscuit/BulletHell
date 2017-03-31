@@ -2,33 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de855df-65cd-4fef-84aa-08e9ec0dbdb0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/game/ProjectGame.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/Tween.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/Tween.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenEvent.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenJuggler.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenParam.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenParam.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenTransitions.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenTransitions.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/DisplayObject.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/DisplayObjectContainer.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/Game.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/GameScenePanel.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/PhysicsSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/Sprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/Event.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/EventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/IEventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/IEventListener.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/util/GameClock.java" afterPath="$PROJECT_DIR$/src/main/java/engine/util/GameClock.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Coin.java" afterPath="$PROJECT_DIR$/src/main/java/game/Coin.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Enemy.java" afterPath="$PROJECT_DIR$/src/main/java/game/Enemy.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Platformer.java" afterPath="$PROJECT_DIR$/src/main/java/game/Platformer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/QuestManager.java" afterPath="$PROJECT_DIR$/src/main/java/game/QuestManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/SolarSystem.java" afterPath="$PROJECT_DIR$/src/main/java/game/SolarSystem.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/SoundManagerClass.java" afterPath="$PROJECT_DIR$/src/main/java/game/SoundManagerClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -828,12 +813,12 @@
       <workItem from="1490924732283" duration="358000" />
       <workItem from="1490925184076" duration="6102000" />
       <workItem from="1490978341129" duration="3225000" />
-      <workItem from="1490988420019" duration="1891000" />
+      <workItem from="1490988420019" duration="2064000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47164000" />
+    <option name="totallyTimeSpent" value="47337000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
