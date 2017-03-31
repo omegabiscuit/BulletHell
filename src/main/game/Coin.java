@@ -1,6 +1,6 @@
 package main.game;
 
-import Tweens.*;
+import main.engine.Tweens.*;
 import main.engine.display.Sprite;
 import main.engine.events.Event;
 import main.engine.events.IEventListener;

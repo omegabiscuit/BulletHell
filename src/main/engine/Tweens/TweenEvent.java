@@ -1,4 +1,4 @@
-package Tweens;
+package main.engine.Tweens;
 
 import main.engine.display.Sprite;
 import main.engine.events.Event;

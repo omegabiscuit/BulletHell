@@ -1,12 +1,11 @@
 package main.game;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Tweens.*;
+import main.engine.Tweens.*;
 import main.engine.display.AnimatedSprite;
 import main.engine.display.Game;
 import main.engine.display.Sprite;

@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de855df-65cd-4fef-84aa-08e9ec0dbdb0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/Tween.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/Tween.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenEvent.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenJuggler.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenParam.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenTransitions.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenTransitions.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenableParams.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/game/Coin.java" afterPath="$PROJECT_DIR$/src/main/game/Coin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/game/ProjectGame.java" afterPath="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -114,8 +122,8 @@
       <file leaf-file-name="ProjectGame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2584">
-              <caret line="152" column="23" lean-forward="false" selection-start-line="152" selection-start-column="23" selection-end-line="152" selection-end-column="23" />
+            <state relative-caret-position="2567">
+              <caret line="151" column="23" lean-forward="false" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,7 +132,7 @@
         </entry>
       </file>
       <file leaf-file-name="Tween.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Tweens/Tween.java">
+        <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/Tween.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
               <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
@@ -268,24 +276,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Tweens" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GameEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BulletHell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -317,6 +307,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GameEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BulletHell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tweens" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -890,12 +906,12 @@
       <workItem from="1490924732283" duration="358000" />
       <workItem from="1490925184076" duration="6102000" />
       <workItem from="1490978341129" duration="3225000" />
-      <workItem from="1490988420019" duration="339000" />
+      <workItem from="1490988420019" duration="541000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45612000" />
+    <option name="totallyTimeSpent" value="45814000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -997,29 +1013,29 @@
     <entry file="file://$PROJECT_DIR$/.classpath" />
     <entry file="file://$PROJECT_DIR$/edu/main/java/lab1test/Coin.java" />
     <entry file="file://$PROJECT_DIR$/edu/main/java/lab1test/SolarSystem.java" />
-    <entry file="file://$PROJECT_DIR$/src/Tweens/TweenEvent.java">
+    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#354#355#0" expanded="false" />
-            <element signature="e#376#377#0" expanded="false" />
+            <element signature="e#366#367#0" expanded="false" />
+            <element signature="e#388#389#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tweens/TweenJuggler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#207#208#0" expanded="false" />
-            <element signature="e#230#231#0" expanded="false" />
-            <element signature="e#261#262#0" expanded="false" />
-            <element signature="e#290#291#0" expanded="false" />
-            <element signature="e#516#517#0" expanded="false" />
-            <element signature="e#538#539#0" expanded="false" />
+            <element signature="e#219#220#0" expanded="false" />
+            <element signature="e#242#243#0" expanded="false" />
+            <element signature="e#273#274#0" expanded="false" />
+            <element signature="e#302#303#0" expanded="false" />
+            <element signature="e#528#529#0" expanded="false" />
+            <element signature="e#550#551#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1116,12 +1132,12 @@
           <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#260#261#0" expanded="false" />
-            <element signature="e#300#301#0" expanded="false" />
-            <element signature="e#372#373#0" expanded="false" />
-            <element signature="e#402#403#0" expanded="false" />
-            <element signature="e#449#450#0" expanded="false" />
-            <element signature="e#487#488#0" expanded="false" />
+            <element signature="e#272#273#0" expanded="false" />
+            <element signature="e#312#313#0" expanded="false" />
+            <element signature="e#384#385#0" expanded="false" />
+            <element signature="e#414#415#0" expanded="false" />
+            <element signature="e#461#462#0" expanded="false" />
+            <element signature="e#499#500#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1181,7 +1197,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tweens/Tween.java">
+    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/Tween.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
@@ -1191,8 +1207,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="152" column="23" lean-forward="false" selection-start-line="152" selection-start-column="23" selection-end-line="152" selection-end-column="23" />
+        <state relative-caret-position="2567">
+          <caret line="151" column="23" lean-forward="false" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
