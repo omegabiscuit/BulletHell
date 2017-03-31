@@ -13,4 +13,5 @@ hs_err_pid*
 .idea
 BulletHell.iml
 GameEngine.iml
+main.iml
 bin/
