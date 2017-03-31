@@ -36,7 +36,7 @@ public class ProjectGame extends Game {
     Sprite marioBackground = new Sprite("Background", "dungeon_concept.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
 
-    private AnimatedSprite animation;
+    private AnimatedSprite player;
     private Enemy enemy;
 
     ArrayList<Double> listArray = new ArrayList<Double>();
@@ -72,7 +72,7 @@ public class ProjectGame extends Game {
 
 
 
-        animation = new AnimatedSprite("animate");
+        player = new AnimatedSprite("animate");
 
         platform.setPositionX(50);
         platform.setPositionY(550);
@@ -84,33 +84,34 @@ public class ProjectGame extends Game {
         music.playMusic("resources/bowsersound.mp3");
 
 
-        animation.setPositionX(51);
-        animation.setPositionY(450);
-        
+        player.setPositionX(750);
+        player.setPositionY(450);
+
 
         enemy = new Enemy("enemy","Mario.png");
-        enemy.setPositionX(300);
-        enemy.setPositionY(150);
-        enemy.addRoute(500,0);//create square route
-        enemy.addRoute(0,-500);
-        enemy.addRoute(-500,0);
-        enemy.addRoute(0,500);
+        enemy.setPositionX(570);
+        enemy.setPositionY(200);
+        enemy.addRoute(150,0);//create square route
+        enemy.addRoute(0,-300);
+        enemy.addRoute(-150,0);
+        enemy.addRoute(0,300);
 
 
-        enemy.setSpeed(4);
+
+        enemy.setSpeed(3);
 
 
         //tweenJuggler = new TweenJuggler();
-        TweenTransitions animationIntro = new TweenTransitions("linearTransition");
-        Tween animationTween = new Tween(animation, animationIntro);
-        animationTween.animate(TweenableParams.Y, 1000, 500, 2);
+        TweenTransitions playerIntro = new TweenTransitions("linearTransition");
+        Tween playerTween = new Tween(player, playerIntro);
+        playerTween.animate(TweenableParams.Y, 1000, 650, 2);
 
 
         TweenTransitions coinCatch = new TweenTransitions("easeInOut");
 
 
-        TweenJuggler.getInstance().add(animationTween);
-        //tweenJuggler.add(animationTween);
+        TweenJuggler.getInstance().add(playerTween);
+        //tweenJuggler.add(playerTween);
 
 
     }
@@ -132,31 +133,31 @@ public class ProjectGame extends Game {
 
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
-        if (animation != null) {
-            if (animation.collidesWith(enemy)){
-                animation.toggleVisibility();
+        if (player != null) {
+            if (player.collidesWith(enemy)){
+                player.toggleVisibility();
                 complete = true;
             }
-            //float deltaX = (float) (mousePosition.getX()-animation.getPositionX());
-            //float deltaY = (float) (mousePosition.getY()-animation.getPositionY());
+            //float deltaX = (float) (mousePosition.getX()-player.getPositionX());
+            //float deltaY = (float) (mousePosition.getY()-player.getPositionY());
             mario.update(pressedKeys);
-            //animation.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
-            animation.update();
-            checkCollisions(animation);
+            //player.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
+            player.update();
+            checkCollisions(player);
             TweenJuggler.getInstance().nextFrame();
 
         }
 
 
         if (pressedKeys.contains("W")) {
-           animation.walkNorth();
+           player.walkNorth();
 
         }
 
         if (pressedKeys.contains("S")) {
 
 
-            animation.walkSouth();
+            player.walkSouth();
 
 
             music.playSoundEffect("resources/song100.wav");
@@ -166,72 +167,72 @@ public class ProjectGame extends Game {
 
             mario.setPositionX(mario.getPositionX() + 10);
 
-            animation.walkEast();
+            player.walkEast();
 
 
         }
         if (pressedKeys.contains("A")) {
-            animation.walkWest();
+            player.walkWest();
         }
 
 
         /*
         if (pressedKeys.contains("A")) {
             mario.setScaleX(mario.getScaleX() + 0.1);
-            animation.setScaleX(animation.getScaleX() + 0.1);
+            player.setScaleX(player.getScaleX() + 0.1);
 
         }
         if (pressedKeys.contains("S")) {
             mario.setScaleY(mario.getScaleY() - 0.1);
-            animation.setScaleY(animation.getScaleY() - 0.1);
+            player.setScaleY(player.getScaleY() - 0.1);
         }
         if (pressedKeys.contains("Q")) {
             mario.setRotation(mario.getRotation() + 1);
 
-            animation.setRotation(animation.getRotation() + 1);
+            player.setRotation(player.getRotation() + 1);
 
         }
         if (pressedKeys.contains("W")) {
             mario.setRotation(mario.getRotation() - 1);
 
-            animation.setRotation(animation.getRotation() - 1);
+            player.setRotation(player.getRotation() - 1);
         }
         if (pressedKeys.contains("Z")) {
             mario.setTransparency(mario.getTransparency() + 0.01f);
-            animation.setTransparency(animation.getTransparency() + 0.01f);
+            player.setTransparency(player.getTransparency() + 0.01f);
 
         }
         if (pressedKeys.contains("X")) {
 
             mario.setTransparency(mario.getTransparency() - 0.01f);
-            animation.setTransparency(animation.getTransparency() - 0.01f);
+            player.setTransparency(player.getTransparency() - 0.01f);
 
 
         }
         if (pressedKeys.contains("I")) {
             mario.setPivotY(mario.getPivotY() - 3);
-            animation.setPivotY(animation.getPivotY() - 3);
+            player.setPivotY(player.getPivotY() - 3);
 
         }
         if (pressedKeys.contains("K")) {
             mario.setPivotY(mario.getPivotY() + 3);
-            animation.setPivotY(animation.getPivotY() + 3);
+            player.setPivotY(player.getPivotY() + 3);
 
         }
         if (pressedKeys.contains("J")) {
             mario.setPivotX(mario.getPivotX() - 3);
-            animation.setPivotX(animation.getPivotX() - 3);
+            player.setPivotX(player.getPivotX() - 3);
 
         }
         if (pressedKeys.contains("L")) {
             mario.setPivotX(mario.getPivotX() + 3);
 
-            animation.setPivotX(animation.getPivotX() + 3);
+            player.setPivotX(player.getPivotX() + 3);
         }
         if (pressedKeys.contains("V")) {
 
             mario.toggleVisibility();
-            animation.toggleVisibility();
+            player.toggleVisibility();
 
 
         }
@@ -318,8 +319,8 @@ public class ProjectGame extends Game {
             marioBackground.draw(g);
 
         }
-        if (animation != null) {
-            animation.draw(g);
+        if (player != null) {
+            player.draw(g);
 
         }
         if (enemy != null) {
@@ -369,11 +370,11 @@ public class ProjectGame extends Game {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        double minWc = animation.getCenterX() - (animation.getUnscaledWidth() / 2);
-        double minHc = animation.getCenterY() - animation.getUnscaledHeight() / 2;
+        double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
+        double minHc = player.getCenterY() - player.getUnscaledHeight() / 2;
 
-        double maxWc = animation.getCenterX() + (animation.getUnscaledWidth() / 2);
-        double maxHc = animation.getCenterY() + animation.getUnscaledHeight() / 2 + 20;
+        double maxWc = player.getCenterX() + (player.getUnscaledWidth() / 2);
+        double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
 
         double mouseX = e.getX();
         double mouseY = e.getY();

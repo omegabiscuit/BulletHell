@@ -121,23 +121,23 @@ public class AnimatedSprite extends Sprite {
 	public void walkWest(){
 		setFrames(walkingSprite);
 		setDelay(100);
-		setPositionX(getPositionX()-10);
+		setPositionX(getPositionX()-3);
 	}
 
 	public void runRight(){
 		setFrames(walkingSprite);
 		setDelay(1);
-		setPositionX(getPositionX()+10);
+		setPositionX(getPositionX()+3);
 	}
 	public void walkNorth(){
 		setFrames(jumpingSprite);
 		setDelay(500);
-		setPositionY(getPositionY()-10);
+		setPositionY(getPositionY()-3);
 	}
 	public void walkSouth(){
 		setFrames(fallingSprite);
 		setDelay(500);
-		setPositionY(getPositionY()+10);
+		setPositionY(getPositionY()+3);
 
 
 
