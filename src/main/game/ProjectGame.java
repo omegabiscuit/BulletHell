@@ -19,7 +19,7 @@ public class ProjectGame extends Game {
 
     /* Create a sprite object for our game. We'll use mario */
     Sprite mario = new Sprite("Mario", "Mario.png");
-    Coin myCoin = new Coin("Coin", "Coin4.png");
+
     //TweenJuggler tweenJuggler;
 
     QuestManager myQuestManager = new QuestManager();
@@ -33,14 +33,14 @@ public class ProjectGame extends Game {
     Platformer platform1 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
     SoundManagerClass music = new SoundManagerClass();
-    Sprite marioBackground = new Sprite("Background", "BowserCastle3.png");
+    Sprite marioBackground = new Sprite("Background", "dungeon_concept.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
-    ArrayList<Coin> coinArray = new ArrayList<Coin>();
+
     private AnimatedSprite animation;
     private Enemy enemy;
-    int coinCount = 0;
+
     ArrayList<Double> listArray = new ArrayList<Double>();
-    ArrayList<Tween> coinTweenArray = new ArrayList<>();
+
 
     int offset = 1;
 
@@ -56,23 +56,19 @@ public class ProjectGame extends Game {
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
         die.setEventType("playerDeath");
-        PickedUpEvent.setEventType("CoinPickedUp");
         fadeOutEvent.setEventType("FadeOut");
         this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
         this.addEventListener(myQuestManager, die.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
         this.addEventListener(myQuestManager, collidedEvent.getEventType());
-        myCoin.setPivotX(myCoin.getUnscaledWidth() / 2);
-        myCoin.setPivotY(myCoin.getUnscaledHeight() / 2);
-        myCoin.setPositionY(50);
-        myCoin.setPositionX(400);
+
 
         collisionArray.add(platform);
 
 
 
-        coinArray.add(myCoin);
+
 
 
 
@@ -90,8 +86,7 @@ public class ProjectGame extends Game {
 
         animation.setPositionX(51);
         animation.setPositionY(450);
-        scatterCoins();
-        addListeners();
+        
 
         enemy = new Enemy("enemy","Mario.png");
         enemy.setPositionX(300);
@@ -120,13 +115,6 @@ public class ProjectGame extends Game {
 
     }
 
-    public void addListeners() {
-        for (int i = 0; i < coinArray.size(); i++) {
-            this.addEventListener(coinArray.get(i), fadeOutEvent.getEventType());
-
-        }
-    }
-
 
 
     /**
@@ -149,10 +137,10 @@ public class ProjectGame extends Game {
                 animation.toggleVisibility();
                 complete = true;
             }
-            float deltaX = (float) (mousePosition.getX()-animation.getPositionX());
-            float deltaY = (float) (mousePosition.getY()-animation.getPositionY());
+            //float deltaX = (float) (mousePosition.getX()-animation.getPositionX());
+            //float deltaY = (float) (mousePosition.getY()-animation.getPositionY());
             mario.update(pressedKeys);
-            animation.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
+            //animation.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
             animation.update();
             checkCollisions(animation);
             TweenJuggler.getInstance().nextFrame();
@@ -248,37 +236,6 @@ public class ProjectGame extends Game {
 
         }
         */
-        if (myCoin != null && animation != null) {
-            for (int i = 0; i < coinArray.size(); i++) {
-                if (!coinArray.get(i).isTouched()) {
-                    if (animation.collidesWith(coinArray.get(i))) {
-                        coinArray.get(i).setTouched(true);
-                        //coinTweenArray.get(i).animate(TweenableParams.SCALE_X, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleX() + 1, 2);
-                        //coinTweenArray.get(i).animate(TweenableParams.SCALE_Y, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleY() + 1, 2);
-
-                        Tween tweenEnlarge = new Tween(coinArray.get(i), new TweenTransitions("linearTransition"));
-                        tweenEnlarge.animate(TweenableParams.SCALE_X, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleX() + 1, 1);
-                        tweenEnlarge.animate(TweenableParams.SCALE_Y, coinArray.get(i).getScaleX(), coinArray.get(i).getScaleY() + 1, 1);
-
-                        //dispatchEvent(fadeOutEvent, coinArray.get(i));
-                        //dispatchEvent(collidedEvent);
-                        TweenJuggler.getInstance().add(tweenEnlarge);
-                        music.playSoundEffect("resources/smw_coin.wav");
-                    }
-                }
-            }
-        }
-        if (myCoin != null) {
-            for (int i = 0; i < coinArray.size(); i++) {
-                if (coinArray.get(i).getVisibility() == true) {
-                    coinCount++;
-                    break;
-                } else if (i == coinArray.size() - 1) {
-                    complete = true;
-                }
-
-            }
-        }
         if (enemy != null) {
             enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
@@ -292,20 +249,6 @@ public class ProjectGame extends Game {
             collide(sprite, collisionArray.get(i));
 
         }
-
-    }
-
-    public void scatterCoins() {
-        Random rand = new Random();
-
-        for (int i = 0; i < coinArray.size(); i++) {
-            int nx = rand.nextInt(100) + 1;
-            int ny = rand.nextInt(100) + 1;
-            coinArray.get(i).setPositionX(nx * 8);
-            coinArray.get(i).setPositionY(ny * 7);
-
-        }
-
 
     }
 
@@ -383,16 +326,7 @@ public class ProjectGame extends Game {
             enemy.draw(g);
         }
 
-        if (myCoin != null) {
-            for (int i = 0; i < coinArray.size(); i++) {
-                if (coinArray.get(i) != null && coinArray.get(i).getVisibility() != false) {
 
-                    coinArray.get(i).draw(g);
-
-                }
-
-            }
-        }
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
         if (complete == true) {
             g.drawString("You are dead!", 400, 40);

@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de855df-65cd-4fef-84aa-08e9ec0dbdb0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/.svn/all-wcprops" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/.svn/entries" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/all-wcprops" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/entries" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/Alignment.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/AnimatedSprite.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/AnimatedSpriteWithPhysics.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/Animation.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/Camera.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/DisplayObject.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/DisplayObjectContainer.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/Game.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/GameScene.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/GameScenePanel.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/IClickable.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/text-base/Sprite.java.svn-base" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/tmp/GameScenePanel.java.tmp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/.svn/tmp/svn-wldH93" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/util/.svn/all-wcprops" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/util/.svn/entries" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/edu/virginia/engine/util/.svn/text-base/GameClock.java.svn-base" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameEngine.iml" afterPath="$PROJECT_DIR$/GameEngine.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" afterPath="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/game/ProjectGame.java" afterPath="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -53,16 +31,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="IEventListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/events/IEventListener.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="IEventDispatcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/engine/events/IEventDispatcher.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -86,27 +54,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            <state relative-caret-position="272">
+              <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventDispatcher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/events/EventDispatcher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding>
-                <element signature="e#269#270#0" expanded="false" />
-                <element signature="e#308#309#0" expanded="false" />
-                <element signature="e#404#405#0" expanded="false" />
-                <element signature="e#446#447#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -132,16 +85,34 @@
       <file leaf-file-name="AnimatedSprite.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+            <state relative-caret-position="2448">
+              <caret line="192" column="0" lean-forward="false" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2170#2171#0" expanded="false" />
-                <element signature="e#2186#2187#0" expanded="false" />
-                <element signature="e#2801#2802#0" expanded="false" />
-                <element signature="e#2820#2821#0" expanded="false" />
-                <element signature="e#3300#3301#0" expanded="false" />
-                <element signature="e#3334#3335#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_front.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/run_front.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnimatedSprite.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Downloads/AnimatedSprite.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="858">
+              <caret line="198" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
+              <folding>
+                <element signature="e#2610#2611#0" expanded="false" />
+                <element signature="e#2626#2627#0" expanded="false" />
+                <element signature="e#3241#3242#0" expanded="false" />
+                <element signature="e#3260#3261#0" expanded="false" />
+                <element signature="e#3741#3742#0" expanded="false" />
+                <element signature="e#3775#3776#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -173,11 +144,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProjectGame.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProjectGame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2346">
-              <caret line="149" column="32" lean-forward="false" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
+            <state relative-caret-position="1360">
+              <caret line="88" column="8" lean-forward="false" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -206,7 +177,6 @@
       <find>sp</find>
       <find>animatedS</find>
       <find>enemy</find>
-      <find>mario</find>
       <find>enem</find>
       <find>speed</find>
       <find>system.</find>
@@ -215,6 +185,10 @@
       <find>quest</find>
       <find>complete</find>
       <find>animation</find>
+      <find>mario</find>
+      <find>background</find>
+      <find>mouse</find>
+      <find>coin</find>
     </findStrings>
     <replaceStrings>
       <replace>this</replace>
@@ -249,8 +223,9 @@
         <option value="$PROJECT_DIR$/src/main/lab1test/ProjectGame.java" />
         <option value="$PROJECT_DIR$/src/main/game/Enemy.java" />
         <option value="$PROJECT_DIR$/src/main/game/QuestManager.java" />
-        <option value="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" />
+        <option value="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
       </list>
     </option>
   </component>
@@ -358,6 +333,10 @@
               <option name="myItemId" value="engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -441,6 +420,11 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/.gitignore" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Brigadoon\IdeaProjects\BulletHell\resources" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.ProjectGame">
     <configuration default="false" name="LabFiveGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -924,12 +908,12 @@
       <workItem from="1490910418329" duration="272000" />
       <workItem from="1490924732283" duration="358000" />
       <workItem from="1490925184076" duration="6102000" />
-      <workItem from="1490978341129" duration="105000" />
+      <workItem from="1490978341129" duration="1451000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42153000" />
+    <option name="totallyTimeSpent" value="43499000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -947,13 +931,14 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19210246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19133192" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -970,7 +955,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1006,8 +990,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/game/QuestManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java" />
     <entry file="file://$PROJECT_DIR$/src/main/game/Coin.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/Tween.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenEvent.java" />
@@ -1083,6 +1065,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#270#271#0" expanded="false" />
+            <element signature="e#293#294#0" expanded="false" />
+            <element signature="e#406#407#0" expanded="false" />
+            <element signature="e#463#464#0" expanded="false" />
+            <element signature="e#534#535#0" expanded="false" />
+            <element signature="e#570#571#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1181,38 +1171,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2170#2171#0" expanded="false" />
-            <element signature="e#2186#2187#0" expanded="false" />
-            <element signature="e#2801#2802#0" expanded="false" />
-            <element signature="e#2820#2821#0" expanded="false" />
-            <element signature="e#3300#3301#0" expanded="false" />
-            <element signature="e#3334#3335#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/game/QuestManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2346">
-          <caret line="149" column="32" lean-forward="false" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1230,9 +1194,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        <state relative-caret-position="272">
+          <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/AnimatedSprite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="198" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
+          <folding>
+            <element signature="e#2610#2611#0" expanded="false" />
+            <element signature="e#2626#2627#0" expanded="false" />
+            <element signature="e#3241#3242#0" expanded="false" />
+            <element signature="e#3260#3261#0" expanded="false" />
+            <element signature="e#3741#3742#0" expanded="false" />
+            <element signature="e#3775#3776#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2448">
+          <caret line="192" column="0" lean-forward="false" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/run_front.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="88" column="8" lean-forward="false" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

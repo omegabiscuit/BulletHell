@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import main.engine.util.GameClock;
 
 public class AnimatedSprite extends Sprite {
-	
+
 	//private int currentFrame = 0;
 	private int startIndex;
 	private int endIndex;
@@ -28,90 +28,102 @@ public class AnimatedSprite extends Sprite {
 	private BufferedImage[] walkingMario;
 	private BufferedImage[] walkingSpriteRight;
 	private boolean facingLeft;
-	
+
 	public BufferedImage[] frames;
 	public int currentFrame;
 	private long startTime;
 	private long delay;
 
-	
+	long terminalSpeed = 100;
+	public boolean isJumping = false;
+	public boolean canJump = true;
+	int gravity = 1;
+	int terminalVelocity = 10;
+	int verticalSpeed = 0;
+
+
 
 	public AnimatedSprite(String id){
 		super(id);
 		try{
-			walkingSprite = new BufferedImage[6];
-			notMoving = new BufferedImage[1];
+			walkingSprite = new BufferedImage[8];
+			notMoving = new BufferedImage[7];
 			jumpingSprite = new BufferedImage[1];
 			fallingSprite = new BufferedImage[1];
-			walkingSpriteRight = new BufferedImage[6];
-		
-			notMoving[0] = ImageIO.read(new File("resources/kirbyidle4.0.png"));
+			walkingSpriteRight = new BufferedImage[8];
+
+			BufferedImage image2 = ImageIO.read(new File("resources/idle_front.png"));
 			jumpingSprite[0] = ImageIO.read(new File("resources/kirbyjump4.0.png"));
 			fallingSprite[0] = ImageIO.read(new File("resources/kirbyfall4.0.png"));
-			BufferedImage image = ImageIO.read(new File("resources/kirbywalk10.0.png"));
-			BufferedImage image1 = ImageIO.read(new File("resources/kirbywalk11.0.png"));
+			BufferedImage image = ImageIO.read(new File("resources/run_front.png"));
+			BufferedImage image1 = ImageIO.read(new File("resources/run_front.png"));
 			for(int i = 0; i < walkingSprite.length;i++){
-				walkingSprite[i] = image.getSubimage(i*66,0,65,60);
-				walkingSpriteRight[i] = image1.getSubimage(i*66,0,65,60);
-				
+				walkingSprite[i] = image.getSubimage(i*76,0,76,92);
+				walkingSpriteRight[i] = image1.getSubimage(i*76,0,76,92);
+
 			}
-			
-			
+
+			for(int i = 0; i < notMoving.length;i++){
+				notMoving[i] = image2.getSubimage(i*76,0,76,92);
+
+			}
+
+
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
-		
+
+
 		setFrames(notMoving);
 		setDelay(500);
-		
+
 		setPositionX(250);
 		setPositionY(180);
-		
-	}
-	
 
-	
-	
+	}
+
+
+
+
 	public AnimatedSprite(String id, String fileName){
 		super(id,fileName);
-		
-		
-			
-				
+
+
+
+
 	}
 	public void setFrames(BufferedImage[] images){
 		frames = images;
 		if(currentFrame>=frames.length){
 			currentFrame = 0;
-			
+
 		}
-		
+
 	}
 	//set speed with this method
 	public void setDelay(long d){
 		delay = d;
 	}
-	
-	
+
+
 	public void walkEast(){
 		setFrames(walkingSpriteRight);
 		setDelay(100);
-		
-		
-		
+
+
+
 		setPositionX(getPositionX()+10);
-		
-		
-		
-		
+
+
+
+
 	}
 	public void walkWest(){
 		setFrames(walkingSprite);
 		setDelay(100);
 		setPositionX(getPositionX()-10);
 	}
-	
+
 	public void runRight(){
 		setFrames(walkingSprite);
 		setDelay(1);
@@ -126,23 +138,23 @@ public class AnimatedSprite extends Sprite {
 		setFrames(fallingSprite);
 		setDelay(500);
 		setPositionY(getPositionY()+10);
-		 
-		
-			
+
+
+
 	}
 
-	
 
 
-	
+
+
 	public long getDelay(){
 		return delay;
 	}
-	
+
 	@Override
 	public void update(ArrayList<String> pressedKeys){
-	super.update(pressedKeys);
-	
+		super.update(pressedKeys);
+
 
 	}
 	public void update(){
@@ -153,28 +165,28 @@ public class AnimatedSprite extends Sprite {
 		if(elapsed> delay){
 			currentFrame++;
 			startTime = System.nanoTime();
-			
+
 		}
 		if(currentFrame == frames.length){
 			currentFrame = 0;
 			setFrames(notMoving);
-			setDelay(-1);
+			setDelay(100);
 		}
-	
+
 		super.setImage(frames[currentFrame]);
 	}
-	
+
 	public BufferedImage getImage(){
 		return frames[currentFrame];
 	}
-	
+
 	@Override
 	public void draw(Graphics g)
 	{
 	/* Call the super draw method in DisplayObject class */
-	super.draw(g);
-	
+		super.draw(g);
+
 	}
-	
+
 
 }
