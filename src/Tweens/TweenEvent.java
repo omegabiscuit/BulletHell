@@ -1,8 +1,8 @@
 package Tweens;
 
-import edu.virginia.engine.display.Sprite;
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.events.IEventListener;
+import main.engine.display.Sprite;
+import main.engine.events.Event;
+import main.engine.events.IEventListener;
 
 public class TweenEvent extends Event implements IEventListener{
 	static boolean complete = false;

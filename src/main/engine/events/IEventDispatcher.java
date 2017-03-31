@@ -1,8 +1,4 @@
-package edu.virginia.engine.events;
-
-import java.util.ArrayList;
-
-
+package main.engine.events;
 
 
 public interface IEventDispatcher {

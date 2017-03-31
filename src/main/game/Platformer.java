@@ -1,10 +1,8 @@
-package edu.virginia.lab1test;
+package main.game;
 
-import com.sun.javafx.geom.Rectangle;
-
-import edu.virginia.engine.display.Sprite;
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.events.IEventListener;
+import main.engine.display.Sprite;
+import main.engine.events.Event;
+import main.engine.events.IEventListener;
 
 public class Platformer extends Sprite implements IEventListener {
 	

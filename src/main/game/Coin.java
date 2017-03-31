@@ -1,13 +1,9 @@
-package edu.virginia.lab1test;
+package main.game;
 
 import Tweens.*;
-import edu.virginia.engine.display.Sprite;
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.events.IEventDispatcher;
-import edu.virginia.engine.events.IEventListener;
-
-import java.util.ArrayList;
-import java.util.EventListener;
+import main.engine.display.Sprite;
+import main.engine.events.Event;
+import main.engine.events.IEventListener;
 
 
 public class Coin extends Sprite implements IEventListener {

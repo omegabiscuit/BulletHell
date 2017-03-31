@@ -1,7 +1,6 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -15,26 +14,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import com.sun.prism.Image;
-
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.events.IEventDispatcher;
-import edu.virginia.engine.events.IEventListener;
-
-
-
-
+import main.engine.events.Event;
+import main.engine.events.IEventDispatcher;
+import main.engine.events.IEventListener;
 
 
 /**

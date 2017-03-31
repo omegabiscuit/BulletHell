@@ -1,10 +1,9 @@
-package edu.virginia.lab1test;
+package main.game;
 
-import edu.virginia.engine.display.AnimatedSprite;
+import main.engine.display.AnimatedSprite;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

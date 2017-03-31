@@ -1,11 +1,9 @@
-package edu.virginia.lab1test;
+package main.game;
 
 
-import edu.virginia.engine.display.Sprite;
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.events.EventDispatcher;
-import edu.virginia.engine.events.IEventDispatcher;
-import edu.virginia.engine.events.IEventListener;
+import main.engine.display.Sprite;
+import main.engine.events.Event;
+import main.engine.events.IEventListener;
 
 /**
  * Created by Brigadoon on 2/17/2017.
@@ -18,6 +16,9 @@ public class QuestManager implements IEventListener {
         }
         if(event.getEventType()== "CollidedEvent"){
         	
+        }
+        if (event.getEventType() == "playerDeath"){
+            System.out.println("player is dead");
         }
     }
 

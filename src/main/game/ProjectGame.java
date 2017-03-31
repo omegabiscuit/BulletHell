@@ -1,19 +1,18 @@
-package edu.virginia.lab1test;
+package main.game;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
 import Tweens.*;
-import edu.virginia.engine.display.AnimatedSprite;
-import edu.virginia.engine.display.Game;
-import edu.virginia.engine.display.Sprite;
-import edu.virginia.engine.events.Event;
-import edu.virginia.engine.util.GameClock;
+import main.engine.display.AnimatedSprite;
+import main.engine.display.Game;
+import main.engine.display.Sprite;
+import main.engine.events.Event;
+import main.engine.util.GameClock;
+
 
 public class ProjectGame extends Game {
 
@@ -26,6 +25,7 @@ public class ProjectGame extends Game {
     QuestManager myQuestManager = new QuestManager();
     Event PickedUpEvent;
     Event fadeOutEvent;
+    Event die;
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
@@ -52,13 +52,14 @@ public class ProjectGame extends Game {
      */
     public ProjectGame() {
         super("Lab Four Test Game", 1200, 900);
-
+        die = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
+        die.setEventType("playerDeath");
         PickedUpEvent.setEventType("CoinPickedUp");
         fadeOutEvent.setEventType("FadeOut");
         this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
-        //this.addEventListener(myCoin, PickedUpEvent.getEventType());
+        this.addEventListener(myQuestManager, die.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
         this.addEventListener(myQuestManager, collidedEvent.getEventType());
@@ -134,6 +135,8 @@ public class ProjectGame extends Game {
      */
     @Override
     public void update(ArrayList<String> pressedKeys) {
+        Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+
         super.update(pressedKeys);
         if (start) {
             randomPositions();
@@ -142,8 +145,10 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (animation != null) {
+            float deltaX = (float) (mousePosition.getX()-animation.getPositionX());
+            float deltaY = (float) (mousePosition.getY()-animation.getPositionY());
             mario.update(pressedKeys);
-
+            animation.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
             animation.update();
             checkCollisions(animation);
             TweenJuggler.getInstance().nextFrame();
@@ -151,12 +156,12 @@ public class ProjectGame extends Game {
         }
 
 
-        if (pressedKeys.contains("Up")) {
+        if (pressedKeys.contains("W")) {
            animation.walkNorth();
 
         }
 
-        if (pressedKeys.contains("Down")) {
+        if (pressedKeys.contains("S")) {
 
 
             animation.walkSouth();
@@ -165,7 +170,7 @@ public class ProjectGame extends Game {
             music.playSoundEffect("resources/song100.wav");
 
         }
-        if (pressedKeys.contains("Right")) {
+        if (pressedKeys.contains("D")) {
 
             mario.setPositionX(mario.getPositionX() + 10);
 
@@ -173,9 +178,15 @@ public class ProjectGame extends Game {
 
 
         }
-        if (pressedKeys.contains("Left")) {
+        if (pressedKeys.contains("A")) {
             animation.walkWest();
         }
+        if (animation.collidesWith(enemy)){
+            animation.toggleVisibility();
+            complete = true;
+
+        }
+
         /*
         if (pressedKeys.contains("A")) {
             mario.setScaleX(mario.getScaleX() + 0.1);
@@ -268,8 +279,10 @@ public class ProjectGame extends Game {
 
             }
         }
-        enemy.setPositionY(enemy.getPositionY()+enemy.getPathY());
-        enemy.setPositionX(enemy.getPositionX()+enemy.getPathX());
+        if (enemy != null) {
+            enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
+            enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
+        }
 
     }
 
@@ -381,7 +394,8 @@ public class ProjectGame extends Game {
         }
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
         if (complete == true) {
-            g.drawString("Quest is complete!", 400, 40);
+            g.drawString("You are dead!", 400, 40);
+            pause();
 
         }
 
@@ -413,6 +427,8 @@ public class ProjectGame extends Game {
 
 
     }
+
+
 
 
     @Override

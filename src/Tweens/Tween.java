@@ -1,7 +1,6 @@
 package Tweens;
 
-import edu.virginia.engine.display.DisplayObject;
-import edu.virginia.engine.display.Sprite;
+import main.engine.display.DisplayObject;
 
 import java.util.ArrayList;
 

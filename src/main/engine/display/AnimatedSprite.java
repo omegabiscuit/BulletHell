@@ -1,19 +1,13 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
-import com.sun.glass.ui.Timer;
-
-import edu.virginia.engine.util.GameClock;
-import edu.virginia.lab1test.Platformer;
+import main.engine.util.GameClock;
 
 public class AnimatedSprite extends Sprite {
 	

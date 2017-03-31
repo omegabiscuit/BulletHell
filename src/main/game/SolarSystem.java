@@ -1,19 +1,14 @@
-package edu.virginia.lab1test;
+package main.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.util.ArrayList;
 
-import javax.swing.SwingUtilities;
+import main.engine.display.Game;
+import main.engine.display.Sprite;
 
-import edu.virginia.engine.display.DisplayObject;
-import edu.virginia.engine.display.DisplayObjectContainer;
-import edu.virginia.engine.display.Game;
-import edu.virginia.engine.display.Sprite;
-import java.math.*;
-public class SolarSystem extends Game{
+public class SolarSystem extends Game {
 	Sprite secret = new Sprite("invisible");
 	Sprite sun = new Sprite(secret,"sun","newsun.png");
 	Sprite earth = new Sprite(sun,"earth","newearth.jpg");

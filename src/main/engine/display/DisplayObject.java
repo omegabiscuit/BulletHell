@@ -1,4 +1,4 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
-
-import edu.virginia.engine.events.Event;
-
 
 
 /**

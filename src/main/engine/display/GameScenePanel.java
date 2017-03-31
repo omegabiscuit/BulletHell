@@ -1,8 +1,7 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
 import java.awt.Graphics;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**

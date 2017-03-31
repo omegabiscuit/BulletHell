@@ -1,4 +1,4 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

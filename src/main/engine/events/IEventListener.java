@@ -1,6 +1,6 @@
-package edu.virginia.engine.events;
+package main.engine.events;
 
-import edu.virginia.engine.display.Sprite;
+import main.engine.display.Sprite;
 
 public interface IEventListener {
     void handleEvent(Event event);

@@ -1,4 +1,4 @@
-package edu.virginia.engine.display;
+package main.engine.display;
 
 public class PhysicsSprite extends Sprite{
 

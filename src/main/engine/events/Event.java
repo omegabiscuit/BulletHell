@@ -1,4 +1,4 @@
-package edu.virginia.engine.events;
+package main.engine.events;
 
 public class Event {
     String eventType;
