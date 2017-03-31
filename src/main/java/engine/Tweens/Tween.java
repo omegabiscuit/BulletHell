@@ -1,6 +1,6 @@
-package main.java.engine.Tweens;
+package engine.Tweens;
 
-import main.java.engine.display.DisplayObject;
+import engine.display.DisplayObject;
 
 import java.util.ArrayList;
 

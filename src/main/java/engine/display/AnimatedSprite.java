@@ -1,4 +1,4 @@
-package main.java.engine.display;
+package engine.display;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import main.java.engine.util.GameClock;
+import engine.util.GameClock;
 
 public class AnimatedSprite extends Sprite {
 

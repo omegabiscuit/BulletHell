@@ -1,6 +1,6 @@
-package main.java.game;
+package game;
 
-import main.java.engine.display.AnimatedSprite;
+import engine.display.AnimatedSprite;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

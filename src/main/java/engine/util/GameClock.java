@@ -1,4 +1,4 @@
-package main.java.engine.util;
+package engine.util;
 
 /**
  * This is a simple class that gives you the ability to easily track time between frames or other events in

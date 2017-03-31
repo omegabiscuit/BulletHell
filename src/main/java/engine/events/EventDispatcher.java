@@ -1,4 +1,4 @@
-package main.java.engine.events;
+package engine.events;
 
 import java.util.ArrayList;
 

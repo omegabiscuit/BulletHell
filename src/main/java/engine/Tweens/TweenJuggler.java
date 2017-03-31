@@ -1,4 +1,4 @@
-package main.java.engine.Tweens;
+package engine.Tweens;
 
 import java.util.ArrayList;
 

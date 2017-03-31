@@ -1,6 +1,6 @@
-package main.java.engine.events;
+package engine.events;
 
-import main.java.engine.display.Sprite;
+import engine.display.Sprite;
 
 public interface IEventListener {
     void handleEvent(Event event);

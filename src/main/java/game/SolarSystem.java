@@ -1,12 +1,12 @@
-package main.java.game;
+package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import main.java.engine.display.Game;
-import main.java.engine.display.Sprite;
+import engine.display.Game;
+import engine.display.Sprite;
 
 public class SolarSystem extends Game {
 	Sprite secret = new Sprite("invisible");

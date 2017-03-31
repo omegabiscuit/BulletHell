@@ -1,8 +1,8 @@
-package main.java.engine.Tweens;
+package engine.Tweens;
 
-import main.java.engine.display.Sprite;
-import main.java.engine.events.Event;
-import main.java.engine.events.IEventListener;
+import engine.display.Sprite;
+import engine.events.Event;
+import engine.events.IEventListener;
 
 public class TweenEvent extends Event implements IEventListener{
 	static boolean complete = false;

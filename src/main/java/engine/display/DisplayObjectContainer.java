@@ -1,4 +1,4 @@
-package main.java.engine.display;
+package engine.display;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

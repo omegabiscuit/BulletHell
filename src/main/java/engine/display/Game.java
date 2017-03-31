@@ -1,4 +1,4 @@
-package main.java.engine.display;
+package engine.display;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -20,9 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import main.java.engine.events.Event;
-import main.java.engine.events.IEventDispatcher;
-import main.java.engine.events.IEventListener;
+import engine.events.Event;
+import engine.events.IEventDispatcher;
+import engine.events.IEventListener;
 
 
 /**
