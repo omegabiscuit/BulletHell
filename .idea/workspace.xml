@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de855df-65cd-4fef-84aa-08e9ec0dbdb0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/._build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/._gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/._gradlew" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/._gradlew.bat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/._settings.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/gradle/._wrapper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/__MACOSX/gradle/wrapper/._gradle-wrapper.properties" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -327,6 +323,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Brigadoon\IdeaProjects\BulletHell" />
       <recent name="C:\Users\Brigadoon\IdeaProjects\BulletHell\resources" />
     </key>
   </component>
@@ -813,12 +810,12 @@
       <workItem from="1490924732283" duration="358000" />
       <workItem from="1490925184076" duration="6102000" />
       <workItem from="1490978341129" duration="3225000" />
-      <workItem from="1490988420019" duration="2064000" />
+      <workItem from="1490988420019" duration="2279000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47337000" />
+    <option name="totallyTimeSpent" value="47552000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -830,7 +827,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="1" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
