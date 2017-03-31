@@ -146,7 +146,7 @@ public class ProjectGame extends Game {
         }
 
         if (bullet != null) {
-            bullet.setPositionX(bullet.startValX);
+            //bullet.setPositionX(bullet.startValX);
             if(bullet.collidesWith(enemy)){
                 enemy.dead = true;
             }
@@ -155,7 +155,6 @@ public class ProjectGame extends Game {
 
         if (pressedKeys.contains("W")) {
            player.walkNorth();
-
         }
 
         if (pressedKeys.contains("S")) {
@@ -375,7 +374,13 @@ public class ProjectGame extends Game {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        bullet = new Bullet("bullet","coin.png");
+        double mouseX = e.getX();
+        double mouseY = e.getY();
+        bullet = new Bullet("bullet", "Coin.png");
+        bullet.setStart(player.getPositionX(),player.getPositionY());
+        bullet.setEnd(mouseX,mouseY);
+
+
         TweenTransitions bulletPath = new TweenTransitions("linearTransition");
         Tween bulletmovement = new Tween(bullet, bulletPath);
         bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 1);
@@ -388,10 +393,7 @@ public class ProjectGame extends Game {
         double maxWc = player.getCenterX() + (player.getUnscaledWidth() / 2);
         double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
         */
-        double mouseX = e.getX();
-        double mouseY = e.getY();
-        bullet.setStart(player.getPositionX(),player.getPositionY());
-        bullet.setEnd(mouseX,mouseY);
+
     }
 
     /**

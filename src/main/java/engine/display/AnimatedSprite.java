@@ -126,7 +126,7 @@ public class AnimatedSprite extends Sprite {
 
 	public void runRight(){
 		setFrames(walkingSprite);
-		setDelay(1);
+		setDelay(100);
 		setPositionX(getPositionX()+3);
 	}
 	public void walkNorth(){

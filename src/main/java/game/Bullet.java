@@ -37,6 +37,8 @@ public class Bullet extends Sprite implements IEventListener {
     public void setStart(double startValX, double startValY){
         this.startValX = startValX;
         this.startValY = startValY;
+        this.setPositionX(startValX);
+        this.setPositionY(startValY);
     }
 
     public void setEnd(double endValX, double endValY){
