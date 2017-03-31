@@ -19,7 +19,6 @@ public class ProjectGame extends Game {
     /* Create a sprite object for our game. We'll use mario */
     Sprite mario = new Sprite("Mario", "Mario.png");
 
-    //TweenJuggler tweenJuggler;
 
     QuestManager myQuestManager = new QuestManager();
     Event PickedUpEvent;
@@ -34,7 +33,7 @@ public class ProjectGame extends Game {
     SoundManagerClass music = new SoundManagerClass();
     Sprite marioBackground = new Sprite("Background", "dungeon_concept.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
-
+    Bullet bullet;
     private AnimatedSprite player;
     private Enemy enemy;
 
@@ -100,7 +99,6 @@ public class ProjectGame extends Game {
         enemy.setSpeed(3);
 
 
-        //tweenJuggler = new TweenJuggler();
         TweenTransitions playerIntro = new TweenTransitions("linearTransition");
         Tween playerTween = new Tween(player, playerIntro);
         playerTween.animate(TweenableParams.Y, 1000, 650, 2);
@@ -145,6 +143,13 @@ public class ProjectGame extends Game {
             checkCollisions(player);
             TweenJuggler.getInstance().nextFrame();
 
+        }
+
+        if (bullet != null) {
+            bullet.setPositionX(bullet.startValX);
+            if(bullet.collidesWith(enemy)){
+                enemy.dead = true;
+            }
         }
 
 
@@ -236,10 +241,9 @@ public class ProjectGame extends Game {
 
         }
         */
-        if (enemy != null) {
+        if (enemy != null && enemy.dead == false) {
             enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
-
         }
 
     }
@@ -313,6 +317,9 @@ public class ProjectGame extends Game {
 
 
         super.draw(g);
+        if(bullet != null){
+            bullet.draw(g);
+        }
 
         if (marioBackground != null) {
             marioBackground.draw(g);
@@ -368,17 +375,23 @@ public class ProjectGame extends Game {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        bullet = new Bullet("bullet","coin.png");
+        TweenTransitions bulletPath = new TweenTransitions("linearTransition");
+        Tween bulletmovement = new Tween(bullet, bulletPath);
+        bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 1);
+        bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 1);
+        TweenJuggler.getInstance().add(bulletmovement);
+        /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
         double minHc = player.getCenterY() - player.getUnscaledHeight() / 2;
 
         double maxWc = player.getCenterX() + (player.getUnscaledWidth() / 2);
         double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
-
+        */
         double mouseX = e.getX();
         double mouseY = e.getY();
-
-
+        bullet.setStart(player.getPositionX(),player.getPositionY());
+        bullet.setEnd(mouseX,mouseY);
     }
 
     /**

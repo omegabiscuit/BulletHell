@@ -13,6 +13,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     ArrayList<double[]> routePatternTemplate = new ArrayList<>();
     ArrayList<double[]> routePattern = new ArrayList<>();
     double speed = 1;
+    public boolean dead = false;
     public Enemy(String id) {
         super(id);
     }
