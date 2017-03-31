@@ -17,7 +17,7 @@ public class ProjectGame extends Game {
 
 
     /* Create a sprite object for our game. We'll use mario */
-    Sprite mario = new Sprite("Mario", "Mario.png");
+    Sprite mario = new Sprite("Mario", "gator.png");
 
 
     QuestManager myQuestManager = new QuestManager();
@@ -71,6 +71,7 @@ public class ProjectGame extends Game {
 
 
         player = new AnimatedSprite("animate");
+       // player.setHasPhysics(true);
 
         platform.setPositionX(50);
         platform.setPositionY(550);
@@ -86,7 +87,7 @@ public class ProjectGame extends Game {
         player.setPositionY(450);
 
 
-        enemy = new Enemy("enemy","Mario.png");
+        enemy = new Enemy("enemy","gator.png");
         enemy.setPositionX(570);
         enemy.setPositionY(200);
         enemy.addRoute(150,0);//create square route
@@ -163,7 +164,7 @@ public class ProjectGame extends Game {
             player.walkSouth();
 
 
-            music.playSoundEffect("resources/song100.wav");
+           // music.playSoundEffect("resources/song100.wav");
 
         }
         if (pressedKeys.contains("D")) {
