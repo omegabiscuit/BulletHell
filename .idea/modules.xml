@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BulletHell.iml" filepath="$PROJECT_DIR$/BulletHell.iml" />
       <module fileurl="file://$PROJECT_DIR$/GameEngine.iml" filepath="$PROJECT_DIR$/GameEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main.iml" filepath="$PROJECT_DIR$/main.iml" />
     </modules>
   </component>
 </project>

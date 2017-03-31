@@ -1,9 +1,9 @@
-package main.game;
+package main.java.game;
 
 
-import main.engine.display.Sprite;
-import main.engine.events.Event;
-import main.engine.events.IEventListener;
+import main.java.engine.display.Sprite;
+import main.java.engine.events.Event;
+import main.java.engine.events.IEventListener;
 
 /**
  * Created by Brigadoon on 2/17/2017.

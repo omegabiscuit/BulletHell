@@ -1,4 +1,4 @@
-package main.engine.Tweens;
+package main.java.engine.Tweens;
 
 import java.lang.Math;
 

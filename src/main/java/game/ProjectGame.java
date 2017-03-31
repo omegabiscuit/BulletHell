@@ -1,16 +1,16 @@
-package main.game;
+package main.java.game;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-import main.engine.Tweens.*;
-import main.engine.display.AnimatedSprite;
-import main.engine.display.Game;
-import main.engine.display.Sprite;
-import main.engine.events.Event;
-import main.engine.util.GameClock;
+import main.java.engine.Tweens.*;
+import main.java.engine.display.AnimatedSprite;
+import main.java.engine.display.Game;
+import main.java.engine.display.Sprite;
+import main.java.engine.events.Event;
+import main.java.engine.util.GameClock;
 
 
 public class ProjectGame extends Game {

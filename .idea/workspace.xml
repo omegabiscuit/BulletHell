@@ -2,15 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0de855df-65cd-4fef-84aa-08e9ec0dbdb0" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/Tween.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/Tween.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenEvent.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenJuggler.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenParam.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenParam.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenTransitions.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenTransitions.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/engine/Tweens/TweenableParams.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/game/ProjectGame.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/Tween.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/Tween.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenEvent.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenJuggler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenParam.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenTransitions.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenTransitions.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/Tweens/TweenableParams.java" afterPath="$PROJECT_DIR$/src/main/java/engine/Tweens/TweenableParams.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/DisplayObject.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/DisplayObjectContainer.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/DisplayObjectContainer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/Game.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Game.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/GameScenePanel.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/PhysicsSprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/display/Sprite.java" afterPath="$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/Event.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/Event.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/EventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/IEventDispatcher.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/events/IEventListener.java" afterPath="$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/engine/util/GameClock.java" afterPath="$PROJECT_DIR$/src/main/java/engine/util/GameClock.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Coin.java" afterPath="$PROJECT_DIR$/src/main/java/game/Coin.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Enemy.java" afterPath="$PROJECT_DIR$/src/main/java/game/Enemy.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/Platformer.java" afterPath="$PROJECT_DIR$/src/main/java/game/Platformer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/QuestManager.java" afterPath="$PROJECT_DIR$/src/main/java/game/QuestManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/SolarSystem.java" afterPath="$PROJECT_DIR$/src/main/java/game/SolarSystem.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/game/SoundManagerClass.java" afterPath="$PROJECT_DIR$/src/main/java/game/SoundManagerClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/game/Coin.java" afterPath="$PROJECT_DIR$/src/main/game/Coin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/game/ProjectGame.java" afterPath="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,11 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+            <state relative-caret-position="289">
+              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -77,7 +95,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -87,8 +105,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Coin.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/Coin.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AnimatedSprite.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
               <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
@@ -99,18 +127,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/display/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1496">
-              <caret line="114" column="17" lean-forward="false" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Sprite.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/display/Sprite.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/Sprite.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="799">
               <caret line="50" column="45" lean-forward="false" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
@@ -120,9 +138,9 @@
         </entry>
       </file>
       <file leaf-file-name="ProjectGame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/game/ProjectGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2567">
+            <state relative-caret-position="312">
               <caret line="151" column="23" lean-forward="false" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -132,7 +150,7 @@
         </entry>
       </file>
       <file leaf-file-name="Tween.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/Tween.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/engine/Tweens/Tween.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
               <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
@@ -210,11 +228,11 @@
         <option value="$PROJECT_DIR$/src/main/lab1test/ProjectGame.java" />
         <option value="$PROJECT_DIR$/src/main/game/Enemy.java" />
         <option value="$PROJECT_DIR$/src/main/game/QuestManager.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/game/ProjectGame.java" />
         <option value="$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" />
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -276,7 +294,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -298,107 +316,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GameEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BulletHell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tweens" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GameEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BulletHell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GameEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BulletHell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="display" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GameEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BulletHell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -416,7 +338,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/.gitignore" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/.gitignore&#10;C:/Users/Brigadoon/IdeaProjects/BulletHell/src/main/game/ProjectGame.java" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -447,11 +369,11 @@
     <configuration default="false" name="ProjectGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="main.game.*" />
+          <option name="PATTERN" value="main.java.engine.game.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="main.game.ProjectGame" />
+      <option name="MAIN_CLASS_NAME" value="main.java.engine.game.ProjectGame" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -906,12 +828,12 @@
       <workItem from="1490924732283" duration="358000" />
       <workItem from="1490925184076" duration="6102000" />
       <workItem from="1490978341129" duration="3225000" />
-      <workItem from="1490988420019" duration="541000" />
+      <workItem from="1490988420019" duration="1891000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45814000" />
+    <option name="totallyTimeSpent" value="47164000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -924,7 +846,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -940,8 +862,9 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15553236" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15553236" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -954,7 +877,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -990,15 +912,15 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenJuggler.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenTransitions.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/Event.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/game/QuestManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/IEventListener.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/Event.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/QuestManager.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/lab1test/LabFiveGame.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/Sprite.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/Game.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/GameScenePanel.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/game/QuestManager.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/Sprite.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/Game.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/QuestManager.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/lab1test/LabFourGame.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/lab1test/LabFourGame.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/lab1test/LabFiveGame.java" />
@@ -1006,51 +928,51 @@
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenEvent.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenJuggler.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/TweenTransitions.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/PhysicsSprite.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/GameScenePanel.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/PhysicsSprite.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/GameScenePanel.java" />
     <entry file="file://$PROJECT_DIR$/edu/Tweens/Tween.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/DisplayObject.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/DisplayObject.java" />
     <entry file="file://$PROJECT_DIR$/.classpath" />
     <entry file="file://$PROJECT_DIR$/edu/main/java/lab1test/Coin.java" />
     <entry file="file://$PROJECT_DIR$/edu/main/java/lab1test/SolarSystem.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/TweenEvent.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/Tweens/TweenEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#366#367#0" expanded="false" />
-            <element signature="e#388#389#0" expanded="false" />
+            <element signature="e#386#387#0" expanded="false" />
+            <element signature="e#408#409#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/TweenJuggler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/Tweens/TweenJuggler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#219#220#0" expanded="false" />
-            <element signature="e#242#243#0" expanded="false" />
-            <element signature="e#273#274#0" expanded="false" />
-            <element signature="e#302#303#0" expanded="false" />
-            <element signature="e#528#529#0" expanded="false" />
-            <element signature="e#550#551#0" expanded="false" />
+            <element signature="e#224#225#0" expanded="false" />
+            <element signature="e#247#248#0" expanded="false" />
+            <element signature="e#278#279#0" expanded="false" />
+            <element signature="e#307#308#0" expanded="false" />
+            <element signature="e#533#534#0" expanded="false" />
+            <element signature="e#555#556#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/util/GameClock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/util/GameClock.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#270#271#0" expanded="false" />
-            <element signature="e#293#294#0" expanded="false" />
-            <element signature="e#406#407#0" expanded="false" />
-            <element signature="e#463#464#0" expanded="false" />
-            <element signature="e#534#535#0" expanded="false" />
-            <element signature="e#570#571#0" expanded="false" />
+            <element signature="e#275#276#0" expanded="false" />
+            <element signature="e#298#299#0" expanded="false" />
+            <element signature="e#411#412#0" expanded="false" />
+            <element signature="e#468#469#0" expanded="false" />
+            <element signature="e#539#540#0" expanded="false" />
+            <element signature="e#575#576#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1069,7 +991,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/Event.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
@@ -1077,7 +999,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/Enemy.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/Enemy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-34">
           <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
@@ -1085,20 +1007,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/EventDispatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/EventDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding>
-            <element signature="e#269#270#0" expanded="false" />
-            <element signature="e#308#309#0" expanded="false" />
-            <element signature="e#404#405#0" expanded="false" />
-            <element signature="e#446#447#0" expanded="false" />
+            <element signature="e#274#275#0" expanded="false" />
+            <element signature="e#313#314#0" expanded="false" />
+            <element signature="e#409#410#0" expanded="false" />
+            <element signature="e#451#452#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/IEventListener.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/IEventListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
@@ -1106,7 +1028,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/events/IEventDispatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/events/IEventDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
@@ -1114,35 +1036,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/Platformer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/Platformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#254#255#0" expanded="false" />
-            <element signature="e#294#295#0" expanded="false" />
+            <element signature="e#274#275#0" expanded="false" />
+            <element signature="e#314#315#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/Coin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#272#273#0" expanded="false" />
-            <element signature="e#312#313#0" expanded="false" />
-            <element signature="e#384#385#0" expanded="false" />
-            <element signature="e#414#415#0" expanded="false" />
-            <element signature="e#461#462#0" expanded="false" />
-            <element signature="e#499#500#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/QuestManager.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/QuestManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
@@ -1181,7 +1087,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/Game.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1496">
           <caret line="114" column="17" lean-forward="false" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
@@ -1189,7 +1095,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/Sprite.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/Sprite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="50" column="45" lean-forward="false" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
@@ -1197,7 +1103,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/Tweens/Tween.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/Tweens/Tween.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
@@ -1205,31 +1111,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/game/ProjectGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="151" column="23" lean-forward="false" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/engine/display/AnimatedSprite.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/engine/display/AnimatedSprite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1261,6 +1149,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/Coin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/game/ProjectGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="151" column="23" lean-forward="false" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
           <folding />
         </state>
       </provider>

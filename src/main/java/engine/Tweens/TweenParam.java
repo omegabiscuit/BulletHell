@@ -1,4 +1,4 @@
-package main.engine.Tweens;
+package main.java.engine.Tweens;
 
 public class TweenParam {
 	TweenableParams param;

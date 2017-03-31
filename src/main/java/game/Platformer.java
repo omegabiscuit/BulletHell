@@ -1,8 +1,8 @@
-package main.game;
+package main.java.game;
 
-import main.engine.display.Sprite;
-import main.engine.events.Event;
-import main.engine.events.IEventListener;
+import main.java.engine.display.Sprite;
+import main.java.engine.events.Event;
+import main.java.engine.events.IEventListener;
 
 public class Platformer extends Sprite implements IEventListener {
 	

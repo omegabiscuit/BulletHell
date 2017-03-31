@@ -1,5 +1,5 @@
 
-package main.game;
+package main.java.game;
 
 
 import java.applet.AudioClip;
