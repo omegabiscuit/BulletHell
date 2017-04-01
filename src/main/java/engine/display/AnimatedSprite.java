@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -22,10 +23,11 @@ public class AnimatedSprite extends Sprite {
 
 	private AnimatedSprite animation;
 	private BufferedImage[] notMoving;
+	private BufferedImage[] notMovingLeft;
 	private BufferedImage[] walkingSprite;
-	private BufferedImage[] jumpingSprite;
-	private BufferedImage[] fallingSprite;
-	private BufferedImage[] walkingMario;
+	//private BufferedImage[] jumpingSprite;
+	//private BufferedImage[] fallingSprite;
+	//private BufferedImage[] walkingMario;
 	private BufferedImage[] walkingSpriteRight;
 	private boolean facingLeft;
 
@@ -48,14 +50,16 @@ public class AnimatedSprite extends Sprite {
 		try{
 			walkingSprite = new BufferedImage[8];
 			notMoving = new BufferedImage[7];
-			jumpingSprite = new BufferedImage[1];
-			fallingSprite = new BufferedImage[1];
+			notMovingLeft = new BufferedImage[7];
+		//	jumpingSprite = new BufferedImage[1];
+		//	fallingSprite = new BufferedImage[1];
 			walkingSpriteRight = new BufferedImage[8];
 
 			BufferedImage image2 = ImageIO.read(new File("resources/idle_front.png"));
-			jumpingSprite[0] = ImageIO.read(new File("resources/kirbyjump4.0.png"));
-			fallingSprite[0] = ImageIO.read(new File("resources/kirbyfall4.0.png"));
-			BufferedImage image = ImageIO.read(new File("resources/run_front.png"));
+			BufferedImage image3 = ImageIO.read(new File("resources/idle_left.png"));
+		//	jumpingSprite[0] = ImageIO.read(new File("resources/kirbyjump4.0.png"));
+		//	fallingSprite[0] = ImageIO.read(new File("resources/kirbyfall4.0.png"));
+			BufferedImage image = ImageIO.read(new File("resources/run_left.png"));
 			BufferedImage image1 = ImageIO.read(new File("resources/run_front.png"));
 			for(int i = 0; i < walkingSprite.length;i++){
 				walkingSprite[i] = image.getSubimage(i*76,0,76,92);
@@ -65,7 +69,7 @@ public class AnimatedSprite extends Sprite {
 
 			for(int i = 0; i < notMoving.length;i++){
 				notMoving[i] = image2.getSubimage(i*76,0,76,92);
-
+				notMovingLeft[i] = image3.getSubimage(i*76,0,76,92);
 			}
 
 
@@ -107,37 +111,50 @@ public class AnimatedSprite extends Sprite {
 
 
 	public void walkEast(){
+	//	this.moveHorizontallyWithMomentum(0.002);
 		setFrames(walkingSpriteRight);
 		setDelay(100);
 
 
 
-		setPositionX(getPositionX()+10);
+		setPositionX(getPositionX()+5);
 
 
 
 
 	}
 	public void walkWest(){
+//		this.moveHorizontallyWithMomentum(-0.002);
 		setFrames(walkingSprite);
 		setDelay(100);
-		setPositionX(getPositionX()-3);
+		setPositionX(getPositionX()-5);
 	}
 
-	public void runRight(){
-		setFrames(walkingSprite);
-		setDelay(100);
-		setPositionX(getPositionX()+3);
-	}
+//	public void runRight(){
+//		setFrames(walkingSprite);
+//		setDelay(100);
+//		setPositionX(getPositionX()+3);
+//	}
 	public void walkNorth(){
-		setFrames(jumpingSprite);
-		setDelay(500);
-		setPositionY(getPositionY()-3);
+//		this.moveVerticallyWithMomentum(-0.002);
+		if(Arrays.equals(frames, walkingSpriteRight) || Arrays.equals(frames, notMoving)) {
+			setFrames(walkingSpriteRight);
+		} else if(Arrays.equals(frames, walkingSprite) || Arrays.equals(frames, notMovingLeft)) {
+			setFrames(walkingSprite);
+		}
+
+		setDelay(100);
+		setPositionY(getPositionY()-5);
 	}
 	public void walkSouth(){
-		setFrames(fallingSprite);
-		setDelay(500);
-		setPositionY(getPositionY()+3);
+	//	this.moveVerticallyWithMomentum(0.002);
+		if(Arrays.equals(frames, walkingSpriteRight) || Arrays.equals(frames, notMoving)) {
+			setFrames(walkingSpriteRight);
+		} else if(Arrays.equals(frames, walkingSprite) || Arrays.equals(frames, notMovingLeft)) {
+			setFrames(walkingSprite);
+		}
+		setDelay(100);
+		setPositionY(getPositionY()+5);
 
 
 
@@ -169,7 +186,12 @@ public class AnimatedSprite extends Sprite {
 		}
 		if(currentFrame == frames.length){
 			currentFrame = 0;
-			setFrames(notMoving);
+			if(Arrays.equals(frames, walkingSpriteRight)) {
+				setFrames(notMoving);
+			} else if(Arrays.equals(frames, walkingSprite)) {
+				setFrames(notMovingLeft);
+			}
+
 			setDelay(100);
 		}
 

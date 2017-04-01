@@ -17,7 +17,7 @@ public class ProjectGame extends Game {
 
 
     /* Create a sprite object for our game. We'll use mario */
-    Sprite mario = new Sprite("Mario", "Mario.png");
+    Sprite mario = new Sprite("Mario", "gator.png");
 
 
     QuestManager myQuestManager = new QuestManager();
@@ -27,6 +27,7 @@ public class ProjectGame extends Game {
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
+    Coin coin =  new Coin("coin","Coin4.png");
     Platformer platform = new Platformer("Rectangele", "platform.png");
     Platformer platform1 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
@@ -59,6 +60,9 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager, die.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
+
+        PickedUpEvent.setEventType("CoinPickedUp");
+
         this.addEventListener(myQuestManager, collidedEvent.getEventType());
 
 
@@ -71,6 +75,7 @@ public class ProjectGame extends Game {
 
 
         player = new AnimatedSprite("animate");
+       // player.setHasPhysics(true);
 
         platform.setPositionX(50);
         platform.setPositionY(550);
@@ -86,7 +91,7 @@ public class ProjectGame extends Game {
         player.setPositionY(450);
 
 
-        enemy = new Enemy("enemy","Mario.png");
+        enemy = new Enemy("enemy","gator.png");
         enemy.setPositionX(570);
         enemy.setPositionY(200);
         enemy.addRoute(150,0);//create square route
@@ -98,7 +103,8 @@ public class ProjectGame extends Game {
 
         enemy.setSpeed(3);
 
-
+        coin.setPositionY(250);
+        coin.setPositionX(660);
         TweenTransitions playerIntro = new TweenTransitions("linearTransition");
         Tween playerTween = new Tween(player, playerIntro);
         playerTween.animate(TweenableParams.Y, 1000, 650, 2);
@@ -108,7 +114,6 @@ public class ProjectGame extends Game {
 
 
         TweenJuggler.getInstance().add(playerTween);
-        //tweenJuggler.add(playerTween);
 
 
     }
@@ -131,10 +136,15 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (player != null) {
-            if (player.collidesWith(enemy)){
+            if (player.collidesWith(enemy) && enemy.dead == false){
                 player.toggleVisibility();
                 complete = true;
             }
+            if (player.collidesWith(coin)){
+                coin.handleEvent(collidedEvent);
+                myQuestManager.handleEvent(PickedUpEvent);
+            }
+
             //float deltaX = (float) (mousePosition.getX()-player.getPositionX());
             //float deltaY = (float) (mousePosition.getY()-player.getPositionY());
             mario.update(pressedKeys);
@@ -146,10 +156,16 @@ public class ProjectGame extends Game {
         }
 
         if (bullet != null) {
-            //bullet.setPositionX(bullet.startValX);
             if(bullet.collidesWith(enemy)){
                 enemy.dead = true;
+                bullet = null;
             }
+        }
+        if (bullet != null){
+            if(bullet.getPositionX()+3 >= bullet.endValX && bullet.getPositionX()-3 <= bullet.endValX){
+                bullet = null;
+            }
+
         }
 
 
@@ -163,7 +179,7 @@ public class ProjectGame extends Game {
             player.walkSouth();
 
 
-            music.playSoundEffect("resources/song100.wav");
+           // music.playSoundEffect("resources/song100.wav");
 
         }
         if (pressedKeys.contains("D")) {
@@ -316,21 +332,29 @@ public class ProjectGame extends Game {
 
 
         super.draw(g);
-        if(bullet != null){
-            bullet.draw(g);
-        }
+
 
         if (marioBackground != null) {
             marioBackground.draw(g);
 
         }
+
+        if(bullet != null){
+            bullet.draw(g);
+        }
+
+        if (coin != null){
+            coin.draw(g);
+        }
+
+        if (enemy != null) {
+            enemy.draw(g);
+        }
         if (player != null) {
             player.draw(g);
 
         }
-        if (enemy != null) {
-            enemy.draw(g);
-        }
+
 
 
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
@@ -374,9 +398,10 @@ public class ProjectGame extends Game {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        bullet = new Bullet("bullet", "Coin4.png");
         double mouseX = e.getX();
         double mouseY = e.getY();
-        bullet = new Bullet("bullet", "Coin.png");
+
         bullet.setStart(player.getPositionX(),player.getPositionY());
         bullet.setEnd(mouseX,mouseY);
 

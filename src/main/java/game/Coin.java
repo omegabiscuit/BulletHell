@@ -35,6 +35,12 @@ public class Coin extends Sprite implements IEventListener {
             TweenJuggler.getInstance().add(myTween);
             System.out.println("handled");
         }
+        if (event.getEventType() == "CoinPickedUp"){
+            if(touched == false){
+                this.toggleVisibility();
+                touched = true;
+            }
+        }
     }
 
 

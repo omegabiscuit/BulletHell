@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
@@ -24,10 +26,14 @@ import javax.imageio.ImageIO;
 public class DisplayObject {
 	
 	
-	
+
 	boolean visible = true;
 	double positionX = 0;
 	double positionY = 0;
+//	double velocityX = 0;
+//	double velocityY = 0;
+//	double frictionCoefficient = 0.001;
+//	double maxSpeed = 10.0;
 	int pivotPoint;
 	double pivotX = 0;
 	double pivotY = 0;
@@ -38,6 +44,10 @@ public class DisplayObject {
 	Point2D screenPoint;
 	boolean objColliding = false;
 	private DisplayObject parent;
+	public static boolean hasPhysics;
+
+//	public static long deltaTime;
+//	public static long lastUpdate;
 	
 	
 	/* All DisplayObject have a unique id */
@@ -55,20 +65,24 @@ public class DisplayObject {
 	 */
 	public DisplayObject(String id) {
 		this.setId(id);
+		Calendar cal = Calendar.getInstance();
+	//	this.lastUpdate = cal.getTimeInMillis();
 	}
 	
 
 	public DisplayObject(String id, String fileName) {
 		this.setId(id);
 		this.setImage(fileName);
+		Calendar cal = Calendar.getInstance();
+	//	this.lastUpdate = cal.getTimeInMillis();
 	}
 	
 	public DisplayObject(DisplayObject obj,String id, String fileName) {
 		this.setId(id);
 		this.setImage(fileName);
 		this.setParent(obj);
-		
-		
+		Calendar cal = Calendar.getInstance();
+	//	this.lastUpdate = cal.getTimeInMillis();
 	}
 	public void setParent(DisplayObject parent){
 		this.parent = parent;
@@ -185,12 +199,57 @@ public class DisplayObject {
 	 * to update objects appropriately.
 	 * */
 	protected void update(ArrayList<String> pressedKeys) {
-	
-		
-		
-		
+//		this.computeDeltaTime();
+//
+//		if(hasPhysics) {
+//			this.setPositionX(this.getPositionX() + this.getDeltaTime() * this.getVelocityX());
+//			this.setPositionY(this.getPositionY() + this.getDeltaTime() * this.getVelocityY());
+//			this.applyFriction();
+//		}
 		
 	}
+
+//	protected void computeDeltaTime() {
+//		Calendar cal = Calendar.getInstance();
+//		long now = cal.getTimeInMillis();
+//
+//		this.deltaTime = now - this.lastUpdate;
+//
+//		this.lastUpdate = now;
+//	}
+
+//	protected void moveHorizontallyWithMomentum(double acceleration) {
+//		if(this.maxSpeed > Math.abs(this.getVelocityX())) {
+//			System.out.println(this.getDeltaTime());
+//			this.setVelocityX(this.getVelocityX() + this.getDeltaTime()*acceleration);
+//
+//		}
+//	}
+
+//	protected void moveVerticallyWithMomentum(double acceleration) {
+//		if(this.maxSpeed > Math.abs(this.getVelocityY())) {
+//			this.setVelocityY(this.getVelocityY() + this.getDeltaTime()*acceleration);
+//		}
+//	}
+
+//	protected void applyFriction() {
+//		if(Math.abs(this.getVelocityX()) < 0.01) {
+//			this.setVelocityX(0);
+//		} else if(this.getVelocityX() > 0) {
+//			this.setVelocityX(this.getVelocityX() - this.getDeltaTime()*this.frictionCoefficient);
+//		} else if(this.getVelocityX() < 0) {
+//			this.setVelocityX(this.getVelocityX() + this.getDeltaTime()*this.frictionCoefficient);
+//		}
+//
+//		if(Math.abs(this.getVelocityY()) < 0.01) {
+//			this.setVelocityY(0);
+//		} else if(this.getVelocityY() > 0) {
+//			this.setVelocityY(this.getVelocityY() - this.getDeltaTime()*this.frictionCoefficient);
+//		} else if(this.getVelocityY() < 0) {
+//			this.setVelocityY(this.getVelocityY() + this.getDeltaTime()*this.frictionCoefficient);
+//		}
+//	}
+
 
 	/**
 	 * Draws this image. This should be overloaded if a display object should
@@ -334,6 +393,22 @@ public class DisplayObject {
 	
 		return positionY;
 	}
+
+//	public void setVelocityX(double velX) {
+//		this.velocityX = velX;
+//	}
+//
+//	public void setVelocityY(double velY) {
+//		this.velocityY = velY;
+//	}
+//
+//	public double getVelocityX() {
+//		return this.velocityX;
+//	}
+//
+//	public double getVelocityY() {
+//		return this.velocityY;
+//	}
 	
 
 	
@@ -406,6 +481,9 @@ public class DisplayObject {
 		return screenPoint.getY();
 	}
 	
-	
-
+//	public long getDeltaTime() { return deltaTime; }
+//
+//	public void setHasPhysics(boolean phys) {
+//		hasPhysics = phys;
+//	}
 }
