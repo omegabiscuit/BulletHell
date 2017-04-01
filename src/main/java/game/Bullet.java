@@ -1,5 +1,6 @@
 package game;
 
+import engine.display.AnimatedSprite;
 import engine.display.DisplayObjectContainer;
 import engine.display.Sprite;
 import engine.events.Event;
@@ -16,6 +17,8 @@ public class Bullet extends Sprite implements IEventListener {
     double endValY;
     double startValX;
     double startValY;
+
+
 
     public Bullet(String id) {
         super(id);

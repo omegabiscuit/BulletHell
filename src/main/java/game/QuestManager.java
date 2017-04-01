@@ -12,7 +12,7 @@ public class QuestManager implements IEventListener {
     @Override
     public void handleEvent(Event event) {
         if (event.getEventType() == "CoinPickedUp") {
-            //System.out.println("Quest is Complete");
+            System.out.println("Quest is Complete");
         }
         if(event.getEventType()== "CollidedEvent"){
         	
