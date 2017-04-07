@@ -22,8 +22,8 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         super(id, fileName);
     }
 
-    public void addRoute(double x,double y){//enter -1 for no change in that axis
-        routePatternTemplate.add(new double[] {x,y});
+    public void addRoute(double x,double y, double speed){//enter -1 for no change in that axis
+        routePatternTemplate.add(new double[] {x,y,speed});
     }
 
     public void clearRoute(){
@@ -44,25 +44,25 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
         double currentX = routePattern.get(0)[0];
         if(currentX > 0 ){ //used to decide if enemy is moving left or right
-            double x = routePattern.get(0)[0]-speed; //used to prevent enemy from moving past its destination point
+            double x = routePattern.get(0)[0]-routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if(x>=0) {
-                routePattern.set(0, new double[]{x, routePattern.get(0)[1]});
-                return speed;
+                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2]});
+                return routePattern.get(0)[2];
             }
             else{
-                routePattern.set(0, new double[]{0, routePattern.get(0)[1]});
-                return speed;
+                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2]});
+                return routePattern.get(0)[2];
             }
         }
         else if(currentX < 0){
-            double x = routePattern.get(0)[0]+speed; //used to prevent enemy from moving past its destination point
+            double x = routePattern.get(0)[0]+routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if(x<=0) {
-                routePattern.set(0, new double[]{x, routePattern.get(0)[1]});
-                return -speed;
+                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2]});
+                return -routePattern.get(0)[2];
             }
             else{
-                routePattern.set(0, new double[]{0, routePattern.get(0)[1]});
-                return -speed;
+                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2]});
+                return -routePattern.get(0)[2];
             }
 
         }
@@ -82,25 +82,25 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
         double currentY = routePattern.get(0)[1];
         if(currentY > 0 ){ //used to decide if enemy is moving left or right
-            double y = routePattern.get(0)[1]-speed; //used to prevent enemy from moving past its destination point
+            double y = routePattern.get(0)[1]-routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if(y>=0) {
-                routePattern.set(0, new double[]{ routePattern.get(0)[0],y});
-                return -speed;
+                routePattern.set(0, new double[]{ routePattern.get(0)[0],y, routePattern.get(0)[2]});
+                return -routePattern.get(0)[2];
             }
             else{
-                routePattern.set(0, new double[]{routePattern.get(0)[0],0});
-                return -speed;
+                routePattern.set(0, new double[]{routePattern.get(0)[0],0, routePattern.get(0)[2]});
+                return -routePattern.get(0)[2];
             }
         }
         else if(currentY < 0){
-            double y = routePattern.get(0)[1]+speed; //used to prevent enemy from moving past its destination point
+            double y = routePattern.get(0)[1]+routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if(y<=0) {
-                routePattern.set(0, new double[]{routePattern.get(0)[0],y});
-                return speed;
+                routePattern.set(0, new double[]{routePattern.get(0)[0],y, routePattern.get(0)[2]});
+                return routePattern.get(0)[2];
             }
             else{
-                routePattern.set(0, new double[]{routePattern.get(0)[0],0});
-                return speed;
+                routePattern.set(0, new double[]{routePattern.get(0)[0],0, routePattern.get(0)[2]});
+                return routePattern.get(0)[2];
             }
         }
         return 0;

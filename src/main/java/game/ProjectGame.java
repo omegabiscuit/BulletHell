@@ -94,10 +94,10 @@ public class ProjectGame extends Game {
         enemy = new Enemy("enemy","gator.png");
         enemy.setPositionX(570);
         enemy.setPositionY(200);
-        enemy.addRoute(150,0);//create square route
-        enemy.addRoute(0,-300);
-        enemy.addRoute(-150,0);
-        enemy.addRoute(0,300);
+        enemy.addRoute(150,0,1);//create square route
+        enemy.addRoute(0,-300,8);
+        enemy.addRoute(-150,0,2);
+        enemy.addRoute(0,300,4);
 
 
 
@@ -384,7 +384,6 @@ public class ProjectGame extends Game {
 
             for (int i = 0; i < collisionArray.size(); i++) {
                 collisionArray.get(i).draw(g);
-
             }
 
 
