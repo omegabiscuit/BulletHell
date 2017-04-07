@@ -46,8 +46,8 @@ public class DisplayObject {
 	private DisplayObject parent;
 	public static boolean hasPhysics;
 
-//	public static long deltaTime;
-//	public static long lastUpdate;
+	public static long deltaTime;
+	public static long lastUpdate;
 	
 	
 	/* All DisplayObject have a unique id */
@@ -66,7 +66,7 @@ public class DisplayObject {
 	public DisplayObject(String id) {
 		this.setId(id);
 		Calendar cal = Calendar.getInstance();
-	//	this.lastUpdate = cal.getTimeInMillis();
+		this.lastUpdate = cal.getTimeInMillis();
 	}
 	
 
@@ -74,7 +74,7 @@ public class DisplayObject {
 		this.setId(id);
 		this.setImage(fileName);
 		Calendar cal = Calendar.getInstance();
-	//	this.lastUpdate = cal.getTimeInMillis();
+		this.lastUpdate = cal.getTimeInMillis();
 	}
 	
 	public DisplayObject(DisplayObject obj,String id, String fileName) {
@@ -82,7 +82,7 @@ public class DisplayObject {
 		this.setImage(fileName);
 		this.setParent(obj);
 		Calendar cal = Calendar.getInstance();
-	//	this.lastUpdate = cal.getTimeInMillis();
+		this.lastUpdate = cal.getTimeInMillis();
 	}
 	public void setParent(DisplayObject parent){
 		this.parent = parent;
@@ -198,7 +198,7 @@ public class DisplayObject {
 	 * objects state before the draw occurs. Should be overridden if necessary
 	 * to update objects appropriately.
 	 * */
-	protected void update(ArrayList<String> pressedKeys) {
+//	protected void update(ArrayList<String> pressedKeys) {
 //		this.computeDeltaTime();
 //
 //		if(hasPhysics) {
@@ -206,17 +206,17 @@ public class DisplayObject {
 //			this.setPositionY(this.getPositionY() + this.getDeltaTime() * this.getVelocityY());
 //			this.applyFriction();
 //		}
-		
-	}
-
-//	protected void computeDeltaTime() {
-//		Calendar cal = Calendar.getInstance();
-//		long now = cal.getTimeInMillis();
 //
-//		this.deltaTime = now - this.lastUpdate;
-//
-//		this.lastUpdate = now;
 //	}
+
+	protected void computeDeltaTime() {
+		Calendar cal = Calendar.getInstance();
+		long now = cal.getTimeInMillis();
+
+		this.deltaTime = now - this.lastUpdate;
+
+		this.lastUpdate = now;
+	}
 
 //	protected void moveHorizontallyWithMomentum(double acceleration) {
 //		if(this.maxSpeed > Math.abs(this.getVelocityX())) {
@@ -481,7 +481,7 @@ public class DisplayObject {
 		return screenPoint.getY();
 	}
 	
-//	public long getDeltaTime() { return deltaTime; }
+	public long getDeltaTime() { return deltaTime; }
 //
 //	public void setHasPhysics(boolean phys) {
 //		hasPhysics = phys;

@@ -98,8 +98,8 @@ public class DisplayObjectContainer extends DisplayObject{
 	
 	
 	public void update(ArrayList<String> pressedKeys) {
-		super.update(pressedKeys);
-	
+		//super.update(pressedKeys);
+
 	}
 	
 	

@@ -95,13 +95,14 @@ public class ProjectGame extends Game {
         enemy.setPositionX(570);
         enemy.setPositionY(200);
         enemy.addRoute(150,0,1);//create square route
+        enemy.addRoute(5,0,0);
         enemy.addRoute(0,-300,8);
         enemy.addRoute(-150,0,2);
         enemy.addRoute(0,300,4);
 
 
 
-        enemy.setSpeed(3);
+        //enemy.setSpeed(3);
 
         coin.setPositionY(250);
         coin.setPositionX(660);
