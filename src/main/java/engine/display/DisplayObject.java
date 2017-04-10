@@ -282,8 +282,8 @@ public class DisplayObject {
 			
 			
 			
-			g2d.setColor(Color.RED);
-			g2d.drawOval((int)getPivotX(),(int) getPivotY(), 10, 10);
+			//g2d.setColor(Color.RED);
+			//g2d.drawOval((int)getPivotX(),(int) getPivotY(), 10, 10);
 			
 	
 			
