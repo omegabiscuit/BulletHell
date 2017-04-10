@@ -1,0 +1,166 @@
+{ "frames": [
+   {
+    "filename": "idle",
+    "frame": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 88, "y": 0, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 176, "y": 0, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 264, "y": 0, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 0, "y": 88, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 88, "y": 88, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 176, "y": 88, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 264, "y": 88, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 0, "y": 176, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 88, "y": 176, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 176, "y": 176, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 264, "y": 176, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 0, "y": 264, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 88, "y": 264, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 176, "y": 264, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 264, "y": 264, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   },
+   {
+    "filename": "idle",
+    "frame": { "x": 0, "y": 352, "w": 88, "h": 88 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 88 },
+    "sourceSize": { "w": 88, "h": 88 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.1.13",
+  "image": "C:\\Users\\Tyler\\Documents\\BulletHell\\resources\\gator-sheet.png",
+  "format": "RGBA8888",
+  "size": { "w": 352, "h": 440 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

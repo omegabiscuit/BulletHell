@@ -4,6 +4,7 @@ import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
 import engine.util.GameClock;
 
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     public boolean dead = false;
 
     public Enemy(String id) {
-        super(id);
+        super(id, "", "");
     }
 
     public Enemy(String id, String fileName) {
@@ -35,6 +36,12 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     public void addRoute(double x, double y, double speed, double direction) {//enter -1 for no change in that axis
         routePatternTemplate.add(new double[]{x, y, speed, direction});
+    public Enemy(String id, String fileName, String startState) {
+        super(id, fileName, startState);
+    }
+
+    public void addRoute(double x, double y, double speed) {//enter -1 for no change in that axis
+        routePatternTemplate.add(new double[]{x, y, speed});
     }
 
     public void clearRoute() {
@@ -157,6 +164,11 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         //System.out.println(this.direction[0]);
     }
 
+
+//    public void setSpeed(double speed) {
+//        this.speed = speed;
+//    }
+
     public double getDirectionX() {
         return direction[0];
     }
@@ -181,6 +193,18 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+
+    }
+
+    public void update(){
+        super.update();
+    }
+
+    @Override
+    public void draw(Graphics g)
+    {
+	/* Call the super draw method in DisplayObject class */
+        super.draw(g);
 
     }
 }

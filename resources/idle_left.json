@@ -1,0 +1,76 @@
+{ "frames": [
+   {
+    "filename": "bh_idle_left 0.ase",
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 1.ase",
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 2.ase",
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 3.ase",
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 4.ase",
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 5.ase",
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   },
+   {
+    "filename": "bh_idle_left 6.ase",
+    "frame": { "x": 384, "y": 0, "w": 64, "h": 92 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 92 },
+    "sourceSize": { "w": 64, "h": 92 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.1.13",
+  "image": "C:\\Users\\Tyler\\Documents\\BulletHell\\resources\\idle_left.png",
+  "format": "RGBA8888",
+  "size": { "w": 448, "h": 92 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

@@ -31,9 +31,9 @@ public class ProjectGame extends Game {
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
-    Coin coin = new Coin("coin", "Coin4.png");
-    Platformer platform = new Platformer("Rectangele", "platform.png");
-    Platformer platform1 = new Platformer("Rectangele", "platform.png");
+    Coin coin =  new Coin("coin","Coin4.png");
+  //  Platformer platform = new Platformer("Rectangele", "platform.png");
+  //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
     SoundManagerClass music = new SoundManagerClass();
     Sprite marioBackground = new Sprite("Background", "dungeon_concept.png");
@@ -85,6 +85,7 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager, collidedEvent.getEventType());
 
 
+       // collisionArray.add(platform);
         collisionArray.add(platform);
         lifeArray.add(life1);
         lifeArray.add(life2);
@@ -103,16 +104,20 @@ public class ProjectGame extends Game {
 
 
 
+        player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
+        player.setSpriteSheetJson("resources/player_sheet.json");
+        player.setDelay(100);
+       // player.setHasPhysics(true);
         keyCount = 0;
         player = new AnimatedSprite("animate");
         // player.setHasPhysics(true);
 
-        platform.setPositionX(50);
-        platform.setPositionY(550);
+      //  platform.setPositionX(50);
+      //  platform.setPositionY(550);
 
 
-        platform1.setPositionX(150);
-        platform1.setPositionY(150);
+      //  platform1.setPositionX(150);
+      //  platform1.setPositionY(150);
 
         //music.playMusic("resources/bowsersound.mp3");
 
@@ -121,7 +126,9 @@ public class ProjectGame extends Game {
         player.setPositionY(450);
 
 
-        enemy = new Enemy("enemy", "gator.png");
+        enemy = new Enemy("enemy","resources/gator_sheet.png", "idle");
+        enemy.setSpriteSheetJson("resources/gator_sheet.json");
+        enemy.setDelay(100);
         enemy.setPositionX(570);
         enemy.setPositionY(200);
         enemy.setFieldOfView(160);
@@ -195,7 +202,11 @@ public class ProjectGame extends Game {
             mario.update(pressedKeys);
             //player.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
             player.update();
+
             checkCollisions(player);
+
+            enemy.update();
+
             TweenJuggler.getInstance().nextFrame();
 
             if(player.getHitBox().intersects(pickpocketRect)){
@@ -220,34 +231,51 @@ public class ProjectGame extends Game {
 
         }
 
+        boolean moving = false;
 
         if (pressedKeys.contains("W")) {
-            player.walkNorth();
+            player.setPositionY(player.getPositionY()-5);
+            moving = true;
+            if(player.getStateName().contains("right") && !player.getStateName().equals("run_back_right")){
+                player.setAnimationState("run_back_right");
+            } else if(player.getStateName().contains("left") && !player.getStateName().equals("run_back_left")) {
+                player.setAnimationState("run_back_left");
+            }
         }
 
         if (pressedKeys.contains("S")) {
-
-
-            player.walkSouth();
-
-
-            // music.playSoundEffect("resources/song100.wav");
-
+            player.setPositionY(player.getPositionY()+5);
+            moving = true;
+            if(player.getStateName().contains("right") && !player.getStateName().equals("run_front_right")){
+                player.setAnimationState("run_front_right");
+            } else if(player.getStateName().contains("left") && !player.getStateName().equals("run_front_left")) {
+                player.setAnimationState("run_front_left");
+            }
         }
         if (pressedKeys.contains("D")) {
-
-            mario.setPositionX(mario.getPositionX() + 10);
-
-            player.walkEast();
-
-
+            player.setPositionX(player.getPositionX()+5);
+            moving = true;
+            if(!player.getStateName().equals("run_back_right") && !player.getStateName().equals("run_front_right")) {
+                player.setAnimationState("run_front_right");
+            }
         }
         if (pressedKeys.contains("A")) {
-            player.walkWest();
+            player.setPositionX(player.getPositionX()-5);
+            moving = true;
+            if(!player.getStateName().equals("run_back_left") && !player.getStateName().equals("run_front_left")) {
+                player.setAnimationState("run_front_left");
+            }
         }
 
         if (pressedKeys.contains("X")) {
             Random rand = new Random();
+        if(!moving) {
+            if(player.getStateName().contains("right")) {
+                player.setAnimationState("idle_right");
+            } else if(player.getStateName().contains("left")) {
+                player.setAnimationState("idle_left");
+            }
+        }
 
             int n = rand.nextInt(3) + 1;
 
@@ -462,9 +490,9 @@ public class ProjectGame extends Game {
             bullet.draw(g);
         }
 
-        if (coin != null) {
-            coin.draw(g);
-        }
+//        if (coin != null){
+//            coin.draw(g);
+//        }
 
         if (enemy != null) {
             enemy.draw(g);
@@ -498,7 +526,15 @@ public class ProjectGame extends Game {
 
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        if (platform != null) {
+//        if (platform != null) {
+//
+//
+//            for (int i = 0; i < collisionArray.size(); i++) {
+//                collisionArray.get(i).draw(g);
+//            }
+//
+//
+//        }
 
 
             for (int i = 0; i < collisionArray.size(); i++) {
@@ -538,9 +574,7 @@ public class ProjectGame extends Game {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        bullet = new Bullet("bullet", "Coin4.png");
-        bullet.setPivotX(bullet.getUnscaledWidth() / 2);
-        bullet.setPivotY(bullet.getUnscaledHeight() / 2);
+        bullet = new Bullet("bullet", "knife.png");
         double mouseX = e.getX();
         double mouseY = e.getY();
 
@@ -550,8 +584,8 @@ public class ProjectGame extends Game {
 
         TweenTransitions bulletPath = new TweenTransitions("linearTransition");
         Tween bulletmovement = new Tween(bullet, bulletPath);
-        bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 1);
-        bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 1);
+        bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 0.2);
+        bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 0.2);
         TweenJuggler.getInstance().add(bulletmovement);
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
