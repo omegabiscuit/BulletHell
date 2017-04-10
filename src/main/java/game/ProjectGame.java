@@ -126,7 +126,7 @@ public class ProjectGame extends Game {
         enemy.addRoute(-150,0);
         enemy.addRoute(0,300);
 
-        pickpocketRect = new Rectangle(670,300,enemy.getUnscaledWidth()+50,enemy.getUnscaledHeight()+50);
+        pickpocketRect = new Rectangle(670,300,enemy.getUnscaledWidth()+75,enemy.getUnscaledHeight()+75);
 
         enemy.setSpeed(3);
 
@@ -333,7 +333,7 @@ public class ProjectGame extends Game {
             Integer yLoc = y.intValue();
             Integer xLoc = x.intValue();
 
-            pickpocketRect.setLocation(xLoc,yLoc);
+            pickpocketRect.setLocation(xLoc-40,yLoc-40);
         }
 
         //pickpocketing logic
