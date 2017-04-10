@@ -27,6 +27,7 @@ public class ProjectGame extends Game {
     Event PickedUpEvent;
     Event fadeOutEvent;
     Event die;
+    Event reduceLife;
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
@@ -40,9 +41,20 @@ public class ProjectGame extends Game {
     Bullet bullet;
     private AnimatedSprite player;
     private Enemy enemy;
-
+    ArrayList<Heart> lifeArray = new ArrayList<>();
+    Heart life1 = new Heart("Heart","heart.png");
+    Heart life2 = new Heart("Heart","heart.png");
+    Heart life3 = new Heart("Heart","heart.png");
+    Rectangle pickpocketRect;
+    int keyCount;
+    String itemString = "";
+    int lifeCount;
+    boolean pickpocket = false;
     ArrayList<Double> listArray = new ArrayList<Double>();
+    boolean canTakeItem = false;
 
+
+    int coinCount;
 
     int offset = 1;
 
@@ -55,14 +67,18 @@ public class ProjectGame extends Game {
     public ProjectGame() {
         super("Lab Four Test Game", 1200, 900);
         die = new Event();
+        reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
         die.setEventType("playerDeath");
         fadeOutEvent.setEventType("FadeOut");
+        reduceLife.setEventType("Collision");
         this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
         this.addEventListener(myQuestManager, die.getEventType());
+        this.addEventListener(myQuestManager,reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
+        coinCount = 0;
 
         PickedUpEvent.setEventType("CoinPickedUp");
 
@@ -70,8 +86,24 @@ public class ProjectGame extends Game {
 
 
         collisionArray.add(platform);
+        lifeArray.add(life1);
+        lifeArray.add(life2);
+        lifeArray.add(life3);
+        lifeCount = lifeArray.size();
+        life1.setPositionX(390);
+        life1.setPositionY(40);
+
+        life2.setPositionX(420);
+        life2.setPositionY(40);
+
+        life3.setPositionX(450);
+        life3.setPositionY(40);
 
 
+
+
+
+        keyCount = 0;
         player = new AnimatedSprite("animate");
         // player.setHasPhysics(true);
 
@@ -82,7 +114,7 @@ public class ProjectGame extends Game {
         platform1.setPositionX(150);
         platform1.setPositionY(150);
 
-        music.playMusic("resources/bowsersound.mp3");
+        //music.playMusic("resources/bowsersound.mp3");
 
 
         player.setPositionX(750);
@@ -99,6 +131,7 @@ public class ProjectGame extends Game {
         enemy.addRoute(-150, 0, 2, 4);
         enemy.addRoute(0, 300, 1, 1);
 
+        pickpocketRect = new Rectangle(670,300,enemy.getUnscaledWidth()+75,enemy.getUnscaledHeight()+75);
 
         //enemy.setSpeed(3);
 
@@ -134,11 +167,22 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (player != null) {
-//            if (player.collidesWith(enemy) && enemy.dead == false){
-//                player.toggleVisibility();
-//                complete = true;
-//            }
-            if (player.collidesWith(coin)) {
+            if (player.collidesWith(enemy) && enemy.dead == false){
+
+                //player.toggleVisibility();
+                System.out.println("collided");
+                player.setPositionX(670);
+                player.setPositionY(700);
+                lifeArray.get(lifeCount-1).handleEvent(reduceLife);
+
+                lifeCount--;
+                if(lifeCount==0){
+                    complete = true;
+                }
+
+
+            }
+            if (player.collidesWith(coin)){
                 coin.handleEvent(collidedEvent);
                 myQuestManager.handleEvent(PickedUpEvent);
             }
@@ -195,6 +239,35 @@ public class ProjectGame extends Game {
             player.walkWest();
         }
 
+        if (pressedKeys.contains("X")) {
+            Random rand = new Random();
+
+            int n = rand.nextInt(3) + 1;
+
+            if(n==1){
+                coinCount++;
+                itemString = "You found a coin!";
+            }else if(n==2){
+                keyCount++;
+                itemString = "You found a key!";
+
+            }else if(n==3){
+                itemString = "No items found.";
+            }
+            pressedKeys.remove("X");
+        }
+
+        if (pressedKeys.contains("P")) {
+            for(int i = 0; i <lifeArray.size();i++){
+
+
+                complete = false;
+                lifeArray.get(i).toggleVisibility();
+                lifeCount = lifeArray.size();
+                player.setPositionX(670);
+                player.setPositionY(700);
+            }
+        }
 
         /*
         if (pressedKeys.contains("A")) {
@@ -249,6 +322,7 @@ public class ProjectGame extends Game {
 
             player.setPivotX(player.getPivotX() + 3);
         }
+
         if (pressedKeys.contains("V")) {
 
             mario.toggleVisibility();
@@ -305,6 +379,21 @@ public class ProjectGame extends Game {
 //            double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
 //            System.out.println(angle);
 
+
+            Double y =enemy.getPositionY() + enemy.getPathY();
+            Double x = enemy.getPositionX() + enemy.getPathX();
+            Integer yLoc = y.intValue();
+            Integer xLoc = x.intValue();
+
+            pickpocketRect.setLocation(xLoc-40,yLoc-40);
+        }
+
+        //pickpocketing logic
+        if(player.getHitBox().intersects(pickpocketRect)){
+
+            pickpocket = true;
+        }else{
+            pickpocket = false;
         }
 
     }
@@ -403,7 +492,8 @@ public class ProjectGame extends Game {
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
         if (complete == true) {
             g.drawString("You are dead!", 400, 40);
-            pause();
+            g.drawString("Press P to play again", 400, 400);
+            //pause();
 
         }
 
@@ -429,6 +519,30 @@ public class ProjectGame extends Game {
                 collisionArray.get(i).draw(g);
             }
 
+
+        }
+        if(life1!=null ){
+            for (int i = 0; i < lifeArray.size(); i++) {
+                if(lifeArray.get(i).getVisibility())
+                lifeArray.get(i).draw(g);
+
+            }
+
+        }
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.setColor(Color.RED);
+        g.drawString("--LIFE--",400,30);
+
+        g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
+        g.drawString("Key Count: " + Integer.toString(keyCount),200,60);
+        g.drawString(itemString,200,90);
+
+        ((Graphics2D) g).draw(pickpocketRect);
+
+        if(pickpocket){
+
+            g.drawString("Press X to pickpocket", 400, 400);
 
         }
 
