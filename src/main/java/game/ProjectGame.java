@@ -198,6 +198,13 @@ public class ProjectGame extends Game {
             checkCollisions(player);
             TweenJuggler.getInstance().nextFrame();
 
+            if(player.getHitBox().intersects(pickpocketRect)){
+
+                pickpocket = true;
+            }else{
+                pickpocket = false;
+            }
+
         }
 
         if (bullet != null) {
@@ -364,22 +371,6 @@ public class ProjectGame extends Game {
             }
 
 
-
-//            ///TEST///
-//            double length = Math.sqrt(Math.pow(1,2)+Math.pow(1,2));
-//            enemyFacing.x=1/length;
-//
-//            enemyFacing.y=1/length;
-//
-//            length=Math.sqrt(Math.pow(2,2)+Math.pow(-1,2));
-//            enemyToPlayer.x=2/length;
-//
-//            enemyToPlayer.y=-1/length;
-//
-//            double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
-//            System.out.println(angle);
-
-
             Double y =enemy.getPositionY() + enemy.getPathY();
             Double x = enemy.getPositionX() + enemy.getPathX();
             Integer yLoc = y.intValue();
@@ -389,12 +380,7 @@ public class ProjectGame extends Game {
         }
 
         //pickpocketing logic
-        if(player.getHitBox().intersects(pickpocketRect)){
 
-            pickpocket = true;
-        }else{
-            pickpocket = false;
-        }
 
     }
 
