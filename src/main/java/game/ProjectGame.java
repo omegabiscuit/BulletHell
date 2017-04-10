@@ -86,7 +86,6 @@ public class ProjectGame extends Game {
 
 
        // collisionArray.add(platform);
-        collisionArray.add(platform);
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
@@ -109,7 +108,6 @@ public class ProjectGame extends Game {
         player.setDelay(100);
        // player.setHasPhysics(true);
         keyCount = 0;
-        player = new AnimatedSprite("animate");
         // player.setHasPhysics(true);
 
       //  platform.setPositionX(50);
@@ -526,15 +524,6 @@ public class ProjectGame extends Game {
 
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-//        if (platform != null) {
-//
-//
-//            for (int i = 0; i < collisionArray.size(); i++) {
-//                collisionArray.get(i).draw(g);
-//            }
-//
-//
-//        }
 
 
             for (int i = 0; i < collisionArray.size(); i++) {
@@ -542,7 +531,7 @@ public class ProjectGame extends Game {
             }
 
 
-        }
+
         if(life1!=null ){
             for (int i = 0; i < lifeArray.size(); i++) {
                 if(lifeArray.get(i).getVisibility())

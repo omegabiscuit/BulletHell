@@ -34,10 +34,13 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         super(id, fileName);
     }
 
-    public void addRoute(double x, double y, double speed, double direction) {//enter -1 for no change in that axis
-        routePatternTemplate.add(new double[]{x, y, speed, direction});
     public Enemy(String id, String fileName, String startState) {
         super(id, fileName, startState);
+    }
+
+
+    public void addRoute(double x, double y, double speed, double direction) {//enter -1 for no change in that axis
+        routePatternTemplate.add(new double[]{x, y, speed, direction});
     }
 
     public void addRoute(double x, double y, double speed) {//enter -1 for no change in that axis
