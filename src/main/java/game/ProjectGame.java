@@ -2,9 +2,12 @@ package game;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
+import com.sun.javafx.geom.Vec2d;
 import engine.Tweens.*;
 import engine.display.AnimatedSprite;
 import engine.display.Game;
@@ -27,7 +30,7 @@ public class ProjectGame extends Game {
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
-    Coin coin =  new Coin("coin","Coin4.png");
+    Coin coin = new Coin("coin", "Coin4.png");
     Platformer platform = new Platformer("Rectangele", "platform.png");
     Platformer platform1 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
@@ -69,13 +72,8 @@ public class ProjectGame extends Game {
         collisionArray.add(platform);
 
 
-
-
-
-
-
         player = new AnimatedSprite("animate");
-       // player.setHasPhysics(true);
+        // player.setHasPhysics(true);
 
         platform.setPositionX(50);
         platform.setPositionY(550);
@@ -91,15 +89,15 @@ public class ProjectGame extends Game {
         player.setPositionY(450);
 
 
-        enemy = new Enemy("enemy","gator.png");
+        enemy = new Enemy("enemy", "gator.png");
         enemy.setPositionX(570);
         enemy.setPositionY(200);
-        enemy.addRoute(150,0,1);//create square route
-        enemy.addRoute(5,0,0);
-        enemy.addRoute(0,-300,8);
-        enemy.addRoute(-150,0,2);
-        enemy.addRoute(0,300,4);
-
+        enemy.setFieldOfView(160);
+        enemy.addRoute(150, 0, 1, 2);//create square route
+        enemy.addRoute(2, 0, 0, 2);
+        enemy.addRoute(0, -300, 1, 3);
+        enemy.addRoute(-150, 0, 2, 4);
+        enemy.addRoute(0, 300, 1, 1);
 
 
         //enemy.setSpeed(3);
@@ -120,7 +118,6 @@ public class ProjectGame extends Game {
     }
 
 
-
     /**
      * Engine will automatically call sprite update method once per frame and pass to us
      * the set of keys (as strings) that are currently being pressed down
@@ -137,14 +134,17 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (player != null) {
-            if (player.collidesWith(enemy) && enemy.dead == false){
-                player.toggleVisibility();
-                complete = true;
-            }
-            if (player.collidesWith(coin)){
+//            if (player.collidesWith(enemy) && enemy.dead == false){
+//                player.toggleVisibility();
+//                complete = true;
+//            }
+            if (player.collidesWith(coin)) {
                 coin.handleEvent(collidedEvent);
                 myQuestManager.handleEvent(PickedUpEvent);
             }
+            double xPos = player.getPositionX() - enemy.getPositionX();
+            double yPos = player.getPositionY() - enemy.getPositionY();
+
 
             //float deltaX = (float) (mousePosition.getX()-player.getPositionX());
             //float deltaY = (float) (mousePosition.getY()-player.getPositionY());
@@ -157,13 +157,13 @@ public class ProjectGame extends Game {
         }
 
         if (bullet != null) {
-            if(bullet.collidesWith(enemy)){
+            if (bullet.collidesWith(enemy)) {
                 enemy.dead = true;
                 bullet = null;
             }
         }
-        if (bullet != null){
-            if(bullet.getPositionX()+3 >= bullet.endValX && bullet.getPositionX()-3 <= bullet.endValX){
+        if (bullet != null) {
+            if (bullet.getPositionX() + 3 >= bullet.endValX && bullet.getPositionX() - 3 <= bullet.endValX) {
                 bullet = null;
             }
 
@@ -171,7 +171,7 @@ public class ProjectGame extends Game {
 
 
         if (pressedKeys.contains("W")) {
-           player.walkNorth();
+            player.walkNorth();
         }
 
         if (pressedKeys.contains("S")) {
@@ -180,7 +180,7 @@ public class ProjectGame extends Game {
             player.walkSouth();
 
 
-           // music.playSoundEffect("resources/song100.wav");
+            // music.playSoundEffect("resources/song100.wav");
 
         }
         if (pressedKeys.contains("D")) {
@@ -260,6 +260,51 @@ public class ProjectGame extends Game {
         if (enemy != null && enemy.dead == false) {
             enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
+            enemy.isFacing();
+            float product = 3;
+            Vec2d enemyFacing;
+            Vec2d enemyPos = new Vec2d(enemy.getPositionX(), enemy.getPositionY());
+            Vec2d playerPos = new Vec2d(player.getPositionX(), player.getPositionY());
+            Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
+            if (enemy.getDirection() == 1) {
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 80);
+            } else if (enemy.getDirection() == 2) {
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() + enemy.getPositionX() + 80, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+            } else if (enemy.getDirection() == 3) {
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY()+enemy.getUnscaledHeight() + 80);
+            } else {
+                enemyFacing = new Vec2d(enemy.getPositionX() - 80, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+            }
+
+            //NORMALIZE VECTORS//
+            double length = Math.sqrt(Math.pow(enemyFacing.x,2)+Math.pow(enemyFacing.y,2));
+            enemyFacing.x=enemyFacing.x/length;
+            enemyFacing.y=enemyFacing.y/length;
+            length=Math.sqrt(Math.pow(enemyToPlayer.x,2)+Math.pow(enemyToPlayer.y,2));
+            enemyToPlayer.x=enemyToPlayer.x/length;
+            enemyToPlayer.y=enemyToPlayer.y/length;
+            double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
+
+            if(angle<=enemy.getFieldOfView()/2){
+                System.out.println("player is seen");
+            }
+
+
+
+//            ///TEST///
+//            double length = Math.sqrt(Math.pow(1,2)+Math.pow(1,2));
+//            enemyFacing.x=1/length;
+//
+//            enemyFacing.y=1/length;
+//
+//            length=Math.sqrt(Math.pow(2,2)+Math.pow(-1,2));
+//            enemyToPlayer.x=2/length;
+//
+//            enemyToPlayer.y=-1/length;
+//
+//            double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
+//            System.out.println(angle);
+
         }
 
     }
@@ -305,8 +350,6 @@ public class ProjectGame extends Game {
 
     public void collide(Sprite sprite, Platformer platform) {
         if (sprite.collidesWith(platform)) {
-
-
             if (sprite.getPositionX() + sprite.getUnscaledWidth() > platform.getPositionX()
                     && sprite.getPositionY() + sprite.getUnscaledHeight() / 2 > platform.getPositionY() && sprite.getPositionY() < platform.getPositionY() + platform.getUnscaledHeight()
                     && sprite.getPositionX() < platform.getPositionX()) {
@@ -340,11 +383,11 @@ public class ProjectGame extends Game {
 
         }
 
-        if(bullet != null){
+        if (bullet != null) {
             bullet.draw(g);
         }
 
-        if (coin != null){
+        if (coin != null) {
             coin.draw(g);
         }
 
@@ -355,7 +398,6 @@ public class ProjectGame extends Game {
             player.draw(g);
 
         }
-
 
 
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
@@ -394,16 +436,16 @@ public class ProjectGame extends Game {
     }
 
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
         bullet = new Bullet("bullet", "Coin4.png");
+        bullet.setPivotX(bullet.getUnscaledWidth() / 2);
+        bullet.setPivotY(bullet.getUnscaledHeight() / 2);
         double mouseX = e.getX();
         double mouseY = e.getY();
 
-        bullet.setStart(player.getPositionX(),player.getPositionY());
-        bullet.setEnd(mouseX,mouseY);
+        bullet.setStart(player.getPositionX(), player.getPositionY());
+        bullet.setEnd(mouseX, mouseY);
 
 
         TweenTransitions bulletPath = new TweenTransitions("linearTransition");

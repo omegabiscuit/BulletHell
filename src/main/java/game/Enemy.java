@@ -1,11 +1,14 @@
 package game;
 
 import engine.display.AnimatedSprite;
+import engine.display.DisplayObject;
 import engine.util.GameClock;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+
+import static java.lang.Math.PI;
 
 /**
  * Created by Brigadoon on 3/30/2017.
@@ -15,7 +18,11 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     ArrayList<double[]> routePattern = new ArrayList<>();
     GameClock clock = new GameClock();
     Boolean stall = false;
-    //double speed = 1;
+    double fieldOfView = 45;
+    double direction;//direction enemy is facing [xpos,ypos] of focal point
+    double awareness; //how aware the enemy is to the player's presence
+
+
     public boolean dead = false;
 
     public Enemy(String id) {
@@ -26,8 +33,8 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         super(id, fileName);
     }
 
-    public void addRoute(double x, double y, double speed) {//enter -1 for no change in that axis
-        routePatternTemplate.add(new double[]{x, y, speed});
+    public void addRoute(double x, double y, double speed, double direction) {//enter -1 for no change in that axis
+        routePatternTemplate.add(new double[]{x, y, speed, direction});
     }
 
     public void clearRoute() {
@@ -47,34 +54,32 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
         double currentX = routePattern.get(0)[0];
         if (routePattern.get(0)[2] == 0) { //when speed=0, x=amount of time enemy stalls
-            if(!stall){
+            if (!stall) {
                 clock.resetGameClock();
                 stall = true;
             }
-            if (clock.getElapsedTime()/1000 > routePattern.get(0)[0]) {
+            if (clock.getElapsedTime() / 1000 > routePattern.get(0)[0]) {
                 routePattern.remove(0);
                 stall = false;
             }
-
-            System.out.println(clock.getElapsedTime());
             return 0;
         }
         if (currentX > 0) { //used to decide if enemy is moving left or right
             double x = routePattern.get(0)[0] - routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if (x >= 0) {
-                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2],routePattern.get(0)[3]});
                 return routePattern.get(0)[2];
             } else {
-                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2],routePattern.get(0)[3]});
                 return routePattern.get(0)[2];
             }
         } else if (currentX < 0) {
             double x = routePattern.get(0)[0] + routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
             if (x <= 0) {
-                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{x, routePattern.get(0)[1], routePattern.get(0)[2],routePattern.get(0)[3]});
                 return -routePattern.get(0)[2];
             } else {
-                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{0, routePattern.get(0)[1], routePattern.get(0)[2],routePattern.get(0)[3]});
                 return -routePattern.get(0)[2];
             }
 
@@ -95,37 +100,84 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
         double currentY = routePattern.get(0)[1];
         if (routePattern.get(0)[2] == 0) {
-//            if (this.getDeltaTime() > routePattern.get(0)[0]) {
-//                routePattern.remove(0);
-//
-//            }
             return 0;
         }
         if (currentY > 0) { //used to decide if enemy is moving left or right
-            double y = routePattern.get(0)[1] - routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
+            double y = routePattern.get(0)[1] - routePattern.get(0)[2]; //prevent enemy from moving past its dest.
             if (y >= 0) {
-                routePattern.set(0, new double[]{routePattern.get(0)[0], y, routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{routePattern.get(0)[0], y, routePattern.get(0)[2],routePattern.get(0)[3]});
                 return -routePattern.get(0)[2];
             } else {
-                routePattern.set(0, new double[]{routePattern.get(0)[0], 0, routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{routePattern.get(0)[0], 0, routePattern.get(0)[2],routePattern.get(0)[3]});
                 return -routePattern.get(0)[2];
             }
         } else if (currentY < 0) {
-            double y = routePattern.get(0)[1] + routePattern.get(0)[2]; //used to prevent enemy from moving past its destination point
+            double y = routePattern.get(0)[1] + routePattern.get(0)[2]; //prevent enemy from moving past its dest.
             if (y <= 0) {
-                routePattern.set(0, new double[]{routePattern.get(0)[0], y, routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{routePattern.get(0)[0], y, routePattern.get(0)[2],routePattern.get(0)[3]});
                 return routePattern.get(0)[2];
             } else {
-                routePattern.set(0, new double[]{routePattern.get(0)[0], 0, routePattern.get(0)[2]});
+                routePattern.set(0, new double[]{routePattern.get(0)[0], 0, routePattern.get(0)[2],routePattern.get(0)[3]});
                 return routePattern.get(0)[2];
             }
         }
         return 0;
     }
+    public void isFacing(){
+        if (routePattern.isEmpty()) {
+            routePattern = new ArrayList<>(routePatternTemplate);
+        }
+        double direction = routePattern.get(0)[3];
+        if (direction == 1) { //face north
+            this.direction=1;
+        } else if (direction == 2) {//face east
+            this.direction=2;
+        } else if (direction == 3) {//face south
+            this.direction=3;
+        } else if (direction == 4) { //face west
+            this.direction=4;
+        }
+    }
 
-//    public void setSpeed(double speed) {
-//        this.speed = speed;
-//    }
+    /*
+    public void isFacing() {
+        if (routePattern.isEmpty()) {
+            routePattern = new ArrayList<>(routePatternTemplate);
+        }
+        double direction = routePattern.get(0)[2];
+        if (direction == 1) { //face north
+            this.direction=new double[]{this.getUnscaledWidth()/2,0};
+        } else if (direction == 2) {//face east
+            this.direction=new double[]{this.getUnscaledWidth(),this.getUnscaledHeight()/2};
+        } else if (direction == 3) {//face south
+            this.direction=new double[]{this.getUnscaledWidth()/2,this.getUnscaledHeight()};
+        } else if (direction == 4) { //face west
+            this.direction=new double[]{0,this.getUnscaledHeight()/2};
+        }
+        //System.out.println(this.direction[0]);
+    }
+
+    public double getDirectionX() {
+        return direction[0];
+    }
+
+    public double getDirectionY() {
+        return direction[1];
+    }
+    */
+
+    public double getFieldOfView() {
+        return fieldOfView;
+    }
+
+    public void setFieldOfView(double fieldOfView) {
+        this.fieldOfView = fieldOfView;
+    }
+
+
+    public double getDirection() {
+        return direction;
+    }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
