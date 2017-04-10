@@ -5,10 +5,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.FileReader;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
 import engine.util.GameClock;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+
 
 public class AnimatedSprite extends Sprite {
 
@@ -31,7 +39,7 @@ public class AnimatedSprite extends Sprite {
 	private BufferedImage[] walkingSpriteRight;
 	private boolean facingLeft;
 
-	public BufferedImage[] frames;
+	public JSONArray frames;
 	public int currentFrame;
 	private long startTime;
 	private long delay;
@@ -44,45 +52,32 @@ public class AnimatedSprite extends Sprite {
 	int verticalSpeed = 0;
 
 
+	public String stateName;
+	public String spriteSheetJson;
+	public JSONObject jsonObject;
 
-	public AnimatedSprite(String id){
+	public int endFrame;
+	public int startFrame;
+	public int frameNum;
+
+	public BufferedImage spriteSheet;
+
+	public ArrayList<BufferedImage> stateFrames;
+
+	public AnimatedSprite(String id, String fileName, String startState){
 		super(id);
-		try{
-			walkingSprite = new BufferedImage[8];
-			notMoving = new BufferedImage[7];
-			notMovingLeft = new BufferedImage[7];
-		//	jumpingSprite = new BufferedImage[1];
-		//	fallingSprite = new BufferedImage[1];
-			walkingSpriteRight = new BufferedImage[8];
 
-			BufferedImage image2 = ImageIO.read(new File("resources/idle_front.png"));
-			BufferedImage image3 = ImageIO.read(new File("resources/idle_left.png"));
-		//	jumpingSprite[0] = ImageIO.read(new File("resources/kirbyjump4.0.png"));
-		//	fallingSprite[0] = ImageIO.read(new File("resources/kirbyfall4.0.png"));
-			BufferedImage image = ImageIO.read(new File("resources/run_left.png"));
-			BufferedImage image1 = ImageIO.read(new File("resources/run_front.png"));
-			for(int i = 0; i < walkingSprite.length;i++){
-				walkingSprite[i] = image.getSubimage(i*76,0,76,92);
-				walkingSpriteRight[i] = image1.getSubimage(i*76,0,76,92);
+		stateName = startState;
 
-			}
+		stateFrames = new ArrayList<BufferedImage>();
 
-			for(int i = 0; i < notMoving.length;i++){
-				notMoving[i] = image2.getSubimage(i*76,0,76,92);
-				notMovingLeft[i] = image3.getSubimage(i*76,0,76,92);
-			}
+		currentFrame = 0;
 
-
+		try {
+			spriteSheet = ImageIO.read(new File(fileName));
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-
-
-		setFrames(notMoving);
-		setDelay(500);
-
-		setPositionX(250);
-		setPositionY(180);
 
 	}
 
@@ -93,74 +88,84 @@ public class AnimatedSprite extends Sprite {
 		super(id,fileName);
 
 
+	}
 
+
+	public void setSpriteSheetJson(String json_file){
+		JSONParser parser = new JSONParser();
+
+
+		try {
+
+			Object obj = parser.parse(new FileReader(json_file));
+
+			jsonObject = (JSONObject) obj;
+
+			frames = (JSONArray) jsonObject.get("frames");
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		setAnimationState(stateName);
 
 	}
-	public void setFrames(BufferedImage[] images){
-		frames = images;
-		if(currentFrame>=frames.length){
-			currentFrame = 0;
+
+	public void setAnimationState(String state) {
+		JSONParser parser = new JSONParser();
+
+		stateFrames.clear();
+
+		stateName = state;
+
+		boolean startFrameFound = false;
+		//int frame_num = 0;
+		//endFrame = frames.size() - 1;
+		Iterator<JSONObject> iterator = frames.iterator();
+		while (iterator.hasNext()) {
+
+			try {
+
+				JSONObject frame = (JSONObject)parser.parse(iterator.next().toString());
+				String state_name = (String) frame.get("filename");
+				if(state_name.equals(stateName)) {
+					if (!startFrameFound) {
+						startFrameFound = true;
+					}
+
+					JSONObject frameSpecs = (JSONObject)parser.parse(frame.get("frame").toString());
+					int frameX = ((Long) frameSpecs.get("x")).intValue();
+					int frameY = ((Long) frameSpecs.get("y")).intValue();
+					int frameW = ((Long) frameSpecs.get("w")).intValue();
+					int frameH = ((Long) frameSpecs.get("h")).intValue();
+
+					BufferedImage frameImage = spriteSheet.getSubimage(frameX, frameY, frameW, frameH);
+
+					stateFrames.add(frameImage);
+
+				} else {
+					if(startFrameFound) {
+
+						break;
+					}
+				}
+
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 
 	}
+
+	public String getStateName() {
+		return this.stateName;
+	}
+
 	//set speed with this method
 	public void setDelay(long d){
 		delay = d;
 	}
-
-
-	public void walkEast(){
-	//	this.moveHorizontallyWithMomentum(0.002);
-		setFrames(walkingSpriteRight);
-		setDelay(100);
-
-
-
-		setPositionX(getPositionX()+5);
-
-
-
-
-	}
-	public void walkWest(){
-//		this.moveHorizontallyWithMomentum(-0.002);
-		setFrames(walkingSprite);
-		setDelay(100);
-		setPositionX(getPositionX()-5);
-	}
-
-//	public void runRight(){
-//		setFrames(walkingSprite);
-//		setDelay(100);
-//		setPositionX(getPositionX()+3);
-//	}
-	public void walkNorth(){
-//		this.moveVerticallyWithMomentum(-0.002);
-		if(Arrays.equals(frames, walkingSpriteRight) || Arrays.equals(frames, notMoving)) {
-			setFrames(walkingSpriteRight);
-		} else if(Arrays.equals(frames, walkingSprite) || Arrays.equals(frames, notMovingLeft)) {
-			setFrames(walkingSprite);
-		}
-
-		setDelay(100);
-		setPositionY(getPositionY()-5);
-	}
-	public void walkSouth(){
-	//	this.moveVerticallyWithMomentum(0.002);
-		if(Arrays.equals(frames, walkingSpriteRight) || Arrays.equals(frames, notMoving)) {
-			setFrames(walkingSpriteRight);
-		} else if(Arrays.equals(frames, walkingSprite) || Arrays.equals(frames, notMovingLeft)) {
-			setFrames(walkingSprite);
-		}
-		setDelay(100);
-		setPositionY(getPositionY()+5);
-
-
-
-	}
-
-
 
 
 
@@ -175,6 +180,10 @@ public class AnimatedSprite extends Sprite {
 
 	}
 	public void update(){
+		if(this.getId().equals("enemy")) {
+			System.out.println(delay);
+		}
+
 		if(delay == -1){
 			return;
 		}
@@ -184,22 +193,14 @@ public class AnimatedSprite extends Sprite {
 			startTime = System.nanoTime();
 
 		}
-		if(currentFrame == frames.length){
+		if(currentFrame == stateFrames.size()){
 			currentFrame = 0;
-			if(Arrays.equals(frames, walkingSpriteRight)) {
-				setFrames(notMoving);
-			} else if(Arrays.equals(frames, walkingSprite)) {
-				setFrames(notMovingLeft);
-			}
-
-			setDelay(100);
 		}
-
-		super.setImage(frames[currentFrame]);
+		super.setImage(stateFrames.get(currentFrame));
 	}
 
 	public BufferedImage getImage(){
-		return frames[currentFrame];
+		return stateFrames.get(currentFrame);
 	}
 
 	@Override

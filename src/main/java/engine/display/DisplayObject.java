@@ -280,7 +280,7 @@ public class DisplayObject {
 					(int) (getUnscaledWidth()),
 					(int) (getUnscaledHeight()), null);
 			
-			
+
 			
 			//g2d.setColor(Color.RED);
 			//g2d.drawOval((int)getPivotX(),(int) getPivotY(), 10, 10);
