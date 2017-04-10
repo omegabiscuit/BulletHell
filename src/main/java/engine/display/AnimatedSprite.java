@@ -181,7 +181,7 @@ public class AnimatedSprite extends Sprite {
 
     public void update() {
         if (this.getId().equals("enemy")) {
-            System.out.println(delay);
+            //System.out.println(delay);
         }
 
         if (delay == -1) {

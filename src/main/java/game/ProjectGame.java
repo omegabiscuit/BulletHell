@@ -52,7 +52,7 @@ public class ProjectGame extends Game {
     boolean pickpocket = false;
     ArrayList<Double> listArray = new ArrayList<Double>();
     boolean canTakeItem = false;
-
+    Vec2d enemyPosition = new Vec2d();
 
     int coinCount;
 
@@ -129,14 +129,14 @@ public class ProjectGame extends Game {
         enemy.setDelay(100);
         enemy.setPositionX(570);
         enemy.setPositionY(200);
-        enemy.setFieldOfView(160);
+        enemy.setFieldOfView(45);
         enemy.addRoute(150, 0, 1, 2);//create square route
         enemy.addRoute(2, 0, 0, 2);
         enemy.addRoute(0, -300, 1, 3);
-        enemy.addRoute(-150, 0, 2, 4);
+        enemy.addRoute(-150, 0, .5, 4);
         enemy.addRoute(0, 300, 1, 1);
 
-        pickpocketRect = new Rectangle(670,300,enemy.getUnscaledWidth()+75,enemy.getUnscaledHeight()+75);
+        pickpocketRect = new Rectangle(570,300,enemy.getUnscaledWidth()+75,enemy.getUnscaledHeight()+75);
 
         //enemy.setSpeed(3);
 
@@ -208,7 +208,6 @@ public class ProjectGame extends Game {
             TweenJuggler.getInstance().nextFrame();
 
             if(player.getHitBox().intersects(pickpocketRect)){
-
                 pickpocket = true;
             }else{
                 pickpocket = false;
@@ -374,14 +373,16 @@ public class ProjectGame extends Game {
             Vec2d playerPos = new Vec2d(player.getPositionX(), player.getPositionY());
             Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
             if (enemy.getDirection() == 1) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 80);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 30);
             } else if (enemy.getDirection() == 2) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() + enemy.getPositionX() + 80, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() + enemy.getPositionX() + 30, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             } else if (enemy.getDirection() == 3) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY()+enemy.getUnscaledHeight() + 80);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY()+enemy.getUnscaledHeight() + 30);
             } else {
-                enemyFacing = new Vec2d(enemy.getPositionX() - 80, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                enemyFacing = new Vec2d(enemy.getPositionX() - 30, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             }
+            enemyPosition.x=enemyFacing.x;
+            enemyPosition.y=enemyFacing.y;
 
             //NORMALIZE VECTORS//
             double length = Math.sqrt(Math.pow(enemyFacing.x,2)+Math.pow(enemyFacing.y,2));
@@ -395,6 +396,7 @@ public class ProjectGame extends Game {
             if(angle<=enemy.getFieldOfView()/2){
                 System.out.println("player is seen");
             }
+
 
 
             Double y =enemy.getPositionY() + enemy.getPathY();
@@ -526,9 +528,9 @@ public class ProjectGame extends Game {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
 
-            for (int i = 0; i < collisionArray.size(); i++) {
-                collisionArray.get(i).draw(g);
-            }
+//            for (int i = 0; i < collisionArray.size(); i++) {
+//                collisionArray.get(i).draw(g);
+//            }
 
 
 
@@ -551,6 +553,7 @@ public class ProjectGame extends Game {
 
         ((Graphics2D) g).draw(pickpocketRect);
 
+        ((Graphics2D) g).drawOval((int)enemyPosition.x,(int)enemyPosition.y,5,5);
         if(pickpocket){
 
             g.drawString("Press X to pickpocket", 400, 400);
