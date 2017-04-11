@@ -22,6 +22,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     double fieldOfView = 45;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double awareness=0; //how aware the enemy is to the player's presence
+    public Boolean shooting = false;
 
 
     public boolean dead = false;
@@ -150,6 +151,9 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     }
 
     public void shoot(){
+        if(shooting){
+
+        }
 
     }
 

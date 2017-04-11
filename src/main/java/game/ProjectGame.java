@@ -31,20 +31,21 @@ public class ProjectGame extends Game {
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
-    Coin coin =  new Coin("coin","Coin4.png");
-  //  Platformer platform = new Platformer("Rectangele", "platform.png");
-  //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
+    Coin coin = new Coin("coin", "Coin4.png");
+    //  Platformer platform = new Platformer("Rectangele", "platform.png");
+    //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
     boolean start = false;
+    Bullet enemyBullet;
     SoundManagerClass music = new SoundManagerClass();
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
-    Bullet bullet;
+    Bullet bullet = new Bullet("", "");
     private AnimatedSprite player;
     private Enemy enemy;
     ArrayList<Heart> lifeArray = new ArrayList<>();
-    Heart life1 = new Heart("Heart","heart.png");
-    Heart life2 = new Heart("Heart","heart.png");
-    Heart life3 = new Heart("Heart","heart.png");
+    Heart life1 = new Heart("Heart", "heart.png");
+    Heart life2 = new Heart("Heart", "heart.png");
+    Heart life3 = new Heart("Heart", "heart.png");
     Rectangle pickpocketRect;
     int keyCount;
     String itemString = "";
@@ -55,24 +56,6 @@ public class ProjectGame extends Game {
     Vec2d enemyPosition = new Vec2d();
 
     //map stuff
-    Sprite tile1;
-    Sprite tile2;
-    Sprite tile3;
-    Platformer tile4;
-    Sprite tile5;
-    Sprite tile6;
-    Sprite tile7;
-    Platformer tile8;
-    Sprite tile9;
-    Sprite tile10;
-    Sprite tile11;
-    Sprite tile12;
-    Sprite tile13;
-    Sprite tile14;
-    Sprite tile15;
-    Platformer tile16;
-
-
     Sprite tile1;
     Sprite tile2;
     Sprite tile3;
@@ -148,11 +131,10 @@ public class ProjectGame extends Game {
         reduceLife.setEventType("Collision");
         this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
         this.addEventListener(myQuestManager, die.getEventType());
-        this.addEventListener(myQuestManager,reduceLife.getEventType());
+        this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
-       // coinCount = 0;
-
+        // coinCount = 0;
 
 
         PickedUpEvent.setEventType("CoinPickedUp");
@@ -164,7 +146,7 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-       // collisionArray.add(platform);
+        // collisionArray.add(platform);
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
@@ -181,22 +163,19 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-
-
-
         player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
         player.setSpriteSheetJson("resources/player_sheet.json");
         player.setDelay(100);
-       // player.setHasPhysics(true);
+        // player.setHasPhysics(true);
         keyCount = 0;
         // player.setHasPhysics(true);
 
-      //  platform.setPositionX(50);
-      //  platform.setPositionY(550);
+        //  platform.setPositionX(50);
+        //  platform.setPositionY(550);
 
 
-      //  platform1.setPositionX(150);
-      //  platform1.setPositionY(150);
+        //  platform1.setPositionX(150);
+        //  platform1.setPositionY(150);
 
         //music.playMusic("resources/bowsersound.mp3");
 
@@ -205,20 +184,19 @@ public class ProjectGame extends Game {
         player.setPositionY(700);
 
 
-        enemy = new Enemy("enemy","resources/gator_sheet.png", "idle");
+        enemy = new Enemy("enemy", "resources/gator_sheet.png", "idle");
         enemy.setSpriteSheetJson("resources/gator_sheet.json");
         enemy.setDelay(100);
-        enemy.setPositionX(500);
+        enemy.setPositionX(300);
         enemy.setPositionY(200);
-        enemy.addRoute(30,0,0,4);
-//        enemy.addRoute(810,0,1,2);//create square route
-//        enemy.addRoute(5,0,0,2);
-//        enemy.addRoute(0,-800,1,3);
-//        enemy.addRoute(-810,0,.5,4);
-//        enemy.addRoute(0,800,4,1);
+        enemy.addRoute(810,0,1,2);//create square route
+        enemy.addRoute(5,0,0,2);
+        enemy.addRoute(0,-800,1,3);
+        enemy.addRoute(-810,0,.5,4);
+        enemy.addRoute(0,800,4,1);
         enemy.setFieldOfView(80);
 
-        pickpocketRect = new Rectangle(570,300,enemy.getUnscaledWidth()+110,enemy.getUnscaledHeight()+110);
+        pickpocketRect = new Rectangle(570, 300, enemy.getUnscaledWidth() + 110, enemy.getUnscaledHeight() + 110);
 
         //enemy.setSpeed(3);
 
@@ -229,7 +207,7 @@ public class ProjectGame extends Game {
 //        playerTween.animate(TweenableParams.Y, 1000, 650, 2);
 
 
-      //  TweenTransitions coinCatch = new TweenTransitions("easeInOut");
+        //  TweenTransitions coinCatch = new TweenTransitions("easeInOut");
 
         tile1 = new Sprite("tile1", "tile.png");
         tile1.setPositionX(256);
@@ -309,8 +287,6 @@ public class ProjectGame extends Game {
         collider5.setPositionY(tile16.getPositionY());
 
 
-
-
         ctile1 = new Sprite("ctile1", "tile_with_column.png");
         ctile1.setPositionX(tile1.getPositionX());
         ctile1.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight());
@@ -351,22 +327,22 @@ public class ProjectGame extends Game {
         toptile1 = new Sprite("tt", "top_tile_1.png");
         toptile1.setPositionX(back1.getPositionX());
         toptile1.setPositionY(back1.getPositionY());
-        toptile1.setRotation(-3.14/2);
+        toptile1.setRotation(-3.14 / 2);
 
         toptile2 = new Sprite("tt", "top_tile_2.png");
         toptile2.setPositionX(back2.getPositionX());
         toptile2.setPositionY(back2.getPositionY());
-        toptile2.setRotation(-3.14/2);
+        toptile2.setRotation(-3.14 / 2);
 
         toptile3 = new Sprite("tt", "top_tile_1.png");
         toptile3.setPositionX(back3.getPositionX());
         toptile3.setPositionY(back3.getPositionY());
-        toptile3.setRotation(-3.14/2);
+        toptile3.setRotation(-3.14 / 2);
 
         toptile4 = new Sprite("tt", "top_tile_3.png");
         toptile4.setPositionX(back4.getPositionX());
         toptile4.setPositionY(back4.getPositionY());
-        toptile4.setRotation(-3.14/2);
+        toptile4.setRotation(-3.14 / 2);
 
         toptile5 = new Sprite("tt", "top_tile_3.png");
         toptile5.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
@@ -471,25 +447,26 @@ public class ProjectGame extends Game {
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (player != null) {
-            if (player.collidesWith(enemy) && enemy.dead == false){
+            if (player.collidesWith(enemy) && enemy.dead == false) {
 
                 //player.toggleVisibility();
                 System.out.println("collided");
                 player.setPositionX(550);
                 player.setPositionY(700);
-                lifeArray.get(lifeCount-1).handleEvent(reduceLife);
+                lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
 
                 lifeCount--;
-                if(lifeCount==0){
+                if (lifeCount == 0) {
                     complete = true;
                 }
 
 
             }
-            if (player.collidesWith(coin)){
+            if (player.collidesWith(coin)) {
                 coin.handleEvent(collidedEvent);
                 myQuestManager.handleEvent(PickedUpEvent);
             }
+
             double xPos = player.getPositionX() - enemy.getPositionX();
             double yPos = player.getPositionY() - enemy.getPositionY();
 
@@ -506,9 +483,9 @@ public class ProjectGame extends Game {
 
             TweenJuggler.getInstance().nextFrame();
 
-            if(player.getHitBox().intersects(pickpocketRect)){
+            if (player.getHitBox().intersects(pickpocketRect)) {
                 pickpocket = true;
-            }else{
+            } else {
                 pickpocket = false;
             }
 
@@ -526,54 +503,65 @@ public class ProjectGame extends Game {
             }
 
         }
+        if (enemyBullet != null) {
+            if (enemyBullet.collidesWith(player)) {
+                System.out.println("collided");
+                lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
+                enemyBullet=null;
+                lifeCount--;
+                if (lifeCount == 0) {
+                    complete = true;
+                }
+            }
+        }
 
         boolean moving = false;
 
         if (pressedKeys.contains("W")) {
-            player.setPositionY(player.getPositionY()-5);
+            player.setPositionY(player.getPositionY() - 5);
             moving = true;
-            if(player.getStateName().contains("right") && !player.getStateName().equals("run_back_right")){
+            if (player.getStateName().contains("right") && !player.getStateName().equals("run_back_right")) {
                 player.setAnimationState("run_back_right");
                 player.setDelay(50);
-            } else if(player.getStateName().contains("left") && !player.getStateName().equals("run_back_left")) {
+            } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_back_left")) {
                 player.setAnimationState("run_back_left");
                 player.setDelay(50);
             }
         }
 
         if (pressedKeys.contains("S")) {
-            player.setPositionY(player.getPositionY()+5);
+            player.setPositionY(player.getPositionY() + 5);
             moving = true;
-            if(player.getStateName().contains("right") && !player.getStateName().equals("run_front_right")){
+            if (player.getStateName().contains("right") && !player.getStateName().equals("run_front_right")) {
                 player.setAnimationState("run_front_right");
                 player.setDelay(50);
-            } else if(player.getStateName().contains("left") && !player.getStateName().equals("run_front_left")) {
+            } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_front_left")) {
                 player.setAnimationState("run_front_left");
                 player.setDelay(50);
             }
         }
         if (pressedKeys.contains("D")) {
-            player.setPositionX(player.getPositionX()+5);
+            player.setPositionX(player.getPositionX() + 5);
             moving = true;
-            if(!player.getStateName().equals("run_back_right") && !player.getStateName().equals("run_front_right")) {
+            if (!player.getStateName().equals("run_back_right") && !player.getStateName().equals("run_front_right")) {
                 player.setAnimationState("run_front_right");
                 player.setDelay(50);
             }
         }
         if (pressedKeys.contains("A")) {
-            player.setPositionX(player.getPositionX()-5);
+            player.setPositionX(player.getPositionX() - 5);
             moving = true;
-            if(!player.getStateName().equals("run_back_left") && !player.getStateName().equals("run_front_left")) {
+            if (!player.getStateName().equals("run_back_left") && !player.getStateName().equals("run_front_left")) {
                 player.setAnimationState("run_front_left");
                 player.setDelay(50);
             }
         }
 
-        if(!moving) {
-            if(player.getStateName().contains("right")) {
+        if (!moving) {
+            if (player.getStateName().contains("right")) {
                 player.setAnimationState("idle_right");
                 player.setDelay(100);
-            } else if(player.getStateName().contains("left")) {
+            } else if (player.getStateName().contains("left")) {
                 player.setAnimationState("idle_left");
                 player.setDelay(100);
             }
@@ -585,21 +573,21 @@ public class ProjectGame extends Game {
 
             int n = rand.nextInt(3) + 1;
 
-            if(n==1){
+            if (n == 1) {
                 //coinCount++;
                 itemString = "You found a coin!";
-            }else if(n==2){
+            } else if (n == 2) {
                 keyCount++;
                 itemString = "You found a key!";
 
-            }else if(n==3){
+            } else if (n == 3) {
                 itemString = "No items found.";
             }
             pressedKeys.remove("X");
         }
 
         if (pressedKeys.contains("P")) {
-            for(int i = 0; i <lifeArray.size();i++){
+            for (int i = 0; i < lifeArray.size(); i++) {
 
 
                 complete = false;
@@ -677,59 +665,62 @@ public class ProjectGame extends Game {
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
             enemy.isFacing();
             Vec2d enemyFacing;
-            Vec2d enemyPos = new Vec2d(enemy.getPositionX()+enemy.getUnscaledWidth()/2, enemy.getPositionY()+enemy.getUnscaledHeight()/2);
-            Vec2d playerPos = new Vec2d(player.getPositionX()+player.getUnscaledWidth()/2, player.getPositionY()+player.getUnscaledHeight()/2);
+            Vec2d enemyPos = new Vec2d(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+            Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
             Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
             if (enemy.getDirection() == 2) {
                 enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 100);
             } else if (enemy.getDirection() == 4) {
-                enemyFacing = new Vec2d(enemy.getPositionX()-100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                enemyFacing = new Vec2d(enemy.getPositionX() - 100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             } else if (enemy.getDirection() == 3) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX()-450, enemy.getPositionY()+enemy.getUnscaledHeight() + 100);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX() - 450, enemy.getPositionY() + enemy.getUnscaledHeight() + 100);
             } else {
                 enemyFacing = new Vec2d(enemy.getPositionX() - 100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             }
-            enemyPosition.x=enemyFacing.x;
-            enemyPosition.y=enemyFacing.y;
+            enemyPosition.x = enemyFacing.x;
+            enemyPosition.y = enemyFacing.y;
 
             //NORMALIZE VECTORS//
-            double length = Math.sqrt(Math.pow(enemyFacing.x,2)+Math.pow(enemyFacing.y,2));
-            enemyFacing.x=enemyFacing.x/length;
-            enemyFacing.y=enemyFacing.y/length;
-            length=Math.sqrt(Math.pow(enemyToPlayer.x,2)+Math.pow(enemyToPlayer.y,2));
-            enemyToPlayer.x=enemyToPlayer.x/length;
-            enemyToPlayer.y=enemyToPlayer.y/length;
+            double length = Math.sqrt(Math.pow(enemyFacing.x, 2) + Math.pow(enemyFacing.y, 2));
+            enemyFacing.x = enemyFacing.x / length;
+            enemyFacing.y = enemyFacing.y / length;
+            length = Math.sqrt(Math.pow(enemyToPlayer.x, 2) + Math.pow(enemyToPlayer.y, 2));
+            enemyToPlayer.x = enemyToPlayer.x / length;
+            enemyToPlayer.y = enemyToPlayer.y / length;
             double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
 
-            if(angle<=enemy.getFieldOfView()/2){
+            if (angle <= enemy.getFieldOfView() / 2) {
                 //System.out.println("player is seen");
-                enemy.awareness+=1;
+                enemy.awareness += 1;
             }
+
             System.out.println(enemy.awareness);
-            if(enemy.awareness>=100){
-                Bullet enemyBullet = new Bullet("bullet", "knife.png");
+            if (enemy.awareness >= 100) {
+                if (enemy.shooting == false) {
+                    enemy.shooting = true;
+                    enemyBullet = new Bullet("bullet", "knife.png");
 
-                enemy.shoot();
-                bullet.setStart(enemy.getPositionX()+enemy.getUnscaledWidth()/2, enemy.getPositionY()+enemy.getUnscaledHeight()/2);
-                bullet.setEnd(player.getPositionX(), player.getPositionY());
+                    enemy.shoot();
+                    enemyBullet.setStart(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                    enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
 
 
-                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
-                Tween bulletmovement = new Tween(bullet, bulletPath);
-                bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 0.2);
-                bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 0.2);
-                TweenJuggler.getInstance().add(bulletmovement);
+                    TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
+                    Tween enemyBulletmovement = new Tween(enemyBullet, enemyBulletPath);
+                    enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, .5);
+                    enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, .5);
+                    TweenJuggler.getInstance().add(enemyBulletmovement);
+
+                }
             }
 
 
-
-
-            Double y =enemy.getPositionY() + enemy.getPathY();
+            Double y = enemy.getPositionY() + enemy.getPathY();
             Double x = enemy.getPositionX() + enemy.getPathX();
             Integer yLoc = y.intValue();
             Integer xLoc = x.intValue();
 
-            pickpocketRect.setLocation(xLoc-10,yLoc-10);
+            pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
         }
 
         //pickpocketing logic
@@ -889,6 +880,11 @@ public class ProjectGame extends Game {
             bullet.draw(g);
         }
 
+        if (enemyBullet != null) {
+            enemyBullet.draw(g);
+        }
+
+
 //        if (coin != null){
 //            coin.draw(g);
 //        }
@@ -932,11 +928,10 @@ public class ProjectGame extends Game {
 //            }
 
 
-
-        if(life1!=null ){
+        if (life1 != null) {
             for (int i = 0; i < lifeArray.size(); i++) {
-                if(lifeArray.get(i).getVisibility())
-                lifeArray.get(i).draw(g);
+                if (lifeArray.get(i).getVisibility())
+                    lifeArray.get(i).draw(g);
 
             }
 
@@ -944,16 +939,16 @@ public class ProjectGame extends Game {
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.setColor(Color.RED);
-        g.drawString("--LIFE--",400,30);
+        g.drawString("--LIFE--", 400, 30);
 
-       // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
-        g.drawString("Key Count: " + Integer.toString(keyCount),200,60);
-        g.drawString(itemString,200,90);
+        // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
+        g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
+        g.drawString(itemString, 200, 90);
 
         ((Graphics2D) g).draw(pickpocketRect);
 
-        ((Graphics2D) g).drawOval((int)enemyPosition.x,(int)enemyPosition.y,5,5);
-        if(pickpocket){
+        ((Graphics2D) g).drawOval((int) enemyPosition.x, (int) enemyPosition.y, 5, 5);
+        if (pickpocket) {
 
             g.drawString("Press X to pickpocket", 400, 400);
 
