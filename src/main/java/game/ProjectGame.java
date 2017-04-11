@@ -990,7 +990,7 @@ public class ProjectGame extends Game {
 
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         Bullet bul = new Bullet("bullet", "knife.png", 0.2);
         double mouseX = e.getX();
         double mouseY = e.getY();
