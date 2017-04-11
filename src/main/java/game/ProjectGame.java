@@ -108,7 +108,7 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager,reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
-        coinCount = 0;
+       // coinCount = 0;
 
         PickedUpEvent.setEventType("CoinPickedUp");
 
@@ -153,22 +153,23 @@ public class ProjectGame extends Game {
 
 
         player.setPositionX(400);
-        player.setPositionY(450);
+        player.setPositionY(700);
 
 
         enemy = new Enemy("enemy","resources/gator_sheet.png", "idle");
         enemy.setSpriteSheetJson("resources/gator_sheet.json");
         enemy.setDelay(100);
-        enemy.setPositionX(570);
+        enemy.setPositionX(500);
         enemy.setPositionY(200);
-        enemy.addRoute(125,0,1);//create square route
-        enemy.addRoute(5,0,0);
-        enemy.addRoute(0,-300,8);
-        enemy.addRoute(-125,0,2);
-        enemy.addRoute(0,300,4);
-        enemy.setFieldOfView(45);
+        enemy.addRoute(30,0,0,4);
+//        enemy.addRoute(810,0,1,2);//create square route
+//        enemy.addRoute(5,0,0,2);
+//        enemy.addRoute(0,-800,1,3);
+//        enemy.addRoute(-810,0,.5,4);
+//        enemy.addRoute(0,800,4,1);
+        enemy.setFieldOfView(80);
 
-        pickpocketRect = new Rectangle(570,300,enemy.getUnscaledWidth()+75,enemy.getUnscaledHeight()+75);
+        pickpocketRect = new Rectangle(570,300,enemy.getUnscaledWidth()+110,enemy.getUnscaledHeight()+110);
 
         //enemy.setSpeed(3);
 
@@ -414,7 +415,7 @@ public class ProjectGame extends Game {
             int n = rand.nextInt(3) + 1;
 
             if(n==1){
-                coinCount++;
+                //coinCount++;
                 itemString = "You found a coin!";
             }else if(n==2){
                 keyCount++;
@@ -504,19 +505,18 @@ public class ProjectGame extends Game {
             enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
             enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
             enemy.isFacing();
-            float product = 3;
             Vec2d enemyFacing;
-            Vec2d enemyPos = new Vec2d(enemy.getPositionX(), enemy.getPositionY());
-            Vec2d playerPos = new Vec2d(player.getPositionX(), player.getPositionY());
+            Vec2d enemyPos = new Vec2d(enemy.getPositionX()+enemy.getUnscaledWidth()/2, enemy.getPositionY()+enemy.getUnscaledHeight()/2);
+            Vec2d playerPos = new Vec2d(player.getPositionX()+player.getUnscaledWidth()/2, player.getPositionY()+player.getUnscaledHeight()/2);
             Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
-            if (enemy.getDirection() == 1) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 30);
-            } else if (enemy.getDirection() == 2) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() + enemy.getPositionX() + 30, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+            if (enemy.getDirection() == 2) {
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 100);
+            } else if (enemy.getDirection() == 4) {
+                enemyFacing = new Vec2d(enemy.getPositionX()-100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             } else if (enemy.getDirection() == 3) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY()+enemy.getUnscaledHeight() + 30);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX()-450, enemy.getPositionY()+enemy.getUnscaledHeight() + 100);
             } else {
-                enemyFacing = new Vec2d(enemy.getPositionX() - 30, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                enemyFacing = new Vec2d(enemy.getPositionX() - 100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             }
             enemyPosition.x=enemyFacing.x;
             enemyPosition.y=enemyFacing.y;
@@ -531,8 +531,25 @@ public class ProjectGame extends Game {
             double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
 
             if(angle<=enemy.getFieldOfView()/2){
-                System.out.println("player is seen");
+                //System.out.println("player is seen");
+                enemy.awareness+=1;
             }
+            System.out.println(enemy.awareness);
+            if(enemy.awareness>=100){
+                Bullet enemyBullet = new Bullet("bullet", "knife.png");
+
+                enemy.shoot();
+                bullet.setStart(enemy.getPositionX()+enemy.getUnscaledWidth()/2, enemy.getPositionY()+enemy.getUnscaledHeight()/2);
+                bullet.setEnd(player.getPositionX(), player.getPositionY());
+
+
+                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
+                Tween bulletmovement = new Tween(bullet, bulletPath);
+                bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 0.2);
+                bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 0.2);
+                TweenJuggler.getInstance().add(bulletmovement);
+            }
+
 
 
 
@@ -541,7 +558,7 @@ public class ProjectGame extends Game {
             Integer yLoc = y.intValue();
             Integer xLoc = x.intValue();
 
-            pickpocketRect.setLocation(xLoc-40,yLoc-40);
+            pickpocketRect.setLocation(xLoc-10,yLoc-10);
         }
 
         //pickpocketing logic
@@ -621,32 +638,34 @@ public class ProjectGame extends Game {
         if (background != null) {
             background.draw(g);
 
+            tile1.draw(g);
+            tile2.draw(g);
+            tile3.draw(g);
+            tile4.draw(g);
+            tile5.draw(g);
+            tile6.draw(g);
+            tile7.draw(g);
+            tile8.draw(g);
+            tile9.draw(g);
+            tile10.draw(g);
+            tile11.draw(g);
+            tile12.draw(g);
+            tile13.draw(g);
+            tile14.draw(g);
+            tile15.draw(g);
+            tile16.draw(g);
+            ctile1.draw(g);
+            ctile2.draw(g);
+            ctile3.draw(g);
+            ctile4.draw(g);
+            back1.draw(g);
+            back2.draw(g);
+            back3.draw(g);
+            back4.draw(g);
+
         }
 
-        tile1.draw(g);
-        tile2.draw(g);
-        tile3.draw(g);
-        tile4.draw(g);
-        tile5.draw(g);
-        tile6.draw(g);
-        tile7.draw(g);
-        tile8.draw(g);
-        tile9.draw(g);
-        tile10.draw(g);
-        tile11.draw(g);
-        tile12.draw(g);
-        tile13.draw(g);
-        tile14.draw(g);
-        tile15.draw(g);
-        tile16.draw(g);
-        ctile1.draw(g);
-        ctile2.draw(g);
-        ctile3.draw(g);
-        ctile4.draw(g);
-        back1.draw(g);
-        back2.draw(g);
-        back3.draw(g);
-        back4.draw(g);
+
 
         if(bullet != null){
             bullet.draw(g);
@@ -709,7 +728,7 @@ public class ProjectGame extends Game {
         g.setColor(Color.RED);
         g.drawString("--LIFE--",400,30);
 
-        g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
+       // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
         g.drawString("Key Count: " + Integer.toString(keyCount),200,60);
         g.drawString(itemString,200,90);
 
