@@ -197,10 +197,11 @@ public class ProjectGame extends Game {
         enemy.setPositionX(300);
         enemy.setPositionY(200);
         enemy.addRoute(810,0,1,2);//create square route
+        enemy.addRoute(3,0,0,2);
+        //enemy.addRoute(0,-800,1,3);
+        enemy.addRoute(-810,0,3,4);
         enemy.addRoute(5,0,0,2);
-        enemy.addRoute(0,-800,1,3);
-        enemy.addRoute(-810,0,.5,4);
-        enemy.addRoute(0,800,4,1);
+        //enemy.addRoute(0,800,4,1);
         enemy.setFieldOfView(80);
 
         pickpocketRect = new Rectangle(570, 300, enemy.getUnscaledWidth() + 110, enemy.getUnscaledHeight() + 110);
@@ -935,6 +936,10 @@ public class ProjectGame extends Game {
             g.drawString("You are dead!", 400, 40);
             g.drawString("Press P to play again", 400, 400);
 
+        }
+        if(keyCount == 5) {
+            g.drawString("Congrats, you win!", 400, 40);
+            pause();
         }
 
 
