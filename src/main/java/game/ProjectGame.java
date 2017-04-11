@@ -114,6 +114,11 @@ public class ProjectGame extends Game {
 
     int offset = 1;
 
+    int damageCap = 100;
+    int damageTimer;
+
+    ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
+
 
     static GameClock clock;
 
@@ -135,6 +140,8 @@ public class ProjectGame extends Game {
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
         // coinCount = 0;
+
+        damageTimer = 100;
 
 
         PickedUpEvent.setEventType("CoinPickedUp");
@@ -444,15 +451,19 @@ public class ProjectGame extends Game {
             randomPositions();
         }
 
+        if(damageTimer < damageCap) {
+            damageTimer++;
+        }
+
 		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
         if (player != null) {
-            if (player.collidesWith(enemy) && enemy.dead == false) {
-
+            if (player.collidesWith(enemy) && enemy.dead == false && damageTimer >= damageCap) {
+                damageTimer = 0;
                 //player.toggleVisibility();
-                System.out.println("collided");
-                player.setPositionX(550);
-                player.setPositionY(700);
+//                System.out.println("collided");
+//                player.setPositionX(550);
+//                player.setPositionY(700);
                 lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
 
                 lifeCount--;
@@ -481,6 +492,16 @@ public class ProjectGame extends Game {
 
             enemy.update();
 
+            for(int i = 0; i < playerBullets.size(); i++) {
+                Bullet bul = playerBullets.get(i);
+                bul.update(pressedKeys);
+                System.out.println(bul.getShotTimer());
+                if(bul.getShotTimer() >= bul.getShotCap()) {
+
+                    playerBullets.remove(i);
+                }
+            }
+
             TweenJuggler.getInstance().nextFrame();
 
             if (player.getHitBox().intersects(pickpocketRect)) {
@@ -491,18 +512,19 @@ public class ProjectGame extends Game {
 
         }
 
-        if (bullet != null) {
-            if (bullet.collidesWith(enemy)) {
+        for(int i = 0; i < playerBullets.size(); i++) {
+            Bullet bul = playerBullets.get(i);
+            if (bul.collidesWith(enemy)) {
                 enemy.dead = true;
-                bullet = null;
+                playerBullets.remove(i);
             }
         }
-        if (bullet != null) {
-            if (bullet.getPositionX() + 3 >= bullet.endValX && bullet.getPositionX() - 3 <= bullet.endValX) {
-                bullet = null;
-            }
-
-        }
+//        if (bullet != null) {
+//            if (bullet.getPositionX() + 3 >= bullet.endValX && bullet.getPositionX() - 3 <= bullet.endValX) {
+//                bullet = null;
+//            }
+//
+//        }
         if (enemyBullet != null) {
             if (enemyBullet.collidesWith(player)) {
                 System.out.println("collided");
@@ -698,7 +720,7 @@ public class ProjectGame extends Game {
                 enemy.awareness=0;
                 enemyBullet = null;
                 if (enemyBullet ==null) {
-                    enemyBullet = new Bullet("bullet", "knife.png");
+                    enemyBullet = new Bullet("bullet", "knife.png", 0.2);
 
                     enemy.shoot();
                     enemyBullet.setStart(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
@@ -707,8 +729,8 @@ public class ProjectGame extends Game {
 
                     TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
                     Tween enemyBulletmovement = new Tween(enemyBullet, enemyBulletPath);
-                    enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, .5);
-                    enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, .5);
+                    enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, 0.2);
+                    enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, 0.2);
                     TweenJuggler.getInstance().add(enemyBulletmovement);
                     System.out.println(enemyBullet.getPositionX());
                     if (enemyBullet.endValX-30<enemyBullet.getPositionX() && enemyBullet.getPositionX()<enemyBullet.endValX+30){
@@ -879,8 +901,15 @@ public class ProjectGame extends Game {
         collider5.draw(g);
         collider6.draw(g);
 
-        if (bullet != null) {
-            bullet.draw(g);
+//        if (bullet != null) {
+//            bullet.draw(g);
+//        }
+
+        for(int i = 0; i < playerBullets.size(); i++) {
+            Bullet bul = playerBullets.get(i);
+            if(bul != null) {
+                bul.draw(g);
+            }
         }
 
         if (enemyBullet != null) {
@@ -962,19 +991,22 @@ public class ProjectGame extends Game {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        bullet = new Bullet("bullet", "knife.png");
+        Bullet bul = new Bullet("bullet", "knife.png", 0.2);
         double mouseX = e.getX();
         double mouseY = e.getY();
 
-        bullet.setStart(player.getPositionX(), player.getPositionY());
-        bullet.setEnd(mouseX, mouseY);
+        bul.setStart(player.getPositionX() + player.getUnscaledWidth()/2, player.getPositionY() + player.getUnscaledHeight()/2);
+        bul.setEnd(mouseX, mouseY);
 
 
         TweenTransitions bulletPath = new TweenTransitions("linearTransition");
-        Tween bulletmovement = new Tween(bullet, bulletPath);
-        bulletmovement.animate(TweenableParams.X, bullet.startValX, bullet.endValX, 0.2);
-        bulletmovement.animate(TweenableParams.Y, bullet.startValY, bullet.endValY, 0.2);
+        Tween bulletmovement = new Tween(bul, bulletPath);
+        bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX, 0.2);
+        bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
         TweenJuggler.getInstance().add(bulletmovement);
+
+        playerBullets.add(bul);
+
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
         double minHc = player.getCenterY() - player.getUnscaledHeight() / 2;

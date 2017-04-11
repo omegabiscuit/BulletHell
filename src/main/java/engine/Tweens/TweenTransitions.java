@@ -28,9 +28,7 @@ public class TweenTransitions {
         return Math.log(percentDone+1)/Math.log(2);
     }
 
-    public double linearTransition(double percentDone) {
-        return percentDone;
-    }
+    public double linearTransition(double percentDone) { return percentDone; }
 
     private void introTransition(double startVal, double endVal, double time, double percentDone) {
 
