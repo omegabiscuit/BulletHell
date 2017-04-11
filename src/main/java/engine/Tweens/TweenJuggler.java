@@ -24,6 +24,13 @@ public class TweenJuggler {
 		return instance;
 	}
 
+	public boolean find(Tween tween){
+		if(jugglerList.contains(tween)){
+			return true;
+		}
+		return false;
+	}
+
 	
 	
 }

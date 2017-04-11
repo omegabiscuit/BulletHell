@@ -39,7 +39,7 @@ public class ProjectGame extends Game {
     SoundManagerClass music = new SoundManagerClass();
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
-    Bullet bullet = new Bullet("", "");
+    Bullet bullet;
     private AnimatedSprite player;
     private Enemy enemy;
     ArrayList<Heart> lifeArray = new ArrayList<>();
@@ -691,13 +691,13 @@ public class ProjectGame extends Game {
 
             if (angle <= enemy.getFieldOfView() / 2) {
                 //System.out.println("player is seen");
-                enemy.awareness += 1;
+                enemy.awareness += 5;
             }
 
-            System.out.println(enemy.awareness);
             if (enemy.awareness >= 100) {
-                if (enemy.shooting == false) {
-                    enemy.shooting = true;
+                enemy.awareness=0;
+                enemyBullet = null;
+                if (enemyBullet ==null) {
                     enemyBullet = new Bullet("bullet", "knife.png");
 
                     enemy.shoot();
@@ -710,7 +710,10 @@ public class ProjectGame extends Game {
                     enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, .5);
                     enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, .5);
                     TweenJuggler.getInstance().add(enemyBulletmovement);
-
+                    System.out.println(enemyBullet.getPositionX());
+                    if (enemyBullet.endValX-30<enemyBullet.getPositionX() && enemyBullet.getPositionX()<enemyBullet.endValX+30){
+                        enemyBullet=null;
+                    }
                 }
             }
 
@@ -902,7 +905,6 @@ public class ProjectGame extends Game {
         if (complete == true) {
             g.drawString("You are dead!", 400, 40);
             g.drawString("Press P to play again", 400, 400);
-            //pause();
 
         }
 
