@@ -513,11 +513,14 @@ public class ProjectGame extends Game {
 
         }
 
-        for(int i = 0; i < playerBullets.size(); i++) {
-            Bullet bul = playerBullets.get(i);
-            if (bul.collidesWith(enemy)) {
-                enemy.dead = true;
-                playerBullets.remove(i);
+        if(!enemy.dead) {
+            for (int i = 0; i < playerBullets.size(); i++) {
+                Bullet bul = playerBullets.get(i);
+                if (bul.collidesWith(enemy)) {
+                    enemy.dead = true;
+                    enemy.setAnimationState("dying", "dead");
+                    playerBullets.remove(i);
+                }
             }
         }
 //        if (bullet != null) {
@@ -544,10 +547,10 @@ public class ProjectGame extends Game {
             player.setPositionY(player.getPositionY() - 5);
             moving = true;
             if (player.getStateName().contains("right") && !player.getStateName().equals("run_back_right")) {
-                player.setAnimationState("run_back_right");
+                player.setAnimationState("run_back_right", "");
                 player.setDelay(50);
             } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_back_left")) {
-                player.setAnimationState("run_back_left");
+                player.setAnimationState("run_back_left", "");
                 player.setDelay(50);
             }
         }
@@ -556,10 +559,10 @@ public class ProjectGame extends Game {
             player.setPositionY(player.getPositionY() + 5);
             moving = true;
             if (player.getStateName().contains("right") && !player.getStateName().equals("run_front_right")) {
-                player.setAnimationState("run_front_right");
+                player.setAnimationState("run_front_right", "");
                 player.setDelay(50);
             } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_front_left")) {
-                player.setAnimationState("run_front_left");
+                player.setAnimationState("run_front_left", "");
                 player.setDelay(50);
             }
         }
@@ -567,7 +570,7 @@ public class ProjectGame extends Game {
             player.setPositionX(player.getPositionX() + 5);
             moving = true;
             if (!player.getStateName().equals("run_back_right") && !player.getStateName().equals("run_front_right")) {
-                player.setAnimationState("run_front_right");
+                player.setAnimationState("run_front_right", "");
                 player.setDelay(50);
             }
         }
@@ -575,17 +578,17 @@ public class ProjectGame extends Game {
             player.setPositionX(player.getPositionX() - 5);
             moving = true;
             if (!player.getStateName().equals("run_back_left") && !player.getStateName().equals("run_front_left")) {
-                player.setAnimationState("run_front_left");
+                player.setAnimationState("run_front_left", "");
                 player.setDelay(50);
             }
         }
 
         if (!moving) {
-            if (player.getStateName().contains("right")) {
-                player.setAnimationState("idle_right");
+            if (player.getStateName().contains("right") && !player.getStateName().equals("idle_right")) {
+                player.setAnimationState("idle_right", "");
                 player.setDelay(100);
-            } else if (player.getStateName().contains("left")) {
-                player.setAnimationState("idle_left");
+            } else if (player.getStateName().contains("left") && !player.getStateName().equals("idle_left")) {
+                player.setAnimationState("idle_left", "");
                 player.setDelay(100);
             }
         }

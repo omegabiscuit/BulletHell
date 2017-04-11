@@ -64,6 +64,9 @@ public class AnimatedSprite extends Sprite {
 
     public ArrayList<BufferedImage> stateFrames;
 
+
+    String nextState;
+
     public AnimatedSprite(String id, String fileName, String startState){
         super(id);
 
@@ -72,6 +75,8 @@ public class AnimatedSprite extends Sprite {
         stateFrames = new ArrayList<BufferedImage>();
 
         currentFrame = 0;
+
+        nextState = "";
 
         try {
             spriteSheet = ImageIO.read(new File(fileName));
@@ -107,11 +112,15 @@ public class AnimatedSprite extends Sprite {
             e.printStackTrace();
         }
 
-        setAnimationState(stateName);
+        setAnimationState(stateName, "");
 
     }
 
-    public void setAnimationState(String state) {
+    public void setAnimationState(String state, String ns) {
+        currentFrame = 0;
+
+        nextState = ns;
+
         JSONParser parser = new JSONParser();
 
         stateFrames.clear();
@@ -191,7 +200,12 @@ public class AnimatedSprite extends Sprite {
 
         }
         if(currentFrame == stateFrames.size()){
-            currentFrame = 0;
+            if(nextState != "") {
+                setAnimationState(nextState, "");
+                nextState = "";
+            }else {
+                currentFrame = 0;
+            }
         }
         super.setImage(stateFrames.get(currentFrame));
     }
