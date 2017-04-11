@@ -12,8 +12,6 @@ import javax.imageio.ImageIO;
 
 import engine.util.GameClock;
 
-
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -66,7 +64,7 @@ public class AnimatedSprite extends Sprite {
 
     public ArrayList<BufferedImage> stateFrames;
 
-    public AnimatedSprite(String id, String fileName, String startState) {
+    public AnimatedSprite(String id, String fileName, String startState){
         super(id);
 
         stateName = startState;
@@ -77,21 +75,23 @@ public class AnimatedSprite extends Sprite {
 
         try {
             spriteSheet = ImageIO.read(new File(fileName));
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
 
     }
 
 
-    public AnimatedSprite(String id, String fileName) {
-        super(id, fileName);
+
+
+    public AnimatedSprite(String id, String fileName){
+        super(id,fileName);
 
 
     }
 
 
-    public void setSpriteSheetJson(String json_file) {
+    public void setSpriteSheetJson(String json_file){
         JSONParser parser = new JSONParser();
 
 
@@ -103,7 +103,7 @@ public class AnimatedSprite extends Sprite {
 
             frames = (JSONArray) jsonObject.get("frames");
 
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -126,14 +126,14 @@ public class AnimatedSprite extends Sprite {
 
             try {
 
-                JSONObject frame = (JSONObject) parser.parse(iterator.next().toString());
+                JSONObject frame = (JSONObject)parser.parse(iterator.next().toString());
                 String state_name = (String) frame.get("filename");
-                if (state_name.equals(stateName)) {
+                if(state_name.equals(stateName)) {
                     if (!startFrameFound) {
                         startFrameFound = true;
                     }
 
-                    JSONObject frameSpecs = (JSONObject) parser.parse(frame.get("frame").toString());
+                    JSONObject frameSpecs = (JSONObject)parser.parse(frame.get("frame").toString());
                     int frameX = ((Long) frameSpecs.get("x")).intValue();
                     int frameY = ((Long) frameSpecs.get("y")).intValue();
                     int frameW = ((Long) frameSpecs.get("w")).intValue();
@@ -144,13 +144,13 @@ public class AnimatedSprite extends Sprite {
                     stateFrames.add(frameImage);
 
                 } else {
-                    if (startFrameFound) {
+                    if(startFrameFound) {
 
                         break;
                     }
                 }
 
-            } catch (Exception e) {
+            }catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -163,49 +163,47 @@ public class AnimatedSprite extends Sprite {
     }
 
     //set speed with this method
-    public void setDelay(long d) {
+    public void setDelay(long d){
         delay = d;
     }
 
 
-    public long getDelay() {
+
+    public long getDelay(){
         return delay;
     }
 
     @Override
-    public void update(ArrayList<String> pressedKeys) {
+    public void update(ArrayList<String> pressedKeys){
         super.update(pressedKeys);
 
 
     }
+    public void update(){
 
-    public void update() {
-        if (this.getId().equals("enemy")) {
-            //System.out.println(delay);
-        }
-
-        if (delay == -1) {
+        if(delay == -1){
             return;
         }
-        long elapsed = (System.nanoTime() - startTime) / 1000000;
-        if (elapsed > delay) {
+        long elapsed = (System.nanoTime()-startTime)/1000000;
+        if(elapsed> delay){
             currentFrame++;
             startTime = System.nanoTime();
 
         }
-        if (currentFrame == stateFrames.size()) {
+        if(currentFrame == stateFrames.size()){
             currentFrame = 0;
         }
         super.setImage(stateFrames.get(currentFrame));
     }
 
-    public BufferedImage getImage() {
+    public BufferedImage getImage(){
         return stateFrames.get(currentFrame);
     }
 
     @Override
-    public void draw(Graphics g) {
-    /* Call the super draw method in DisplayObject class */
+    public void draw(Graphics g)
+    {
+	/* Call the super draw method in DisplayObject class */
         super.draw(g);
 
     }
