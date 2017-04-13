@@ -304,7 +304,7 @@ public class ProjectGame extends Game {
         ctile2.setPositionX(tile5.getPositionX());
         ctile2.setPositionY(tile5.getPositionY() - tile5.getUnscaledHeight());
 
-        ctile3 = new Sprite("ctile3", "tile_with_column.png");
+        ctile3 = new Sprite("ctile3", "tile.png");
         ctile3.setPositionX(tile9.getPositionX());
         ctile3.setPositionY(tile9.getPositionY() - tile9.getUnscaledHeight());
 
@@ -312,7 +312,7 @@ public class ProjectGame extends Game {
         ctile4.setPositionX(tile13.getPositionX());
         ctile4.setPositionY(tile13.getPositionY() - tile13.getUnscaledHeight());
 
-        back1 = new Sprite("back", "back_wall_column_left.png");
+        back1 = new Sprite("back", "pillar_door_left.png");
         back1.setPositionX(ctile1.getPositionX());
         back1.setPositionY(ctile1.getPositionY() - ctile1.getUnscaledHeight());
 
@@ -320,15 +320,15 @@ public class ProjectGame extends Game {
         collider1.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
         collider1.setPositionY(back1.getPositionY());
 
-        back2 = new Sprite("back", "back_wall_column_right.png");
+        back2 = new Sprite("back", "pillar_door_left.png");
         back2.setPositionX(ctile2.getPositionX());
         back2.setPositionY(ctile2.getPositionY() - ctile2.getUnscaledHeight());
 
-        back3 = new Sprite("back", "back_wall_column_left.png");
+        back3 = new Sprite("back", "door_locked.png");
         back3.setPositionX(ctile3.getPositionX());
         back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
 
-        back4 = new Sprite("back", "back_wall_column_right.png");
+        back4 = new Sprite("back", "pillar_door_right.png");
         back4.setPositionX(ctile4.getPositionX());
         back4.setPositionY(ctile4.getPositionY() - ctile4.getUnscaledHeight());
 

@@ -37,6 +37,9 @@ public class Bullet extends Sprite implements IEventListener {
         shotCap = shot_cap;
 
         startTime = (double) System.currentTimeMillis() / 1000;
+
+        setPivotY(getUnscaledHeight()/2);
+        setPivotX(getUnscaledWidth()/2);
     }
 
     @Override
@@ -65,6 +68,9 @@ public class Bullet extends Sprite implements IEventListener {
         super.update(pressedKeys);
 
         shotTimer = ( (double) System.currentTimeMillis() / 1000) - startTime;
+
+
+        setRotation(getRotation() + 1);
     }
 
     public double getShotTimer() { return shotTimer; }
