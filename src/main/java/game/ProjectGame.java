@@ -126,7 +126,7 @@ public class ProjectGame extends Game {
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public ProjectGame() {
-        super("Lab Four Test Game", 1200, 900);
+        super("BulletHell", 1200, 900);
         die = new Event();
         reduceLife = new Event();
         fadeOutEvent = new Event();
@@ -139,7 +139,7 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
-        // coinCount = 0;
+
 
         damageTimer = 100;
 
@@ -196,12 +196,11 @@ public class ProjectGame extends Game {
         enemy.setDelay(100);
         enemy.setPositionX(300);
         enemy.setPositionY(200);
-        enemy.addRoute(810,0,1,2);//create square route
         enemy.addRoute(3,0,0,2);
-        //enemy.addRoute(0,-800,1,3);
-        enemy.addRoute(-810,0,3,4);
+        enemy.addRoute(0,-800,1,3);
+        enemy.addRoute(-810,0,1,4);
         enemy.addRoute(5,0,0,2);
-        //enemy.addRoute(0,800,4,1);
+        enemy.addRoute(0,800,4,1);
         enemy.setFieldOfView(80);
 
         pickpocketRect = new Rectangle(570, 300, enemy.getUnscaledWidth() + 110, enemy.getUnscaledHeight() + 110);
@@ -694,14 +693,14 @@ public class ProjectGame extends Game {
             Vec2d enemyPos = new Vec2d(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
             Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
-            if (enemy.getDirection() == 2) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 100);
-            } else if (enemy.getDirection() == 4) {
-                enemyFacing = new Vec2d(enemy.getPositionX() - 100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+            if (enemy.getDirection() == 1) {
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 10000);
+            } else if (enemy.getDirection() == 2) {
+                enemyFacing = new Vec2d(enemy.getPositionX() +enemy.getUnscaledWidth() + 1000, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             } else if (enemy.getDirection() == 3) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX() - 450, enemy.getPositionY() + enemy.getUnscaledHeight() + 100);
+                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2+enemy.getPositionX(), enemy.getPositionY() + enemy.getUnscaledHeight() + 10000);
             } else {
-                enemyFacing = new Vec2d(enemy.getPositionX() - 100, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                enemyFacing = new Vec2d(enemy.getPositionX() - 10000, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
             }
             enemyPosition.x = enemyFacing.x;
             enemyPosition.y = enemyFacing.y;
@@ -717,8 +716,9 @@ public class ProjectGame extends Game {
 
             if (angle <= enemy.getFieldOfView() / 2) {
                 //System.out.println("player is seen");
-                enemy.awareness += 5;
+                //enemy.awareness += 5;
             }
+            System.out.println(angle);
 
             if (enemy.awareness >= 100) {
                 enemy.awareness=0;
@@ -736,7 +736,7 @@ public class ProjectGame extends Game {
                     enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, 0.2);
                     enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, 0.2);
                     TweenJuggler.getInstance().add(enemyBulletmovement);
-                    System.out.println(enemyBullet.getPositionX());
+                    //System.out.println(enemyBullet.getPositionX());
                     if (enemyBullet.endValX-30<enemyBullet.getPositionX() && enemyBullet.getPositionX()<enemyBullet.endValX+30){
                         enemyBullet=null;
                     }
