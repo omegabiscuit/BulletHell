@@ -195,21 +195,22 @@ public class ProjectGame extends Game {
         enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
         enemy01.setSpriteSheetJson("resources/gator_sheet.json");
         enemy01.setDelay(100);
-        enemy01.setPositionX(300);
-        enemy01.setPositionY(200);
+        enemy01.setPositionX(250);
+        enemy01.setPositionY(550);
+        enemy01.addRoute(0, 800, 2, 1);
         enemy01.addRoute(400, 0, 2, 2);
-        enemy01.addRoute(0, -400, 2, 3);
+        enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
-        enemy01.addRoute(0, 400, 2, 1);
+
 
         enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
         enemy02.setSpriteSheetJson("resources/gator_sheet.json");
         enemy02.setDelay(100);
         enemy02.setPositionX(700);
-        enemy02.setPositionY(100);
-        enemy02.addRoute(0, -400, 2, 3);
+        enemy02.setPositionY(150);
+        enemy02.addRoute(0, -800, 2, 3);
         enemy02.addRoute(-400, 0, 2, 4);
-        enemy02.addRoute(0, 400, 2, 1);
+        enemy02.addRoute(0, 800, 2, 1);
         enemy02.addRoute(400, 0, 2, 2);
 
         pickpocketRect = new Rectangle(570, 300, enemy01.getUnscaledWidth() + 110, enemy01.getUnscaledHeight() + 110);
@@ -670,6 +671,7 @@ public class ProjectGame extends Game {
                             break;
                         }
                     }
+                }
 
 
                     Double y = enemies.get(i).getPositionY() + enemies.get(i).getPathY();
@@ -679,7 +681,7 @@ public class ProjectGame extends Game {
 
                     pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
 
-                }
+
 
             }
             if (!enemies.get(i).dead) {
