@@ -689,6 +689,7 @@ public class ProjectGame extends Game {
                     Bullet bul = playerBullets.get(j);
                     if (bul.collidesWith(enemies.get(i))) {
                         enemies.get(i).dead = true;
+                        enemies.get(i).enemyBullet = null;
                         enemies.get(i).setAnimationState("dying", "dead");
                         playerBullets.remove(j);
                     }
