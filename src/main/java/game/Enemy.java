@@ -44,9 +44,6 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         routePatternTemplate.add(new double[]{x, y, speed, direction});
     }
 
-    public void addRoute(double x, double y, double speed) {//enter -1 for no change in that axis
-        routePatternTemplate.add(new double[]{x, y, speed});
-    }
 
     public void clearRoute() {
         routePatternTemplate = new ArrayList<>();
@@ -134,6 +131,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
         return 0;
     }
+
     public void isFacing(){
         if (routePattern.isEmpty()) {
             routePattern = new ArrayList<>(routePatternTemplate);
@@ -150,51 +148,11 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
     }
 
-    public void shoot(){
-        if(shooting){
-
-        }
-
-    }
-
-    /*
-    public void isFacing() {
-        if (routePattern.isEmpty()) {
-            routePattern = new ArrayList<>(routePatternTemplate);
-        }
-        double direction = routePattern.get(0)[2];
-        if (direction == 1) { //face north
-            this.direction=new double[]{this.getUnscaledWidth()/2,0};
-        } else if (direction == 2) {//face east
-            this.direction=new double[]{this.getUnscaledWidth(),this.getUnscaledHeight()/2};
-        } else if (direction == 3) {//face south
-            this.direction=new double[]{this.getUnscaledWidth()/2,this.getUnscaledHeight()};
-        } else if (direction == 4) { //face west
-            this.direction=new double[]{0,this.getUnscaledHeight()/2};
-        }
-        //System.out.println(this.direction[0]);
-    }
 
 
-//    public void setSpeed(double speed) {
-//        this.speed = speed;
-//    }
-
-    public double getDirectionX() {
-        return direction[0];
-    }
-
-    public double getDirectionY() {
-        return direction[1];
-    }
-    */
 
     public double getFieldOfView() {
         return fieldOfView;
-    }
-
-    public void setFieldOfView(double fieldOfView) {
-        this.fieldOfView = fieldOfView;
     }
 
 
