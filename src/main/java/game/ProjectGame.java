@@ -686,11 +686,11 @@ public class ProjectGame extends Game {
             }
             if (!enemies.get(i).dead) {
                 for (int j = 0; j < playerBullets.size(); j++) {
-                    Bullet bul = playerBullets.get(i);
+                    Bullet bul = playerBullets.get(j);
                     if (bul.collidesWith(enemies.get(i))) {
                         enemies.get(i).dead = true;
                         enemies.get(i).setAnimationState("dying", "dead");
-                        playerBullets.remove(i);
+                        playerBullets.remove(j);
                     }
                 }
             }
