@@ -2,11 +2,13 @@ package game;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import com.sun.javafx.geom.Line2D;
 import com.sun.javafx.geom.Vec2d;
 import engine.Tweens.*;
 import engine.display.AnimatedSprite;
@@ -14,6 +16,7 @@ import engine.display.Game;
 import engine.display.Sprite;
 import engine.events.Event;
 import engine.util.GameClock;
+import javafx.scene.shape.Line;
 
 
 public class ProjectGame extends Game {
@@ -22,7 +25,7 @@ public class ProjectGame extends Game {
     /* Create a sprite object for our game. We'll use mario */
     Sprite mario = new Sprite("Mario", "gator.png");
 
-
+    GameClock GlobalCooldown;
     QuestManager myQuestManager = new QuestManager();
     Event PickedUpEvent;
     Event fadeOutEvent;
@@ -34,14 +37,14 @@ public class ProjectGame extends Game {
     Coin coin = new Coin("coin", "Coin4.png");
     //  Platformer platform = new Platformer("Rectangele", "platform.png");
     //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
+
     boolean start = false;
-    Bullet enemyBullet;
     SoundManagerClass music = new SoundManagerClass();
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
     Bullet bullet;
     private AnimatedSprite player;
-    private Enemy enemy;
+    private Enemy enemy01;
     ArrayList<Heart> lifeArray = new ArrayList<>();
     Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
@@ -116,8 +119,10 @@ public class ProjectGame extends Game {
 
     int damageCap = 100;
     int damageTimer;
+    int currentLevel;
 
     ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
+    ArrayList<Enemy> enemies;
 
 
     static GameClock clock;
@@ -139,7 +144,8 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
-
+        GlobalCooldown = new GameClock();
+        currentLevel = 0;
 
         damageTimer = 100;
 
@@ -153,17 +159,14 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-        // collisionArray.add(platform);
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
         lifeCount = lifeArray.size();
         life1.setPositionX(390);
         life1.setPositionY(40);
-
         life2.setPositionX(420);
         life2.setPositionY(40);
-
         life3.setPositionX(450);
         life3.setPositionY(40);
         background.setScaleX(5);
@@ -184,257 +187,253 @@ public class ProjectGame extends Game {
         //  platform1.setPositionX(150);
         //  platform1.setPositionY(150);
 
-        //music.playMusic("resources/bowsersound.mp3");
-
 
         player.setPositionX(550);
         player.setPositionY(700);
+        enemies = new ArrayList<>();
+        enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
+        enemy01.setSpriteSheetJson("resources/gator_sheet.json");
+        enemy01.setDelay(100);
+        enemy01.setPositionX(300);
+        enemy01.setPositionY(200);
+        enemy01.addRoute(400, 0, 2, 2);
+        enemy01.addRoute(0, -400, 2, 3);
+        enemy01.addRoute(-400, 0, 4, 4);
+        enemy01.addRoute(0, 400, 2, 1);
 
+        pickpocketRect = new Rectangle(570, 300, enemy01.getUnscaledWidth() + 110, enemy01.getUnscaledHeight() + 110);
 
-        enemy = new Enemy("enemy", "resources/gator_sheet.png", "idle");
-        enemy.setSpriteSheetJson("resources/gator_sheet.json");
-        enemy.setDelay(100);
-        enemy.setPositionX(300);
-        enemy.setPositionY(200);
-        enemy.addRoute(3,0,0,2);
-        enemy.addRoute(0,-800,1,3);
-        enemy.addRoute(-810,0,1,4);
-        enemy.addRoute(5,0,0,2);
-        enemy.addRoute(0,800,4,1);
-        enemy.setFieldOfView(80);
-
-        pickpocketRect = new Rectangle(570, 300, enemy.getUnscaledWidth() + 110, enemy.getUnscaledHeight() + 110);
-
-        //enemy.setSpeed(3);
 
         coin.setPositionY(250);
         coin.setPositionX(660);
-//        TweenTransitions playerIntro = new TweenTransitions("linearTransition");
-//        Tween playerTween = new Tween(player, playerIntro);
-//        playerTween.animate(TweenableParams.Y, 1000, 650, 2);
 
 
-        //  TweenTransitions coinCatch = new TweenTransitions("easeInOut");
+        ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
+        if (currentLevel == 0) {
 
-        tile1 = new Sprite("tile1", "tile.png");
-        tile1.setPositionX(256);
-        tile1.setPositionY(300);
+            enemies.add(enemy01);
 
-        tile2 = new Sprite("tile2", "tile.png");
-        tile2.setPositionX(tile1.getPositionX());
-        tile2.setPositionY(tile1.getPositionY() + tile1.getUnscaledHeight());
+            tile1 = new Sprite("tile1", "tile.png");
+            tile1.setPositionX(256);
+            tile1.setPositionY(300);
 
-        tile3 = new Sprite("tile3", "tile.png");
-        tile3.setPositionX(tile1.getPositionX());
-        tile3.setPositionY(tile2.getPositionY() + tile2.getUnscaledHeight());
+            tile2 = new Sprite("tile2", "tile.png");
+            tile2.setPositionX(tile1.getPositionX());
+            tile2.setPositionY(tile1.getPositionY() + tile1.getUnscaledHeight());
 
-        tile4 = new Sprite("tile4", "dark_brick.png");
-        tile4.setPositionX(tile1.getPositionX());
-        tile4.setPositionY(tile3.getPositionY() + tile3.getUnscaledHeight());
+            tile3 = new Sprite("tile3", "tile.png");
+            tile3.setPositionX(tile1.getPositionX());
+            tile3.setPositionY(tile2.getPositionY() + tile2.getUnscaledHeight());
 
-        collider4 = new Platformer("collider", "alpha_3x1.png");
-        collider4.setPositionX(tile4.getPositionX() - tile4.getUnscaledWidth());
-        collider4.setPositionY(tile4.getPositionY());
+            tile4 = new Sprite("tile4", "dark_brick.png");
+            tile4.setPositionX(tile1.getPositionX());
+            tile4.setPositionY(tile3.getPositionY() + tile3.getUnscaledHeight());
 
-        tile5 = new Sprite("tile5", "tile.png");
-        tile5.setPositionX(tile1.getPositionX() + tile1.getUnscaledWidth());
-        tile5.setPositionY(tile1.getPositionY());
+            collider4 = new Platformer("collider", "alpha_3x1.png");
+            collider4.setPositionX(tile4.getPositionX() - tile4.getUnscaledWidth());
+            collider4.setPositionY(tile4.getPositionY());
 
-        tile6 = new Sprite("tile6", "tile.png");
-        tile6.setPositionX(tile2.getPositionX() + tile2.getUnscaledWidth());
-        tile6.setPositionY(tile2.getPositionY());
+            tile5 = new Sprite("tile5", "tile.png");
+            tile5.setPositionX(tile1.getPositionX() + tile1.getUnscaledWidth());
+            tile5.setPositionY(tile1.getPositionY());
 
-
-        tile7 = new Sprite("tile7", "tile.png");
-        tile7.setPositionX(tile3.getPositionX() + tile3.getUnscaledWidth());
-        tile7.setPositionY(tile3.getPositionY());
-
-        tile8 = new Sprite("tile8", "dark_brick.png");
-        tile8.setPositionX(tile4.getPositionX() + tile4.getUnscaledWidth());
-        tile8.setPositionY(tile4.getPositionY());
-
-        tile9 = new Sprite("tile9", "tile.png");
-        tile9.setPositionX(tile5.getPositionX() + tile5.getUnscaledWidth());
-        tile9.setPositionY(tile5.getPositionY());
-
-        tile10 = new Sprite("tile10", "tile.png");
-        tile10.setPositionX(tile6.getPositionX() + tile6.getUnscaledWidth());
-        tile10.setPositionY(tile6.getPositionY());
-
-        tile11 = new Sprite("tile11", "tile.png");
-        tile11.setPositionX(tile7.getPositionX() + tile7.getUnscaledWidth());
-        tile11.setPositionY(tile7.getPositionY());
-
-        tile12 = new Sprite("tile12", "tile_dark.png");
-        tile12.setPositionX(tile8.getPositionX() + tile8.getUnscaledWidth());
-        tile12.setPositionY(tile8.getPositionY());
-
-        collider6 = new Platformer("collider", "alpha_3x1.png");
-        collider6.setPositionX(tile12.getPositionX() - tile12.getUnscaledWidth());
-        collider6.setPositionY(tile12.getPositionY() + tile12.getUnscaledHeight());
-
-        tile13 = new Sprite("tile13", "tile.png");
-        tile13.setPositionX(tile9.getPositionX() + tile9.getUnscaledWidth());
-        tile13.setPositionY(tile9.getPositionY());
-
-        tile14 = new Sprite("tile14", "tile.png");
-        tile14.setPositionX(tile10.getPositionX() + tile10.getUnscaledWidth());
-        tile14.setPositionY(tile10.getPositionY());
-
-        tile15 = new Sprite("tile15", "tile.png");
-        tile15.setPositionX(tile11.getPositionX() + tile11.getUnscaledWidth());
-        tile15.setPositionY(tile11.getPositionY());
-
-        tile16 = new Sprite("tile16", "dark_brick.png");
-        tile16.setPositionX(tile12.getPositionX() + tile12.getUnscaledWidth());
-        tile16.setPositionY(tile12.getPositionY());
-
-        collider5 = new Platformer("collider", "alpha_1x1.png");
-        collider5.setPositionX(tile16.getPositionX());
-        collider5.setPositionY(tile16.getPositionY());
+            tile6 = new Sprite("tile6", "tile.png");
+            tile6.setPositionX(tile2.getPositionX() + tile2.getUnscaledWidth());
+            tile6.setPositionY(tile2.getPositionY());
 
 
-        ctile1 = new Sprite("ctile1", "tile_with_column.png");
-        ctile1.setPositionX(tile1.getPositionX());
-        ctile1.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight());
+            tile7 = new Sprite("tile7", "tile.png");
+            tile7.setPositionX(tile3.getPositionX() + tile3.getUnscaledWidth());
+            tile7.setPositionY(tile3.getPositionY());
+
+            tile8 = new Sprite("tile8", "dark_brick.png");
+            tile8.setPositionX(tile4.getPositionX() + tile4.getUnscaledWidth());
+            tile8.setPositionY(tile4.getPositionY());
+
+            tile9 = new Sprite("tile9", "tile.png");
+            tile9.setPositionX(tile5.getPositionX() + tile5.getUnscaledWidth());
+            tile9.setPositionY(tile5.getPositionY());
+
+            tile10 = new Sprite("tile10", "tile.png");
+            tile10.setPositionX(tile6.getPositionX() + tile6.getUnscaledWidth());
+            tile10.setPositionY(tile6.getPositionY());
+
+            tile11 = new Sprite("tile11", "tile.png");
+            tile11.setPositionX(tile7.getPositionX() + tile7.getUnscaledWidth());
+            tile11.setPositionY(tile7.getPositionY());
+
+            tile12 = new Sprite("tile12", "tile_dark.png");
+            tile12.setPositionX(tile8.getPositionX() + tile8.getUnscaledWidth());
+            tile12.setPositionY(tile8.getPositionY());
+
+            collider6 = new Platformer("collider", "alpha_3x1.png");
+            collider6.setPositionX(tile12.getPositionX() - tile12.getUnscaledWidth());
+            collider6.setPositionY(tile12.getPositionY() + tile12.getUnscaledHeight());
+
+            tile13 = new Sprite("tile13", "tile.png");
+            tile13.setPositionX(tile9.getPositionX() + tile9.getUnscaledWidth());
+            tile13.setPositionY(tile9.getPositionY());
+
+            tile14 = new Sprite("tile14", "tile.png");
+            tile14.setPositionX(tile10.getPositionX() + tile10.getUnscaledWidth());
+            tile14.setPositionY(tile10.getPositionY());
+
+            tile15 = new Sprite("tile15", "tile.png");
+            tile15.setPositionX(tile11.getPositionX() + tile11.getUnscaledWidth());
+            tile15.setPositionY(tile11.getPositionY());
+
+            tile16 = new Sprite("tile16", "dark_brick.png");
+            tile16.setPositionX(tile12.getPositionX() + tile12.getUnscaledWidth());
+            tile16.setPositionY(tile12.getPositionY());
+
+            collider5 = new Platformer("collider", "alpha_1x1.png");
+            collider5.setPositionX(tile16.getPositionX());
+            collider5.setPositionY(tile16.getPositionY());
 
 
-        ctile2 = new Sprite("ctile2", "tile_with_column.png");
-        ctile2.setPositionX(tile5.getPositionX());
-        ctile2.setPositionY(tile5.getPositionY() - tile5.getUnscaledHeight());
-
-        ctile3 = new Sprite("ctile3", "tile.png");
-        ctile3.setPositionX(tile9.getPositionX());
-        ctile3.setPositionY(tile9.getPositionY() - tile9.getUnscaledHeight());
-
-        ctile4 = new Sprite("ctile4", "tile_with_column.png");
-        ctile4.setPositionX(tile13.getPositionX());
-        ctile4.setPositionY(tile13.getPositionY() - tile13.getUnscaledHeight());
-
-        back1 = new Sprite("back", "pillar_door_left.png");
-        back1.setPositionX(ctile1.getPositionX());
-        back1.setPositionY(ctile1.getPositionY() - ctile1.getUnscaledHeight());
-
-        collider1 = new Platformer("collider", "alpha_6x1.png");
-        collider1.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
-        collider1.setPositionY(back1.getPositionY());
-
-        back2 = new Sprite("back", "pillar_door_left.png");
-        back2.setPositionX(ctile2.getPositionX());
-        back2.setPositionY(ctile2.getPositionY() - ctile2.getUnscaledHeight());
-
-        back3 = new Sprite("back", "door_locked.png");
-        back3.setPositionX(ctile3.getPositionX());
-        back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
-
-        back4 = new Sprite("back", "pillar_door_right.png");
-        back4.setPositionX(ctile4.getPositionX());
-        back4.setPositionY(ctile4.getPositionY() - ctile4.getUnscaledHeight());
-
-        toptile1 = new Sprite("tt", "top_tile_1.png");
-        toptile1.setPositionX(back1.getPositionX());
-        toptile1.setPositionY(back1.getPositionY());
-        toptile1.setRotation(-3.14 / 2);
-
-        toptile2 = new Sprite("tt", "top_tile_2.png");
-        toptile2.setPositionX(back2.getPositionX());
-        toptile2.setPositionY(back2.getPositionY());
-        toptile2.setRotation(-3.14 / 2);
-
-        toptile3 = new Sprite("tt", "top_tile_1.png");
-        toptile3.setPositionX(back3.getPositionX());
-        toptile3.setPositionY(back3.getPositionY());
-        toptile3.setRotation(-3.14 / 2);
-
-        toptile4 = new Sprite("tt", "top_tile_3.png");
-        toptile4.setPositionX(back4.getPositionX());
-        toptile4.setPositionY(back4.getPositionY());
-        toptile4.setRotation(-3.14 / 2);
-
-        toptile5 = new Sprite("tt", "top_tile_3.png");
-        toptile5.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
-        toptile5.setPositionY(back4.getPositionY());
-
-        toptile6 = new Sprite("tt", "top_tile_1.png");
-        toptile6.setPositionX(toptile5.getPositionX());
-        toptile6.setPositionY(toptile5.getPositionY() + toptile5.getUnscaledHeight());
-
-        toptile7 = new Sprite("tt", "top_tile_4.png");
-        toptile7.setPositionX(toptile6.getPositionX());
-        toptile7.setPositionY(toptile6.getPositionY() + toptile6.getUnscaledHeight());
-
-        toptile8 = new Sprite("tt", "top_tile_1.png");
-        toptile8.setPositionX(toptile7.getPositionX());
-        toptile8.setPositionY(toptile7.getPositionY() + toptile7.getUnscaledHeight());
-
-        toptile9 = new Sprite("tt", "brick_wall_thin.png");
-        toptile9.setPositionX(toptile8.getPositionX() + toptile9.getUnscaledWidth());
-        toptile9.setPositionY(toptile8.getPositionY() + toptile8.getUnscaledHeight());
-        toptile9.setScaleX(-1);
-
-        toptile10 = new Sprite("tt", "top_tile_1.png");
-        toptile10.setPositionX(back1.getPositionX());
-        toptile10.setPositionY(back1.getPositionY());
-        toptile10.setScaleX(-1);
-
-        collider2 = new Platformer("collider", "alpha_1x4.png");
-        collider2.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
-        collider2.setPositionY(back1.getPositionY() + back1.getUnscaledHeight());
-
-        collider3 = new Platformer("collider", "alpha_1x4.png");
-        collider3.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
-        collider3.setPositionY(back4.getPositionY() + back4.getUnscaledHeight());
+            ctile1 = new Sprite("ctile1", "tile_with_column.png");
+            ctile1.setPositionX(tile1.getPositionX());
+            ctile1.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight());
 
 
-        toptile11 = new Sprite("tt", "top_tile_3.png");
-        toptile11.setPositionX(toptile10.getPositionX());
-        toptile11.setPositionY(toptile10.getPositionY() + toptile10.getUnscaledHeight());
-        toptile11.setScaleX(-1);
+            ctile2 = new Sprite("ctile2", "tile_with_column.png");
+            ctile2.setPositionX(tile5.getPositionX());
+            ctile2.setPositionY(tile5.getPositionY() - tile5.getUnscaledHeight());
 
-        toptile12 = new Sprite("tt", "top_tile_2.png");
-        toptile12.setPositionX(toptile11.getPositionX());
-        toptile12.setPositionY(toptile11.getPositionY() + toptile11.getUnscaledHeight());
-        toptile12.setScaleX(-1);
+            ctile3 = new Sprite("ctile3", "tile.png");
+            ctile3.setPositionX(tile9.getPositionX());
+            ctile3.setPositionY(tile9.getPositionY() - tile9.getUnscaledHeight());
 
-        toptile13 = new Sprite("tt", "top_tile_1.png");
-        toptile13.setPositionX(toptile12.getPositionX());
-        toptile13.setPositionY(toptile12.getPositionY() + toptile12.getUnscaledHeight());
-        toptile13.setScaleX(-1);
+            ctile4 = new Sprite("ctile4", "tile_with_column.png");
+            ctile4.setPositionX(tile13.getPositionX());
+            ctile4.setPositionY(tile13.getPositionY() - tile13.getUnscaledHeight());
 
-        toptile14 = new Sprite("tt", "brick_wall_thin.png");
-        toptile14.setPositionX(toptile13.getPositionX() - toptile14.getUnscaledWidth());
-        toptile14.setPositionY(toptile13.getPositionY() + toptile13.getUnscaledHeight());
+            back1 = new Sprite("back", "pillar_door_left.png");
+            back1.setPositionX(ctile1.getPositionX());
+            back1.setPositionY(ctile1.getPositionY() - ctile1.getUnscaledHeight());
 
-        dbthin1 = new Sprite("tt", "dark_brick_thin.png");
-        dbthin1.setPositionX(toptile14.getPositionX());
-        dbthin1.setPositionY(toptile14.getPositionY() + toptile14.getUnscaledHeight());
+            collider1 = new Platformer("collider", "alpha_6x1.png");
+            collider1.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
+            collider1.setPositionY(back1.getPositionY());
 
-        dbthin2 = new Sprite("tt", "dark_brick_thin.png");
-        dbthin2.setPositionX(toptile9.getPositionX() - dbthin2.getUnscaledWidth());
-        dbthin2.setPositionY(toptile9.getPositionY() + toptile9.getUnscaledHeight());
+            back2 = new Sprite("back", "pillar_door_left.png");
+            back2.setPositionX(ctile2.getPositionX());
+            back2.setPositionY(ctile2.getPositionY() - ctile2.getUnscaledHeight());
+
+            back3 = new Sprite("back", "door_locked.png");
+            back3.setPositionX(ctile3.getPositionX());
+            back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
+
+            back4 = new Sprite("back", "pillar_door_right.png");
+            back4.setPositionX(ctile4.getPositionX());
+            back4.setPositionY(ctile4.getPositionY() - ctile4.getUnscaledHeight());
+
+            toptile1 = new Sprite("tt", "top_tile_1.png");
+            toptile1.setPositionX(back1.getPositionX());
+            toptile1.setPositionY(back1.getPositionY());
+            toptile1.setRotation(-3.14 / 2);
+
+            toptile2 = new Sprite("tt", "top_tile_2.png");
+            toptile2.setPositionX(back2.getPositionX());
+            toptile2.setPositionY(back2.getPositionY());
+            toptile2.setRotation(-3.14 / 2);
+
+            toptile3 = new Sprite("tt", "top_tile_1.png");
+            toptile3.setPositionX(back3.getPositionX());
+            toptile3.setPositionY(back3.getPositionY());
+            toptile3.setRotation(-3.14 / 2);
+
+            toptile4 = new Sprite("tt", "top_tile_3.png");
+            toptile4.setPositionX(back4.getPositionX());
+            toptile4.setPositionY(back4.getPositionY());
+            toptile4.setRotation(-3.14 / 2);
+
+            toptile5 = new Sprite("tt", "top_tile_3.png");
+            toptile5.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
+            toptile5.setPositionY(back4.getPositionY());
+
+            toptile6 = new Sprite("tt", "top_tile_1.png");
+            toptile6.setPositionX(toptile5.getPositionX());
+            toptile6.setPositionY(toptile5.getPositionY() + toptile5.getUnscaledHeight());
+
+            toptile7 = new Sprite("tt", "top_tile_4.png");
+            toptile7.setPositionX(toptile6.getPositionX());
+            toptile7.setPositionY(toptile6.getPositionY() + toptile6.getUnscaledHeight());
+
+            toptile8 = new Sprite("tt", "top_tile_1.png");
+            toptile8.setPositionX(toptile7.getPositionX());
+            toptile8.setPositionY(toptile7.getPositionY() + toptile7.getUnscaledHeight());
+
+            toptile9 = new Sprite("tt", "brick_wall_thin.png");
+            toptile9.setPositionX(toptile8.getPositionX() + toptile9.getUnscaledWidth());
+            toptile9.setPositionY(toptile8.getPositionY() + toptile8.getUnscaledHeight());
+            toptile9.setScaleX(-1);
+
+            toptile10 = new Sprite("tt", "top_tile_1.png");
+            toptile10.setPositionX(back1.getPositionX());
+            toptile10.setPositionY(back1.getPositionY());
+            toptile10.setScaleX(-1);
+
+            collider2 = new Platformer("collider", "alpha_1x4.png");
+            collider2.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
+            collider2.setPositionY(back1.getPositionY() + back1.getUnscaledHeight());
+
+            collider3 = new Platformer("collider", "alpha_1x4.png");
+            collider3.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
+            collider3.setPositionY(back4.getPositionY() + back4.getUnscaledHeight());
 
 
-        corner1 = new Sprite("corner", "top_corner_right.png");
-        corner1.setPositionX(toptile4.getPositionX() + toptile4.getUnscaledHeight());
-        corner1.setPositionY(toptile4.getPositionY() - toptile4.getUnscaledWidth());
+            toptile11 = new Sprite("tt", "top_tile_3.png");
+            toptile11.setPositionX(toptile10.getPositionX());
+            toptile11.setPositionY(toptile10.getPositionY() + toptile10.getUnscaledHeight());
+            toptile11.setScaleX(-1);
 
-        corner2 = new Sprite("corner", "top_corner_right.png");
-        corner2.setPositionX(toptile1.getPositionX());
-        corner2.setPositionY(toptile1.getPositionY() - toptile1.getUnscaledWidth());
-        corner2.setScaleX(-1);
+            toptile12 = new Sprite("tt", "top_tile_2.png");
+            toptile12.setPositionX(toptile11.getPositionX());
+            toptile12.setPositionY(toptile11.getPositionY() + toptile11.getUnscaledHeight());
+            toptile12.setScaleX(-1);
+
+            toptile13 = new Sprite("tt", "top_tile_1.png");
+            toptile13.setPositionX(toptile12.getPositionX());
+            toptile13.setPositionY(toptile12.getPositionY() + toptile12.getUnscaledHeight());
+            toptile13.setScaleX(-1);
+
+            toptile14 = new Sprite("tt", "brick_wall_thin.png");
+            toptile14.setPositionX(toptile13.getPositionX() - toptile14.getUnscaledWidth());
+            toptile14.setPositionY(toptile13.getPositionY() + toptile13.getUnscaledHeight());
+
+            dbthin1 = new Sprite("tt", "dark_brick_thin.png");
+            dbthin1.setPositionX(toptile14.getPositionX());
+            dbthin1.setPositionY(toptile14.getPositionY() + toptile14.getUnscaledHeight());
+
+            dbthin2 = new Sprite("tt", "dark_brick_thin.png");
+            dbthin2.setPositionX(toptile9.getPositionX() - dbthin2.getUnscaledWidth());
+            dbthin2.setPositionY(toptile9.getPositionY() + toptile9.getUnscaledHeight());
 
 
-        collisionArray.add(collider1);
-        collisionArray.add(collider2);
-        collisionArray.add(collider3);
-        collisionArray.add(collider4);
-        collisionArray.add(collider5);
-        collisionArray.add(collider6);
+            corner1 = new Sprite("corner", "top_corner_right.png");
+            corner1.setPositionX(toptile4.getPositionX() + toptile4.getUnscaledHeight());
+            corner1.setPositionY(toptile4.getPositionY() - toptile4.getUnscaledWidth());
+
+            corner2 = new Sprite("corner", "top_corner_right.png");
+            corner2.setPositionX(toptile1.getPositionX());
+            corner2.setPositionY(toptile1.getPositionY() - toptile1.getUnscaledWidth());
+            corner2.setScaleX(-1);
 
 
-        //TweenJuggler.getInstance().add(playerTween);
+            collisionArray.add(collider1);
+            collisionArray.add(collider2);
+            collisionArray.add(collider3);
+            collisionArray.add(collider4);
+            collisionArray.add(collider5);
+            collisionArray.add(collider6);
+        }
+        if (currentLevel == 2) {
+            tile1 = new Sprite("tile1", "tile.png");
+            tile1.setPositionX(256);
+            tile1.setPositionY(300);
 
-
+        }
     }
 
 
@@ -451,52 +450,44 @@ public class ProjectGame extends Game {
             randomPositions();
         }
 
-        if(damageTimer < damageCap) {
+        if (damageTimer < damageCap) {
             damageTimer++;
         }
 
-		
-		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialispriteed */
+
         if (player != null) {
-            if (player.collidesWith(enemy) && enemy.dead == false && damageTimer >= damageCap) {
-                damageTimer = 0;
-                //player.toggleVisibility();
-//                System.out.println("collided");
-//                player.setPositionX(550);
-//                player.setPositionY(700);
-                lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
+            for (int i = 0; i < enemies.size(); i++) {
+                if (player.collidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
+                    damageTimer = 0;
+                    lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
 
-                lifeCount--;
-                if (lifeCount == 0) {
-                    complete = true;
+                    lifeCount--;
+                    if (lifeCount == 0) {
+                        complete = true;
+                    }
                 }
-
-
             }
             if (player.collidesWith(coin)) {
                 coin.handleEvent(collidedEvent);
                 myQuestManager.handleEvent(PickedUpEvent);
             }
 
-            double xPos = player.getPositionX() - enemy.getPositionX();
-            double yPos = player.getPositionY() - enemy.getPositionY();
-
 
             //float deltaX = (float) (mousePosition.getX()-player.getPositionX());
             //float deltaY = (float) (mousePosition.getY()-player.getPositionY());
-            mario.update(pressedKeys);
+            //mario.update(pressedKeys);
             //player.setRotation((360 + Math.toDegrees(Math.atan2(deltaY, deltaX))) % 360);
             player.update();
 
             checkCollisions(player);
 
-            enemy.update();
 
-            for(int i = 0; i < playerBullets.size(); i++) {
+
+            for (int i = 0; i < playerBullets.size(); i++) {
                 Bullet bul = playerBullets.get(i);
                 bul.update(pressedKeys);
                 System.out.println(bul.getShotTimer());
-                if(bul.getShotTimer() >= bul.getShotCap()) {
+                if (bul.getShotTimer() >= bul.getShotCap()) {
 
                     playerBullets.remove(i);
                 }
@@ -512,33 +503,7 @@ public class ProjectGame extends Game {
 
         }
 
-        if(!enemy.dead) {
-            for (int i = 0; i < playerBullets.size(); i++) {
-                Bullet bul = playerBullets.get(i);
-                if (bul.collidesWith(enemy)) {
-                    enemy.dead = true;
-                    enemy.setAnimationState("dying", "dead");
-                    playerBullets.remove(i);
-                }
-            }
-        }
-//        if (bullet != null) {
-//            if (bullet.getPositionX() + 3 >= bullet.endValX && bullet.getPositionX() - 3 <= bullet.endValX) {
-//                bullet = null;
-//            }
-//
-//        }
-        if (enemyBullet != null) {
-            if (enemyBullet.collidesWith(player)) {
-                System.out.println("collided");
-                lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
-                enemyBullet=null;
-                lifeCount--;
-                if (lifeCount == 0) {
-                    complete = true;
-                }
-            }
-        }
+
 
         boolean moving = false;
 
@@ -592,23 +557,26 @@ public class ProjectGame extends Game {
             }
         }
 
-        if (pressedKeys.contains("X")) {
+        if (pressedKeys.contains("Space")) {
             Random rand = new Random();
 
+            if (player.collidesWith(back3)) {
+                currentLevel = 2;
+            } else if (pickpocket == true) {
+                int n = rand.nextInt(3) + 1;
+                if (n == 1) {
 
-            int n = rand.nextInt(3) + 1;
+                    itemString = "You found a knife!";
+                } else if (n == 2) {
+                    keyCount++;
+                    itemString = "You found a key!";
 
-            if (n == 1) {
-                //coinCount++;
-                itemString = "You found a coin!";
-            } else if (n == 2) {
-                keyCount++;
-                itemString = "You found a key!";
+                } else if (n == 3) {
+                    itemString = "No items found.";
+                }
 
-            } else if (n == 3) {
-                itemString = "No items found.";
             }
-            pressedKeys.remove("X");
+            pressedKeys.remove("Space");
         }
 
         if (pressedKeys.contains("P")) {
@@ -623,138 +591,100 @@ public class ProjectGame extends Game {
             }
         }
 
-        /*
-        if (pressedKeys.contains("A")) {
-            mario.setScaleX(mario.getScaleX() + 0.1);
-            player.setScaleX(player.getScaleX() + 0.1);
+        for (int i = 0; i < enemies.size(); i++) {
 
-        }
-        if (pressedKeys.contains("S")) {
-            mario.setScaleY(mario.getScaleY() - 0.1);
-            player.setScaleY(player.getScaleY() - 0.1);
-        }
-        if (pressedKeys.contains("Q")) {
-            mario.setRotation(mario.getRotation() + 1);
+            if (enemies.get(i) != null && enemies.get(i).dead == false) {
+                enemies.get(i).update();
+                enemies.get(i).setPositionY(enemies.get(i).getPositionY() + enemies.get(i).getPathY());
+                enemies.get(i).setPositionX(enemies.get(i).getPositionX() + enemies.get(i).getPathX());
+                enemies.get(i).isFacing();
+                Vec2d enemyFacing;
+                Vec2d enemyPos = new Vec2d(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
+                Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
+                Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
+                if (enemies.get(i).getDirection() == 1) {
+                    enemyFacing = new Vec2d(enemies.get(i).getUnscaledWidth() / 2 + enemies.get(i).getPositionX(), enemies.get(i).getPositionY() - 10000);
+                } else if (enemies.get(i).getDirection() == 2) {
+                    enemyFacing = new Vec2d(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() + 1000, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
+                } else if (enemies.get(i).getDirection() == 3) {
+                    enemyFacing = new Vec2d(enemies.get(i).getUnscaledWidth() / 2 + enemies.get(i).getPositionX(), enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() + 10000);
+                } else {
+                    enemyFacing = new Vec2d(enemies.get(i).getPositionX() - 10000, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
+                }
 
-            player.setRotation(player.getRotation() + 1);
+                //NORMALIZE VECTORS//
+                double length = Math.sqrt(Math.pow(enemyFacing.x, 2) + Math.pow(enemyFacing.y, 2));
+                enemyFacing.x = enemyFacing.x / length;
+                enemyFacing.y = enemyFacing.y / length;
+                length = Math.sqrt(Math.pow(enemyToPlayer.x, 2) + Math.pow(enemyToPlayer.y, 2));
+                enemyToPlayer.x = enemyToPlayer.x / length;
+                enemyToPlayer.y = enemyToPlayer.y / length;
+                double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
 
-        }
-        if (pressedKeys.contains("W")) {
-            mario.setRotation(mario.getRotation() - 1);
-
-            player.setRotation(player.getRotation() - 1);
-        }
-        if (pressedKeys.contains("Z")) {
-            mario.setTransparency(mario.getTransparency() + 0.01f);
-            player.setTransparency(player.getTransparency() + 0.01f);
-
-        }
-        if (pressedKeys.contains("X")) {
-
-            mario.setTransparency(mario.getTransparency() - 0.01f);
-            player.setTransparency(player.getTransparency() - 0.01f);
-
-
-        }
-        if (pressedKeys.contains("I")) {
-            mario.setPivotY(mario.getPivotY() - 3);
-            player.setPivotY(player.getPivotY() - 3);
-
-        }
-        if (pressedKeys.contains("K")) {
-            mario.setPivotY(mario.getPivotY() + 3);
-            player.setPivotY(player.getPivotY() + 3);
-
-        }
-        if (pressedKeys.contains("J")) {
-            mario.setPivotX(mario.getPivotX() - 3);
-            player.setPivotX(player.getPivotX() - 3);
-
-        }
-        if (pressedKeys.contains("L")) {
-            mario.setPivotX(mario.getPivotX() + 3);
-
-            player.setPivotX(player.getPivotX() + 3);
-        }
-
-        if (pressedKeys.contains("V")) {
-
-            mario.toggleVisibility();
-            player.toggleVisibility();
+                if (angle <= enemies.get(i).getFieldOfView() / 2) {
+                    Line2D line = new Line2D((float) enemies.get(i).getPositionX(), (float) enemies.get(i).getPositionY(), (float) player.getPositionX(), (float) player.getPositionY());
+                    enemies.get(i).awareness = 100;
+                } else {
+                    enemies.get(i).awareness = 0;
+                }
 
 
-        }
-        */
-        if (enemy != null && enemy.dead == false) {
-            enemy.setPositionY(enemy.getPositionY() + enemy.getPathY());
-            enemy.setPositionX(enemy.getPositionX() + enemy.getPathX());
-            enemy.isFacing();
-            Vec2d enemyFacing;
-            Vec2d enemyPos = new Vec2d(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
-            Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
-            Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
-            if (enemy.getDirection() == 1) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2 + enemy.getPositionX(), enemy.getPositionY() - 10000);
-            } else if (enemy.getDirection() == 2) {
-                enemyFacing = new Vec2d(enemy.getPositionX() +enemy.getUnscaledWidth() + 1000, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
-            } else if (enemy.getDirection() == 3) {
-                enemyFacing = new Vec2d(enemy.getUnscaledWidth() / 2+enemy.getPositionX(), enemy.getPositionY() + enemy.getUnscaledHeight() + 10000);
-            } else {
-                enemyFacing = new Vec2d(enemy.getPositionX() - 10000, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
+                if (enemies.get(i).awareness >= 100 && complete == false) {
+                    if (enemies.get(i).enemyBullet == null) {
+                        enemies.get(i).bulletClock = new GameClock();
+                        enemies.get(i).enemyBullet = new Bullet("bullet", "knife.png", 0.2);
+                        enemies.get(i).enemyBullet.setStart(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
+                        enemies.get(i).enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
+                        TweenTransitions enemy01BulletPath = new TweenTransitions("linearTransition");
+                        Tween enemyBulletmovement = new Tween(enemies.get(i).enemyBullet, enemy01BulletPath);
+                        enemyBulletmovement.animate(TweenableParams.X, enemies.get(i).enemyBullet.startValX, enemies.get(i).enemyBullet.endValX, 0.2);
+                        enemyBulletmovement.animate(TweenableParams.Y, enemies.get(i).enemyBullet.startValY, enemies.get(i).enemyBullet.endValY, 0.2);
+                        TweenJuggler.getInstance().add(enemyBulletmovement);
+                    }
+                    System.out.println(enemy01.bulletClock.getElapsedTime());
+                }
+                if (enemies.get(i).bulletClock != null) { //delete bullet after .2 seconds
+                    if (enemies.get(i).bulletClock.getElapsedTime() > 200) {
+                        enemies.get(i).bulletClock = null;
+                        enemies.get(i).enemyBullet = null;
+                    }
+                }
+                if (enemies.get(i).enemyBullet != null) {
+                    if (enemies.get(i).enemyBullet.collidesWith(player)) {
+                        System.out.println("collided");
+                        lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
+                        enemies.get(i).enemyBullet = null;
+                        lifeCount--;
+                        if (lifeCount == 0) {
+                            complete = true;
+                            break;
+                        }
+                    }
+
+
+                    Double y = enemies.get(i).getPositionY() + enemies.get(i).getPathY();
+                    Double x = enemies.get(i).getPositionX() + enemies.get(i).getPathX();
+                    Integer yLoc = y.intValue();
+                    Integer xLoc = x.intValue();
+
+                    pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
+
+                }
+
             }
-            enemyPosition.x = enemyFacing.x;
-            enemyPosition.y = enemyFacing.y;
-
-            //NORMALIZE VECTORS//
-            double length = Math.sqrt(Math.pow(enemyFacing.x, 2) + Math.pow(enemyFacing.y, 2));
-            enemyFacing.x = enemyFacing.x / length;
-            enemyFacing.y = enemyFacing.y / length;
-            length = Math.sqrt(Math.pow(enemyToPlayer.x, 2) + Math.pow(enemyToPlayer.y, 2));
-            enemyToPlayer.x = enemyToPlayer.x / length;
-            enemyToPlayer.y = enemyToPlayer.y / length;
-            double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
-
-            if (angle <= enemy.getFieldOfView() / 2) {
-                //System.out.println("player is seen");
-                //enemy.awareness += 5;
-            }
-            System.out.println(angle);
-
-            if (enemy.awareness >= 100) {
-                enemy.awareness=0;
-                enemyBullet = null;
-                if (enemyBullet ==null) {
-                    enemyBullet = new Bullet("bullet", "knife.png", 0.2);
-
-                    enemy.shoot();
-                    enemyBullet.setStart(enemy.getPositionX() + enemy.getUnscaledWidth() / 2, enemy.getPositionY() + enemy.getUnscaledHeight() / 2);
-                    enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
-
-
-                    TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
-                    Tween enemyBulletmovement = new Tween(enemyBullet, enemyBulletPath);
-                    enemyBulletmovement.animate(TweenableParams.X, enemyBullet.startValX, enemyBullet.endValX, 0.2);
-                    enemyBulletmovement.animate(TweenableParams.Y, enemyBullet.startValY, enemyBullet.endValY, 0.2);
-                    TweenJuggler.getInstance().add(enemyBulletmovement);
-                    //System.out.println(enemyBullet.getPositionX());
-                    if (enemyBullet.endValX-30<enemyBullet.getPositionX() && enemyBullet.getPositionX()<enemyBullet.endValX+30){
-                        enemyBullet=null;
+            if (!enemies.get(i).dead) {
+                for (int j = 0; j < playerBullets.size(); j++) {
+                    Bullet bul = playerBullets.get(i);
+                    if (bul.collidesWith(enemy01)) {
+                        enemies.get(i).dead = true;
+                        enemies.get(i).setAnimationState("dying", "dead");
+                        playerBullets.remove(i);
                     }
                 }
             }
 
 
-            Double y = enemy.getPositionY() + enemy.getPathY();
-            Double x = enemy.getPositionX() + enemy.getPathX();
-            Integer yLoc = y.intValue();
-            Integer xLoc = x.intValue();
-
-            pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
         }
-
-        //pickpocketing logic
-
-
     }
 
     public void checkCollisions(AnimatedSprite sprite) {
@@ -768,9 +698,6 @@ public class ProjectGame extends Game {
     public void randomPositions() {
 
         Random rand = new Random();
-        double distanceTraveled;
-
-        boolean forward = true;
         offset++;
         for (int i = 0; i < collisionArray.size(); i++) {
             int n = rand.nextInt(10) + 1;
@@ -795,6 +722,7 @@ public class ProjectGame extends Game {
 
 
     }
+
 
     public void collide(Sprite sprite, Platformer platform) {
         if (sprite.collidesWith(platform)) {
@@ -905,29 +833,22 @@ public class ProjectGame extends Game {
         collider5.draw(g);
         collider6.draw(g);
 
-//        if (bullet != null) {
-//            bullet.draw(g);
-//        }
-
-        for(int i = 0; i < playerBullets.size(); i++) {
+        for (int i = 0; i < playerBullets.size(); i++) {
             Bullet bul = playerBullets.get(i);
-            if(bul != null) {
+            if (bul != null) {
                 bul.draw(g);
             }
         }
 
-        if (enemyBullet != null) {
-            enemyBullet.draw(g);
+        for(int i=0; i<enemies.size();i++) {
+            if(enemies.get(i) !=null) {
+                enemies.get(i).draw(g);
+                if (enemies.get(i).enemyBullet != null) {
+                    enemies.get(i).enemyBullet.draw(g);
+                }
+            }
         }
 
-
-//        if (coin != null){
-//            coin.draw(g);
-//        }
-
-        if (enemy != null) {
-            enemy.draw(g);
-        }
         if (player != null) {
             player.draw(g);
 
@@ -940,7 +861,7 @@ public class ProjectGame extends Game {
             g.drawString("Press P to play again", 400, 400);
 
         }
-        if(keyCount == 5) {
+        if (keyCount == 5) {
             g.drawString("Congrats, you win!", 400, 40);
             pause();
         }
@@ -986,10 +907,9 @@ public class ProjectGame extends Game {
 
         ((Graphics2D) g).draw(pickpocketRect);
 
-        ((Graphics2D) g).drawOval((int) enemyPosition.x, (int) enemyPosition.y, 5, 5);
         if (pickpocket) {
 
-            g.drawString("Press X to pickpocket", 400, 400);
+            g.drawString("Press Spacebar to pickpocket", 400, 400);
 
         }
 
@@ -1003,7 +923,7 @@ public class ProjectGame extends Game {
         double mouseX = e.getX();
         double mouseY = e.getY();
 
-        bul.setStart(player.getPositionX() + player.getUnscaledWidth()/2, player.getPositionY() + player.getUnscaledHeight()/2);
+        bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
         bul.setEnd(mouseX, mouseY);
 
 

@@ -19,12 +19,12 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     ArrayList<double[]> routePattern = new ArrayList<>();
     GameClock clock = new GameClock();
     Boolean stall = false;
-    double fieldOfView = 45;
+    double fieldOfView = 80;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double awareness=0; //how aware the enemy is to the player's presence
     public Boolean shooting = false;
-
-
+    public GameClock bulletClock = null;
+    public Bullet enemyBullet = null;
     public boolean dead = false;
 
     public Enemy(String id) {
