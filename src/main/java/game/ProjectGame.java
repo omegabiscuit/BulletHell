@@ -477,7 +477,7 @@ public class ProjectGame extends Game {
 
         if (player != null) {
             for (int i = 0; i < enemies.size(); i++) {
-                if (player.collidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
+                if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
                     damageTimer = 0;
                     //player.getLifeArray().get(lifeCount - 1).handleEvent(reduceLife);AMED PLEASE FIX THIS LINE!!!
 
@@ -487,7 +487,7 @@ public class ProjectGame extends Game {
                     }
                 }
             }
-            if (player.collidesWith(coin)) {
+            if (player.playerCollidesWith(coin)) {
                 coin.handleEvent(collidedEvent);
                 myQuestManager.handleEvent(PickedUpEvent);
             }
@@ -803,9 +803,9 @@ public class ProjectGame extends Game {
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
-        for(int i=0;i<coverList.size();i++){
-            g2d.draw(coverList.get(i));
-        }
+//        for(int i=0;i<coverList.size();i++){ //COVER TESTING
+//            g2d.draw(coverList.get(i));
+//        }
 
 
 //            for (int i = 0; i < collisionArray.size(); i++) {
