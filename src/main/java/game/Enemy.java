@@ -1,6 +1,6 @@
 package game;
 
-import com.sun.javafx.geom.Line2D;
+
 import com.sun.javafx.geom.Vec2d;
 import engine.Tweens.Tween;
 import engine.Tweens.TweenJuggler;
@@ -8,12 +8,15 @@ import engine.Tweens.TweenTransitions;
 import engine.Tweens.TweenableParams;
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
+import engine.display.Sprite;
 import engine.util.GameClock;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static java.lang.Math.PI;
@@ -173,7 +176,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         super.update();
     }
 
-    public boolean isInView(AnimatedSprite player){
+    public boolean isInView(AnimatedSprite player, ArrayList<Rectangle2D> coverList){
         this.setPositionY(this.getPositionY() + this.getPathY());
         this.setPositionX(this.getPositionX() + this.getPathX());
         this.isFacing();
@@ -201,7 +204,12 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
 
         if (angle <= this.getFieldOfView() / 2) {
-            Line2D line = new Line2D((float) this.getPositionX(), (float) this.getPositionY(), (float) player.getPositionX(), (float) player.getPositionY());
+            Line2D line = new Line2D.Double( this.getPositionX(),  this.getPositionY(), player.getPositionX(),player.getPositionY());
+            for(int i=0;i<coverList.size();i++){
+                if(line.intersects(coverList.get(i))){
+                    return false;
+                }
+            }
             return true;
         } else {
             return false;

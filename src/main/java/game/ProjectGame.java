@@ -54,7 +54,8 @@ public class ProjectGame extends Game {
     String itemString = "";
     int lifeCount;
     boolean pickpocket = false;
-
+    Rectangle2D cover;
+    ArrayList<Rectangle2D> coverList;
 
     ///Level 0////
     private Enemy enemy01;
@@ -220,7 +221,9 @@ public class ProjectGame extends Game {
 
         coin.setPositionY(250);
         coin.setPositionX(660);
-
+        //Rectangle2D rect = new Rectangle2D.Float(600,400,700,500);
+        coverList = new ArrayList<Rectangle2D>(); //list of cover sprites
+        //coverList.add(rect);
 
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
         if (currentLevel == 0) {
@@ -556,7 +559,7 @@ public class ProjectGame extends Game {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
             if (!enemies.get(i).dead) {
-                if (enemies.get(i).isInView(player)) {
+                if (enemies.get(i).isInView(player,coverList)) {
                     if (complete == false) {
                         if (enemies.get(i).enemyBullet == null) {
                             enemies.get(i).bulletClock = new GameClock();
@@ -662,8 +665,6 @@ public class ProjectGame extends Game {
                 }
 
             }
-
-
         }
     }
 
@@ -769,6 +770,7 @@ public class ProjectGame extends Game {
         }
 
 
+
         if (player != null) {
             player.draw(g);
         }
@@ -800,6 +802,10 @@ public class ProjectGame extends Game {
 
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+
+        for(int i=0;i<coverList.size();i++){
+            g2d.draw(coverList.get(i));
+        }
 
 
 //            for (int i = 0; i < collisionArray.size(); i++) {
