@@ -555,85 +555,45 @@ public class ProjectGame extends Game {
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
-            if (enemies.get(i) != null && enemies.get(i).dead == false) {
-                enemies.get(i).setPositionY(enemies.get(i).getPositionY() + enemies.get(i).getPathY());
-                enemies.get(i).setPositionX(enemies.get(i).getPositionX() + enemies.get(i).getPathX());
-                enemies.get(i).isFacing();
-                Vec2d enemyFacing;
-                Vec2d enemyPos = new Vec2d(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
-                Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
-                Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
-                if (enemies.get(i).getDirection() == 1) {
-                    enemyFacing = new Vec2d(enemies.get(i).getUnscaledWidth() / 2 + enemies.get(i).getPositionX(), enemies.get(i).getPositionY() - 10000);
-                } else if (enemies.get(i).getDirection() == 2) {
-                    enemyFacing = new Vec2d(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() + 1000, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
-                } else if (enemies.get(i).getDirection() == 3) {
-                    enemyFacing = new Vec2d(enemies.get(i).getUnscaledWidth() / 2 + enemies.get(i).getPositionX(), enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() + 10000);
-                } else {
-                    enemyFacing = new Vec2d(enemies.get(i).getPositionX() - 10000, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
-                }
-
-                //NORMALIZE VECTORS//
-                double length = Math.sqrt(Math.pow(enemyFacing.x, 2) + Math.pow(enemyFacing.y, 2));
-                enemyFacing.x = enemyFacing.x / length;
-                enemyFacing.y = enemyFacing.y / length;
-                length = Math.sqrt(Math.pow(enemyToPlayer.x, 2) + Math.pow(enemyToPlayer.y, 2));
-                enemyToPlayer.x = enemyToPlayer.x / length;
-                enemyToPlayer.y = enemyToPlayer.y / length;
-                double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
-
-                if (angle <= enemies.get(i).getFieldOfView() / 2) {
-                    Line2D line = new Line2D((float) enemies.get(i).getPositionX(), (float) enemies.get(i).getPositionY(), (float) player.getPositionX(), (float) player.getPositionY());
-                    enemies.get(i).awareness = 100;
-                } else {
-                    enemies.get(i).awareness = 0;
-                }
-
-
-                if (enemies.get(i).awareness >= 100 && complete == false) {
-                    if (enemies.get(i).enemyBullet == null) {
-                        enemies.get(i).bulletClock = new GameClock();
-                        enemies.get(i).enemyBullet = new Bullet("bullet", "knife.png", 0.2);
-                        enemies.get(i).enemyBullet.setStart(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
-                        enemies.get(i).enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
-                        TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
-                        Tween enemyBulletmovement = new Tween(enemies.get(i).enemyBullet, enemyBulletPath);
-                        enemyBulletmovement.animate(TweenableParams.X, enemies.get(i).enemyBullet.startValX, enemies.get(i).enemyBullet.endValX, 0.2);
-                        enemyBulletmovement.animate(TweenableParams.Y, enemies.get(i).enemyBullet.startValY, enemies.get(i).enemyBullet.endValY, 0.2);
-                        TweenJuggler.getInstance().add(enemyBulletmovement);
+            if (!enemies.get(i).dead) {
+                if (enemies.get(i).isInView(player)) {
+                    if (complete == false) {
+                        if (enemies.get(i).enemyBullet == null) {
+                            enemies.get(i).bulletClock = new GameClock();
+                            enemies.get(i).enemyBullet = new Bullet("bullet", "knife.png", 0.2);
+                            enemies.get(i).enemyBullet.setStart(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
+                            enemies.get(i).enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
+                            TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
+                            Tween enemyBulletmovement = new Tween(enemies.get(i).enemyBullet, enemyBulletPath);
+                            enemyBulletmovement.animate(TweenableParams.X, enemies.get(i).enemyBullet.startValX, enemies.get(i).enemyBullet.endValX, 0.2);
+                            enemyBulletmovement.animate(TweenableParams.Y, enemies.get(i).enemyBullet.startValY, enemies.get(i).enemyBullet.endValY, 0.2);
+                            TweenJuggler.getInstance().add(enemyBulletmovement);
+                        }
                     }
-                }
-                if (enemies.get(i).bulletClock != null) { //delete bullet after .2 seconds
-                    if (enemies.get(i).bulletClock.getElapsedTime() > 300) {
-                        enemies.get(i).bulletClock = null;
-                        enemies.get(i).enemyBullet = null;
+                    if (enemies.get(i).bulletClock != null) { //delete bullet after .2 seconds
+                        if (enemies.get(i).bulletClock.getElapsedTime() > 300) {
+                            enemies.get(i).bulletClock = null;
+                            enemies.get(i).enemyBullet = null;
+                        }
                     }
-                }
-                if (enemies.get(i).enemyBullet != null) {
-                    if (enemies.get(i).enemyBullet.collidesWith(player)) {
-                        System.out.println("collided");
-                        //player.getLifeArray().get(lifeCount).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
-                        enemies.get(i).enemyBullet = null;
-                        lifeCount--;
-                        if (lifeCount == 0) {
-                            complete = true;
-                            break;
+                    if (enemies.get(i).enemyBullet != null) {
+                        if (enemies.get(i).enemyBullet.collidesWith(player)) {
+                            System.out.println("collided");
+                            //player.getLifeArray().get(lifeCount).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
+                            enemies.get(i).enemyBullet = null;
+                            lifeCount--;
+                            if (lifeCount == 0) {
+                                complete = true;
+                                break;
+                            }
                         }
                     }
                 }
-
-
-                    Double y = enemies.get(i).getPositionY() + enemies.get(i).getPathY();
-                    Double x = enemies.get(i).getPositionX() + enemies.get(i).getPathX();
-                    Integer yLoc = y.intValue();
-                    Integer xLoc = x.intValue();
-
-                    pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
-
-
-
-            }
-            if (!enemies.get(i).dead) {
+                Double y = enemies.get(i).getPositionY() + enemies.get(i).getPathY();
+                Double x = enemies.get(i).getPositionX() + enemies.get(i).getPathX();
+                Integer yLoc = y.intValue();
+                Integer xLoc = x.intValue();
+                pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
                 for (int j = 0; j < playerBullets.size(); j++) {
                     Bullet bul = playerBullets.get(j);
                     if (bul.collidesWith(enemies.get(i))) {
@@ -644,10 +604,9 @@ public class ProjectGame extends Game {
                     }
                 }
             }
-
-
         }
     }
+
 
     public void checkCollisions(AnimatedSprite sprite) {
         for (int i = 0; i < collisionArray.size(); i++) {
@@ -800,8 +759,8 @@ public class ProjectGame extends Game {
             }
         }
 
-        for(int i=0; i<enemies.size();i++) {
-            if(enemies.get(i) !=null) {
+        for (int i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i) != null) {
                 enemies.get(i).draw(g);
                 if (enemies.get(i).enemyBullet != null) {
                     enemies.get(i).enemyBullet.draw(g);

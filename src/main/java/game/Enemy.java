@@ -1,5 +1,11 @@
 package game;
 
+import com.sun.javafx.geom.Line2D;
+import com.sun.javafx.geom.Vec2d;
+import engine.Tweens.Tween;
+import engine.Tweens.TweenJuggler;
+import engine.Tweens.TweenTransitions;
+import engine.Tweens.TweenableParams;
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
 import engine.util.GameClock;
@@ -165,6 +171,41 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     public void update(){
         super.update();
+    }
+
+    public boolean isInView(AnimatedSprite player){
+        this.setPositionY(this.getPositionY() + this.getPathY());
+        this.setPositionX(this.getPositionX() + this.getPathX());
+        this.isFacing();
+        Vec2d enemyFacing;
+        Vec2d enemyPos = new Vec2d(this.getPositionX() + this.getUnscaledWidth() / 2, this.getPositionY() + this.getUnscaledHeight() / 2);
+        Vec2d playerPos = new Vec2d(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
+        Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
+        if (this.getDirection() == 1) {
+            enemyFacing = new Vec2d(this.getUnscaledWidth() / 2 + this.getPositionX(), this.getPositionY() - 10000);
+        } else if (this.getDirection() == 2) {
+            enemyFacing = new Vec2d(this.getPositionX() + this.getUnscaledWidth() + 1000, this.getPositionY() + this.getUnscaledHeight() / 2);
+        } else if (this.getDirection() == 3) {
+            enemyFacing = new Vec2d(this.getUnscaledWidth() / 2 + this.getPositionX(), this.getPositionY() + this.getUnscaledHeight() + 10000);
+        } else {
+            enemyFacing = new Vec2d(this.getPositionX() - 10000, this.getPositionY() + this.getUnscaledHeight() / 2);
+        }
+
+        //NORMALIZE VECTORS//
+        double length = Math.sqrt(Math.pow(enemyFacing.x, 2) + Math.pow(enemyFacing.y, 2));
+        enemyFacing.x = enemyFacing.x / length;
+        enemyFacing.y = enemyFacing.y / length;
+        length = Math.sqrt(Math.pow(enemyToPlayer.x, 2) + Math.pow(enemyToPlayer.y, 2));
+        enemyToPlayer.x = enemyToPlayer.x / length;
+        enemyToPlayer.y = enemyToPlayer.y / length;
+        double angle = Math.toDegrees(Math.acos(enemyToPlayer.x * enemyFacing.x + enemyToPlayer.y * enemyFacing.y));
+
+        if (angle <= this.getFieldOfView() / 2) {
+            Line2D line = new Line2D((float) this.getPositionX(), (float) this.getPositionY(), (float) player.getPositionX(), (float) player.getPositionY());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
