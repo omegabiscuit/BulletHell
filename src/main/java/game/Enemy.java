@@ -4,6 +4,7 @@ import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
 import engine.util.GameClock;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -147,9 +148,6 @@ public class Enemy extends AnimatedSprite implements ItemListener {
             this.direction=4;
         }
     }
-
-
-
 
     public double getFieldOfView() {
         return fieldOfView;

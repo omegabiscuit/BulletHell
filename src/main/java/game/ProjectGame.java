@@ -42,7 +42,8 @@ public class ProjectGame extends Game {
     SoundManagerClass music = new SoundManagerClass();
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<Platformer>();
-    private AnimatedSprite player;
+    //private AnimatedSprite player;
+    private Player player;
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
     Heart life1 = new Heart("Heart", "heart.png");
@@ -160,10 +161,10 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-        lifeArray.add(life1);
-        lifeArray.add(life2);
-        lifeArray.add(life3);
-        lifeCount = lifeArray.size();
+//        lifeArray.add(life1);
+//        lifeArray.add(life2);
+//        lifeArray.add(life3);
+//        lifeCount = lifeArray.size();
         life1.setPositionX(390);
         life1.setPositionY(40);
         life2.setPositionX(420);
@@ -174,7 +175,8 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-        player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
+        //player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
+        player = new Player("player", "resources/player_sheet.png", "idle_right");
         player.setSpriteSheetJson("resources/player_sheet.json");
         player.setDelay(100);
         // player.setHasPhysics(true);
@@ -458,10 +460,12 @@ public class ProjectGame extends Game {
     public void update(ArrayList<String> pressedKeys) {
         Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 
+
         super.update(pressedKeys);
-        if (start) {
-            randomPositions();
-        }
+        player.update(pressedKeys);
+//        if (start) {
+//            randomPositions();
+//        }
 
         if (damageTimer < damageCap) {
             damageTimer++;
@@ -472,7 +476,7 @@ public class ProjectGame extends Game {
             for (int i = 0; i < enemies.size(); i++) {
                 if (player.collidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
                     damageTimer = 0;
-                    lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
+                    //player.getLifeArray().get(lifeCount - 1).handleEvent(reduceLife);AMED PLEASE FIX THIS LINE!!!
 
                     lifeCount--;
                     if (lifeCount == 0) {
@@ -495,7 +499,6 @@ public class ProjectGame extends Game {
             checkCollisions(player);
 
 
-
             for (int i = 0; i < playerBullets.size(); i++) {
                 Bullet bul = playerBullets.get(i);
                 bul.update(pressedKeys);
@@ -516,61 +519,7 @@ public class ProjectGame extends Game {
 
         }
 
-
-
-        boolean moving = false;
-
-        if (pressedKeys.contains("W")) {
-            player.setPositionY(player.getPositionY() - 5);
-            moving = true;
-            if (player.getStateName().contains("right") && !player.getStateName().equals("run_back_right")) {
-                player.setAnimationState("run_back_right", "");
-                player.setDelay(50);
-            } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_back_left")) {
-                player.setAnimationState("run_back_left", "");
-                player.setDelay(50);
-            }
-        }
-
-        if (pressedKeys.contains("S")) {
-            player.setPositionY(player.getPositionY() + 5);
-            moving = true;
-            if (player.getStateName().contains("right") && !player.getStateName().equals("run_front_right")) {
-                player.setAnimationState("run_front_right", "");
-                player.setDelay(50);
-            } else if (player.getStateName().contains("left") && !player.getStateName().equals("run_front_left")) {
-                player.setAnimationState("run_front_left", "");
-                player.setDelay(50);
-            }
-        }
-        if (pressedKeys.contains("D")) {
-            player.setPositionX(player.getPositionX() + 5);
-            moving = true;
-            if (!player.getStateName().equals("run_back_right") && !player.getStateName().equals("run_front_right")) {
-                player.setAnimationState("run_front_right", "");
-                player.setDelay(50);
-            }
-        }
-        if (pressedKeys.contains("A")) {
-            player.setPositionX(player.getPositionX() - 5);
-            moving = true;
-            if (!player.getStateName().equals("run_back_left") && !player.getStateName().equals("run_front_left")) {
-                player.setAnimationState("run_front_left", "");
-                player.setDelay(50);
-            }
-        }
-
-        if (!moving) {
-            if (player.getStateName().contains("right") && !player.getStateName().equals("idle_right")) {
-                player.setAnimationState("idle_right", "");
-                player.setDelay(100);
-            } else if (player.getStateName().contains("left") && !player.getStateName().equals("idle_left")) {
-                player.setAnimationState("idle_left", "");
-                player.setDelay(100);
-            }
-        }
-
-        if (pressedKeys.contains("Space")) {
+        if (pressedKeys.contains("E")) {
             Random rand = new Random();
 
             if (player.collidesWith(back3)) {
@@ -589,16 +538,16 @@ public class ProjectGame extends Game {
                 }
 
             }
-            pressedKeys.remove("Space");
+            pressedKeys.remove("E");
         }
 
         if (pressedKeys.contains("P")) {
-            for (int i = 0; i < lifeArray.size(); i++) {
+            for (int i = 0; i < player.getLifeArray().size(); i++) {
 
 
                 complete = false;
-                lifeArray.get(i).toggleVisibility();
-                lifeCount = lifeArray.size();
+                player.getLifeArray().get(i).toggleVisibility();
+                player.setLifeCount(player.getLifeArray().size());
                 player.setPositionX(550);
                 player.setPositionY(700);
             }
@@ -655,7 +604,7 @@ public class ProjectGame extends Game {
                     }
                 }
                 if (enemies.get(i).bulletClock != null) { //delete bullet after .2 seconds
-                    if (enemies.get(i).bulletClock.getElapsedTime() > 200) {
+                    if (enemies.get(i).bulletClock.getElapsedTime() > 300) {
                         enemies.get(i).bulletClock = null;
                         enemies.get(i).enemyBullet = null;
                     }
@@ -663,7 +612,7 @@ public class ProjectGame extends Game {
                 if (enemies.get(i).enemyBullet != null) {
                     if (enemies.get(i).enemyBullet.collidesWith(player)) {
                         System.out.println("collided");
-                        lifeArray.get(lifeCount - 1).handleEvent(reduceLife);
+                        //player.getLifeArray().get(lifeCount).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                         enemies.get(i).enemyBullet = null;
                         lifeCount--;
                         if (lifeCount == 0) {
@@ -708,33 +657,33 @@ public class ProjectGame extends Game {
 
     }
 
-    public void randomPositions() {
-
-        Random rand = new Random();
-        offset++;
-        for (int i = 0; i < collisionArray.size(); i++) {
-            int n = rand.nextInt(10) + 1;
-
-
-            if (offset > 300) {
-                offset = 1;
-            }
-
-
-            if (offset < 150 && offset > 1) {
-                collisionArray.get(i).setPositionX(collisionArray.get(i).getPositionX() + Math.random() * n);
-            }
-
-
-            if (offset < 300 && offset > 150) {
-                collisionArray.get(i).setPositionX(collisionArray.get(i).getPositionX() - Math.random() * n);
-            }
-
-
-        }
-
-
-    }
+//    public void randomPositions() {
+//
+//        Random rand = new Random();
+//        offset++;
+//        for (int i = 0; i < collisionArray.size(); i++) {
+//            int n = rand.nextInt(10) + 1;
+//
+//
+//            if (offset > 300) {
+//                offset = 1;
+//            }
+//
+//
+//            if (offset < 150 && offset > 1) {
+//                collisionArray.get(i).setPositionX(collisionArray.get(i).getPositionX() + Math.random() * n);
+//            }
+//
+//
+//            if (offset < 300 && offset > 150) {
+//                collisionArray.get(i).setPositionX(collisionArray.get(i).getPositionX() - Math.random() * n);
+//            }
+//
+//
+//        }
+//
+//
+//    }
 
 
     public void collide(Sprite sprite, Platformer platform) {
@@ -762,8 +711,6 @@ public class ProjectGame extends Game {
 
     @Override
     public void draw(Graphics g) {
-
-
         super.draw(g);
 
 
@@ -862,9 +809,9 @@ public class ProjectGame extends Game {
             }
         }
 
+
         if (player != null) {
             player.draw(g);
-
         }
 
 
@@ -902,9 +849,9 @@ public class ProjectGame extends Game {
 
 
         if (life1 != null) {
-            for (int i = 0; i < lifeArray.size(); i++) {
-                if (lifeArray.get(i).getVisibility())
-                    lifeArray.get(i).draw(g);
+            for (int i = 0; i < player.getLifeArray().size(); i++) {
+                if (player.getLifeArray().get(i).getVisibility())
+                    player.getLifeArray().get(i).draw(g);
 
             }
 
@@ -922,7 +869,7 @@ public class ProjectGame extends Game {
 
         if (pickpocket) {
 
-            g.drawString("Press Spacebar to pickpocket", 400, 400);
+            g.drawString("Press E to pickpocket", 400, 400);
 
         }
 
@@ -963,16 +910,9 @@ public class ProjectGame extends Game {
      * that calls update() and draw() every frame
      */
 
-
-    static long startTime;
-    int currentTime;
-
     public static void main(String[] args) {
         clock = new GameClock();
-
         ProjectGame game = new ProjectGame();
-
-
         game.start();
 
 
