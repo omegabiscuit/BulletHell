@@ -9,13 +9,14 @@ import java.awt.event.ItemListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventListener;
 
 /**
  * Created by Brigadoon on 4/16/2017.
  */
 
 
-public class Player extends AnimatedSprite implements ItemListener{
+public class Player extends AnimatedSprite implements EventListener{
 
     boolean moving = false;
 
@@ -42,12 +43,6 @@ public class Player extends AnimatedSprite implements ItemListener{
         lifeArray.add(life3);
         lifeCount = lifeArray.size();
         hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
-    }
-
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-
     }
 
     @Override
