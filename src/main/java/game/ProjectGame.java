@@ -54,6 +54,7 @@ public class ProjectGame extends Game {
     Heart life3 = new Heart("Heart", "heart.png");
 
     int keyCount;
+    int knifeCount;
     String itemString = "";
     boolean pickpocket = false;
     Rectangle2D cover;
@@ -73,6 +74,8 @@ public class ProjectGame extends Game {
 
     ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
     ArrayList<Enemy> enemies;
+
+    Enemy pickpocketEnemy;
 
 
     static GameClock clock;
@@ -129,6 +132,7 @@ public class ProjectGame extends Game {
         player.setDelay(100);
         // player.setHasPhysics(true);
         keyCount = 0;
+        knifeCount = 0;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -151,6 +155,7 @@ public class ProjectGame extends Game {
         enemy01.addRoute(400, 0, 2, 2);
         enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
+        enemy01.addKey();
 
 
         enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
@@ -162,7 +167,7 @@ public class ProjectGame extends Game {
         enemy02.addRoute(-400, 0, 2, 4);
         enemy02.addRoute(0, 800, 2, 1);
         enemy02.addRoute(400, 0, 2, 2);
-
+        enemy02.addKnife();
 
 
 
@@ -184,6 +189,8 @@ public class ProjectGame extends Game {
             myLevel.run();
 
         }
+
+        pickpocketEnemy = null;
 
     }
 
@@ -241,32 +248,38 @@ public class ProjectGame extends Game {
                 Enemy enemy = enemies.get(i);
                 if (player.getHitBox().intersects(enemy.getPickpocketRect())) {
                     pickpocketTrigger = true;
+                    pickpocketEnemy = enemy;
                 }
 
             }
             pickpocket = pickpocketTrigger;
+            if(!pickpocket)
+                pickpocketEnemy = null;
         }
 
         if (pressedKeys.contains("E")) {
-            Random rand = new Random();
-            if (pickpocket == true) {
-                int n = rand.nextInt(3) + 1;
-                if (n == 1) {
+//            Random rand = new Random();
+            if (pickpocket == true && pickpocketEnemy != null) {
 
-                    itemString = "You found a knife!";
-                } else if (n == 2) {
-                    keyCount++;
-                    itemString = "You found a key!";
-
-                } else if (n == 3) {
-                    itemString = "No items found.";
-                }
+                lootEnemy(pickpocketEnemy);
+//                int n = rand.nextInt(3) + 1;
+//                if (n == 1) {
+//
+//                    itemString = "You found a knife!";
+//                } else if (n == 2) {
+//                    keyCount++;
+//                    itemString = "You found a key!";
+//
+//                } else if (n == 3) {
+//                    itemString = "No items found.";
+//                }
             }
 
             if (keyCount > 0) {
                 for (int i = 0; i < myLevel.getDoors().size(); i++) {
                     if (player.getHitBox().intersects(myLevel.getDoors().get(i).getDoorCollider()) && myLevel.getDoors().get(i).stateName == "door_closed") {
                         myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
+                        itemString = "Door unlocked";
                         keyCount --;
                     }
                 }
@@ -522,6 +535,26 @@ public class ProjectGame extends Game {
         double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
         */
 
+    }
+
+
+    public void lootEnemy(Enemy enemy) {
+        keyCount += enemy.getKeyCount();
+        knifeCount += enemy.getKnifeCount();
+
+        if(enemy.getKeyCount() > 0) {
+            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
+        }
+        else if(enemy.getKnifeCount() > 0) {
+            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
+        }
+        else if(enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
+            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
+        }
+        else if(enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
+            itemString = "inventory empty";
+        }
+        enemy.emptyEnemyInventory();
     }
 
     /**

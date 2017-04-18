@@ -39,6 +39,10 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     Rectangle pickpocketRect;
 
+    /*****Inventory Stuff*****/
+    int knifeCount;
+    int keyCount;
+
     public Enemy(String id) {
         super(id, "", "");
         pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
@@ -239,4 +243,28 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         ((Graphics2D) g).draw(pickpocketRect);
 
     }
+
+
+
+    public void addKnife() {
+        knifeCount++;
+    }
+
+    public void addKey() {
+        keyCount++;
+    }
+
+   public int getKnifeCount() {
+       return knifeCount;
+   }
+
+   public int getKeyCount() {
+        return keyCount;
+   }
+
+   public void emptyEnemyInventory() {
+        keyCount = 0;
+        knifeCount = 0;
+   }
+
 }
