@@ -190,6 +190,7 @@ public class AnimatedSprite extends Sprite {
     }
     public void update(){
 
+
         if(delay == -1){
             return;
         }
