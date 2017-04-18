@@ -256,6 +256,16 @@ public class ProjectGame extends Game {
                     itemString = "No items found.";
                 }
             }
+
+            if (keyCount > 0) {
+                for (int i = 0; i < myLevel.getDoors().size(); i++) {
+                    if (player.getHitBox().intersects(myLevel.getDoors().get(i).getDoorCollider()) && myLevel.getDoors().get(i).stateName == "door_closed") {
+                        myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
+                        keyCount --;
+                    }
+                }
+            }
+
             pressedKeys.remove("E");
         }
 
@@ -320,6 +330,8 @@ public class ProjectGame extends Game {
                 }
             }
         }
+
+        myLevel.update();
     }
 
 

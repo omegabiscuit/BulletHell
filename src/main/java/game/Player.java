@@ -18,7 +18,7 @@ import java.util.EventListener;
 
 public class Player extends AnimatedSprite implements EventListener{
 
-    boolean moving = false;
+
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
     Heart life1 = new Heart("Heart", "heart.png");
@@ -48,17 +48,8 @@ public class Player extends AnimatedSprite implements EventListener{
     @Override
     public void update(ArrayList<String> pressedKeys) {
         super.update(pressedKeys);
-        if (!moving) {
-            if (this.getStateName().contains("right") && !this.getStateName().equals("idle_right")) {
-                this.setAnimationState("idle_right", "");
-                this.setDelay(100);
-            } else if (this.getStateName().contains("left") && !this.getStateName().equals("idle_left")) {
-                this.setAnimationState("idle_left", "");
-                this.setDelay(100);
-            }
-        }
 
-
+        boolean moving = false;
         if (pressedKeys.contains("W")) {
             this.setPositionY(this.getPositionY() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
@@ -100,6 +91,16 @@ public class Player extends AnimatedSprite implements EventListener{
             if (!this.getStateName().equals("run_back_left") && !this.getStateName().equals("run_front_left")) {
                 this.setAnimationState("run_front_left", "");
                 this.setDelay(50);
+            }
+        }
+
+        if (!moving) {
+            if (this.getStateName().contains("right") && !this.getStateName().equals("idle_right")) {
+                this.setAnimationState("idle_right", "");
+                this.setDelay(100);
+            } else if (this.getStateName().contains("left") && !this.getStateName().equals("idle_left")) {
+                this.setAnimationState("idle_left", "");
+                this.setDelay(100);
             }
         }
     }

@@ -3,6 +3,7 @@ package game;
 import engine.display.DisplayObject;
 import engine.display.Game;
 import engine.display.Sprite;
+import engine.display.AnimatedSprite;
 
 
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 
 
-public class Level0 {
+public class Level0 extends Room {
 
     public ArrayList<Platformer> collisionArray = new ArrayList<>();
 
@@ -73,6 +74,14 @@ public class Level0 {
     Platformer collider4;
     Platformer collider5;
     Platformer collider6;
+    Platformer collider7;
+    Platformer collider8;
+
+    LockedDoor door1;
+
+    public Level0() {
+        super();
+    }
 
     public void run() {
         //map stuff
@@ -175,7 +184,7 @@ public class Level0 {
         back1.setPositionX(ctile1.getPositionX());
         back1.setPositionY(ctile1.getPositionY() - ctile1.getUnscaledHeight());
 
-        collider1 = new Platformer("collider", "alpha_6x1.png");
+        collider1 = new Platformer("collider", "alpha_3x1.png");
         collider1.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
         collider1.setPositionY(back1.getPositionY());
 
@@ -183,13 +192,28 @@ public class Level0 {
         back2.setPositionX(ctile2.getPositionX());
         back2.setPositionY(ctile2.getPositionY() - ctile2.getUnscaledHeight());
 
-        back3 = new Sprite("back", "door_locked.png");
-        back3.setPositionX(ctile3.getPositionX());
-        back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
+      //  back3 = new Sprite("back", "door_locked.png");
+       // back3.setPositionX(ctile3.getPositionX());
+       // back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
+
+        door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
+        door1.setSpriteSheetJson("resources/door_opening.json");
+        door1.setDelay(100);
+        door1.setPositionX(ctile3.getPositionX());
+        door1.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
+
+        collider8 = new Platformer("collider", "alpha_3x1.png");
+        collider8.setPositionX(door1.getPositionX() - tile1.getUnscaledWidth());
+        collider8.setPositionY(door1.getPositionY() - 2*tile1.getUnscaledHeight()/3);
+
 
         back4 = new Sprite("back", "pillar_door_right.png");
         back4.setPositionX(ctile4.getPositionX());
         back4.setPositionY(ctile4.getPositionY() - ctile4.getUnscaledHeight());
+
+        collider7 = new Platformer("collider", "alpha_2x1.png");
+        collider7.setPositionX(back4.getPositionX());
+        collider7.setPositionY(back4.getPositionY());
 
         toptile1 = new Sprite("tt", "top_tile_1.png");
         toptile1.setPositionX(back1.getPositionX());
@@ -202,8 +226,8 @@ public class Level0 {
         toptile2.setRotation(-3.14 / 2);
 
         toptile3 = new Sprite("tt", "top_tile_1.png");
-        toptile3.setPositionX(back3.getPositionX());
-        toptile3.setPositionY(back3.getPositionY());
+        toptile3.setPositionX(door1.getPositionX());
+        toptile3.setPositionY(door1.getPositionY());
         toptile3.setRotation(-3.14 / 2);
 
         toptile4 = new Sprite("tt", "top_tile_3.png");
@@ -283,15 +307,21 @@ public class Level0 {
         corner2.setPositionY(toptile1.getPositionY() - toptile1.getUnscaledWidth());
         corner2.setScaleX(-1);
 
+
         collisionArray.add(collider1);
         collisionArray.add(collider2);
         collisionArray.add(collider3);
         collisionArray.add(collider4);
         collisionArray.add(collider5);
         collisionArray.add(collider6);
+        collisionArray.add(collider7);
+        collisionArray.add(collider8);
+
+        doors.add(door1);
     }
 
     public void draw(Graphics g) {
+        super.draw(g);
         tile1.draw(g);
         tile2.draw(g);
         tile3.draw(g);
@@ -314,7 +344,7 @@ public class Level0 {
         ctile4.draw(g);
         back1.draw(g);
         back2.draw(g);
-        back3.draw(g);
+      //  back3.draw(g);
         back4.draw(g);
 
 
@@ -340,7 +370,7 @@ public class Level0 {
         ctile4.draw(g);
         back1.draw(g);
         back2.draw(g);
-        back3.draw(g);
+        //back3.draw(g);
         back4.draw(g);
         toptile1.draw(g);
         toptile2.draw(g);
@@ -366,5 +396,14 @@ public class Level0 {
         collider4.draw(g);
         collider5.draw(g);
         collider6.draw(g);
+        collider7.draw(g);
+        collider8.draw(g);
+
+        door1.draw(g);
+    }
+
+    public void update() {
+        super.update();
+        door1.update();
     }
 }
