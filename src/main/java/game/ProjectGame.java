@@ -12,6 +12,7 @@ import com.sun.javafx.geom.Line2D;
 import com.sun.javafx.geom.Vec2d;
 import engine.Tweens.*;
 import engine.display.AnimatedSprite;
+import engine.display.DisplayObjectContainer;
 import engine.display.Game;
 import engine.display.Sprite;
 import engine.events.Event;
@@ -176,7 +177,10 @@ public class ProjectGame extends Game {
 
             enemies.add(enemy01);
             enemies.add(enemy02);
-            myLevel = new Level0();
+            myLevel = new Level0("Room1");
+            addChild(myLevel);
+            myLevel.registerEnemy(enemy01);
+            myLevel.registerEnemy(enemy02);
             myLevel.run();
 
         }

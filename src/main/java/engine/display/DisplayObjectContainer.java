@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class DisplayObjectContainer extends DisplayObject{
 	private DisplayObjectContainer parent;
 	private ArrayList<DisplayObjectContainer> list = new ArrayList<DisplayObjectContainer>();
-	
 
 	
 	public DisplayObjectContainer(String id) {
