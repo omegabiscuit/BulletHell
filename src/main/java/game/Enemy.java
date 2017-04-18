@@ -37,16 +37,21 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     public Bullet enemyBullet = null;
     public boolean dead = false;
 
+    Rectangle pickpocketRect;
+
     public Enemy(String id) {
         super(id, "", "");
+        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
     }
 
     public Enemy(String id, String fileName) {
         super(id, fileName);
+        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
     }
 
     public Enemy(String id, String fileName, String startState) {
         super(id, fileName, startState);
+        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
     }
 
 
@@ -58,6 +63,10 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     public void clearRoute() {
         routePatternTemplate = new ArrayList<>();
         routePattern = new ArrayList<>();
+    }
+
+    public Rectangle getPickpocketRect() {
+        return pickpocketRect;
     }
 
     public double getPathX() {
@@ -174,6 +183,12 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     public void update(){
         super.update();
+
+        Double y = getPositionY() + getPathY();
+        Double x = getPositionX() + getPathX();
+        Integer yLoc = y.intValue();
+        Integer xLoc = x.intValue();
+        pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
     }
 
     public boolean isInView(AnimatedSprite player, ArrayList<Rectangle2D> coverList){
@@ -221,6 +236,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     {
 	/* Call the super draw method in DisplayObject class */
         super.draw(g);
+        ((Graphics2D) g).draw(pickpocketRect);
 
     }
 }

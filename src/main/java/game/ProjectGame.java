@@ -52,7 +52,7 @@ public class ProjectGame extends Game {
     Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
     Heart life3 = new Heart("Heart", "heart.png");
-    Rectangle pickpocketRect;
+
     int keyCount;
     String itemString = "";
     boolean pickpocket = false;
@@ -163,7 +163,7 @@ public class ProjectGame extends Game {
         enemy02.addRoute(0, 800, 2, 1);
         enemy02.addRoute(400, 0, 2, 2);
 
-        pickpocketRect = new Rectangle(570, 300, enemy01.getUnscaledWidth() + 110, enemy01.getUnscaledHeight() + 110);
+
 
 
         coin.setPositionY(250);
@@ -235,12 +235,16 @@ public class ProjectGame extends Game {
 
             TweenJuggler.getInstance().nextFrame();
 
-            if (player.getHitBox().intersects(pickpocketRect)) {
-                pickpocket = true;
-            } else {
-                pickpocket = false;
-            }
+            boolean pickpocketTrigger = false;
+            for(int i = 0; i < enemies.size(); i++) {
 
+                Enemy enemy = enemies.get(i);
+                if (player.getHitBox().intersects(enemy.getPickpocketRect())) {
+                    pickpocketTrigger = true;
+                }
+
+            }
+            pickpocket = pickpocketTrigger;
         }
 
         if (pressedKeys.contains("E")) {
@@ -316,11 +320,11 @@ public class ProjectGame extends Game {
                         }
                     }
                 }
-                Double y = enemies.get(i).getPositionY() + enemies.get(i).getPathY();
-                Double x = enemies.get(i).getPositionX() + enemies.get(i).getPathX();
-                Integer yLoc = y.intValue();
-                Integer xLoc = x.intValue();
-                pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
+                
+                
+                
+                
+                
                 for (int j = 0; j < playerBullets.size(); j++) {
                     Bullet bul = playerBullets.get(j);
                     if (bul.collidesWith(enemies.get(i))) {
@@ -480,7 +484,7 @@ public class ProjectGame extends Game {
         g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
         g.drawString(itemString, 200, 90);
 
-        ((Graphics2D) g).draw(pickpocketRect);
+
 
         if (pickpocket) {
 
