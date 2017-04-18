@@ -21,7 +21,7 @@ public class Player extends AnimatedSprite implements EventListener{
     boolean moving = false;
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
-    Heart life1 = new Heart("Heart", "heart.png");
+    public Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
     Heart life3 = new Heart("Heart", "heart.png");
     int lifeCount;
@@ -41,7 +41,7 @@ public class Player extends AnimatedSprite implements EventListener{
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
-        lifeCount = lifeArray.size();
+        lifeCount = lifeArray.size()-1;
         hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
     }
 

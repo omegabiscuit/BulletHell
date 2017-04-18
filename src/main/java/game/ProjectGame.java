@@ -54,7 +54,6 @@ public class ProjectGame extends Game {
     Rectangle pickpocketRect;
     int keyCount;
     String itemString = "";
-    int lifeCount;
     boolean pickpocket = false;
     Rectangle2D cover;
     ArrayList<Rectangle2D> coverList;
@@ -205,10 +204,9 @@ public class ProjectGame extends Game {
             for (int i = 0; i < enemies.size(); i++) {
                 if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
                     damageTimer = 0;
-                    //player.getLifeArray().get(lifeCount - 1).handleEvent(reduceLife);
-
-                    lifeCount--;
-                    if (lifeCount == 0) {
+                    player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);
+                    player.setLifeCount(player.getLifeCount()-1);
+                    if (player.getLifeCount() == 0) {
                         complete = true;
                     }
                 }
@@ -294,10 +292,10 @@ public class ProjectGame extends Game {
                     if (enemies.get(i).enemyBullet != null) {
                         if (enemies.get(i).enemyBullet.collidesWith(player)) {
                             System.out.println("collided");
-                            //player.getLifeArray().get(lifeCount).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
+                            player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                             enemies.get(i).enemyBullet = null;
-                            lifeCount--;
-                            if (lifeCount == 0) {
+                            player.setLifeCount(player.getLifeCount()-1);
+                            if (player.getLifeCount() == 0) {
                                 complete = true;
                                 break;
                             }
@@ -450,7 +448,7 @@ public class ProjectGame extends Game {
 //            }
 
 
-        if (life1 != null) {
+        if (player.life1 != null) {
             for (int i = 0; i < player.getLifeArray().size(); i++) {
                 if (player.getLifeArray().get(i).getVisibility())
                     player.getLifeArray().get(i).draw(g);
