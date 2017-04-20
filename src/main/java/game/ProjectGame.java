@@ -38,7 +38,7 @@ public class ProjectGame extends Game {
     //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
 
     boolean start = false;
-    SoundManagerClass music = new SoundManagerClass();
+
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<>();
     private Player player;
@@ -222,7 +222,6 @@ public class ProjectGame extends Game {
             for (int i = 0; i < playerBullets.size(); i++) {
                 Bullet bul = playerBullets.get(i);
                 bul.update(pressedKeys);
-                System.out.println(bul.getShotTimer());
                 if (bul.getShotTimer() >= bul.getShotCap()) {
 
                     playerBullets.remove(i);
@@ -322,6 +321,13 @@ public class ProjectGame extends Game {
                 
                 for (int j = 0; j < playerBullets.size(); j++) {
                     Bullet bul = playerBullets.get(j);
+                    for(int k=0; k < myLevel.collisionArray.size();k++){
+                        if(bul.collidesWith(myLevel.collisionArray.get(k))){
+                            playerBullets.remove(j);
+                            System.out.println("collided with cover");
+                            break;
+                        }
+                    }
                     if (bul.collidesWith(enemies.get(i))) {
                         enemies.get(i).dead = true;
                         enemies.get(i).enemyBullet = null;
@@ -508,6 +514,8 @@ public class ProjectGame extends Game {
         TweenJuggler.getInstance().add(bulletmovement);
 
         playerBullets.add(bul);
+
+        player.handleEvent(collidedEvent);
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);

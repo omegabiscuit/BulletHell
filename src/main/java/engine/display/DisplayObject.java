@@ -180,7 +180,7 @@ public class DisplayObject {
 			
 			
 		} catch (IOException e) {
-			System.out.println("[Error in DisplayObject.java:readImage] Could not read image " + imageName);
+			//System.out.println("[Error in DisplayObject.java:readImage] Could not read image " + imageName);
 			e.printStackTrace();
 		}
 		return image;

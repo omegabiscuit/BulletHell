@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class Level0 extends Room {
 
     public ArrayList<Platformer> collisionArray = new ArrayList<>();
+    SoundManagerClass music = new SoundManagerClass();
 
     Sprite tile1;
     Sprite tile2;

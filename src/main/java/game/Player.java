@@ -2,6 +2,9 @@ package game;
 
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
+import engine.display.Sprite;
+import engine.events.*;
+import engine.events.Event;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -16,8 +19,9 @@ import java.util.EventListener;
  */
 
 
-public class Player extends AnimatedSprite implements EventListener{
+public class Player extends AnimatedSprite implements IEventListener {
 
+    SoundManagerClass soundEffects = new SoundManagerClass();
 
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
@@ -132,5 +136,18 @@ public class Player extends AnimatedSprite implements EventListener{
 
     public Rectangle2D getHitbox() {
         return hitbox;
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event.getEventType() == "collidedEvent"){
+            soundEffects.playSoundEffect("knife1.wav");
+            System.out.println("playSound");
+        }
+    }
+
+    @Override
+    public void handleEvent(Event event, Sprite sprite) {
+
     }
 }

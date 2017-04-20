@@ -18,7 +18,7 @@ public class QuestManager implements IEventListener {
         	
         }
         if (event.getEventType() == "playerDeath"){
-            System.out.println("player is dead");
+            //System.out.println("player is dead");
         }
     }
 
