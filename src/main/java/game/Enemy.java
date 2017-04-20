@@ -34,16 +34,18 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     double fieldOfView = 80;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double awareness=0; //how aware the enemy is to the player's presence
-    public Boolean shooting = false;
     public GameClock bulletClock = null;
     public Bullet enemyBullet = null;
     public boolean dead = false;
+    ArrayList<String> knifeSounds = new ArrayList<>();
+    SoundManagerClass soundEffects = new SoundManagerClass();
 
     Rectangle pickpocketRect;
 
     public Enemy(String id) {
         super(id, "", "");
         pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        knifeSounds.add("resources/knife3.mp3");
     }
 
     public Enemy(String id, String fileName) {
@@ -54,6 +56,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     public Enemy(String id, String fileName, String startState) {
         super(id, fileName, startState);
         pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        knifeSounds.add("resources/knife3.mp3");
     }
 
 
@@ -233,7 +236,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     @Override
     public void handleEvent(Event event) {
         if(event.getEventType() == "throwKnife"){
-            //soundEffects.playSoundEffect("knife1.wav");
+            soundEffects.playMusic(knifeSounds.get((int)Math.random()*knifeSounds.size()));//random knife sound
             System.out.println("play Enemy Knife sound");
         }
     }

@@ -22,6 +22,8 @@ import java.util.EventListener;
 public class Player extends AnimatedSprite implements IEventListener {
 
     SoundManagerClass soundEffects = new SoundManagerClass();
+    ArrayList<String> knifeSounds = new ArrayList<>();
+
 
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
@@ -38,6 +40,9 @@ public class Player extends AnimatedSprite implements IEventListener {
         lifeArray.add(life3);
         lifeCount = lifeArray.size();
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
+        knifeSounds.add("resources/knife1.mp3");
+        knifeSounds.add("resources/knife2.mp3");
+
     }
 
     public Player(String id, String fileName) {
@@ -141,7 +146,7 @@ public class Player extends AnimatedSprite implements IEventListener {
     @Override
     public void handleEvent(Event event) {
         if(event.getEventType() == "throwKnife"){
-            //soundEffects.playSoundEffect("knife1.wav");
+            soundEffects.playMusic(knifeSounds.get((int)Math.random()*3));//choose a random knife sound
             System.out.println("play Player Knife sound");
         }
     }
