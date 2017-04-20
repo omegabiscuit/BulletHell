@@ -31,6 +31,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     Boolean stall = false;
     double fieldOfView = 80;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
+    double previousDirection;
     double awareness=0; //how aware the enemy is to the player's presence
     public Boolean shooting = false;
     public GameClock bulletClock = null;
@@ -39,23 +40,39 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     Rectangle pickpocketRect;
 
+    double previousPositionX;
+    double previousPositionY;
+
+    int pauseTime;
+    int pauseCap = 150;
+
+
     /*****Inventory Stuff*****/
     int knifeCount;
     int keyCount;
 
     public Enemy(String id) {
         super(id, "", "");
-        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+       // pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
+        previousPositionX = getPositionX();
+        previousPositionY = getPositionY();
     }
 
     public Enemy(String id, String fileName) {
         super(id, fileName);
-        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+      //  pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
+        previousPositionX = getPositionX();
+        previousPositionY = getPositionY();
     }
 
     public Enemy(String id, String fileName, String startState) {
         super(id, fileName, startState);
-        pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+      //  pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
+        previousPositionX = getPositionX();
+        previousPositionY = getPositionY();
     }
 
 
@@ -171,6 +188,46 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
     }
 
+    public void decideAnimationState() {
+
+        if(previousDirection != 0) {
+            if(isMoving()) {
+                if (direction != previousDirection) {
+                    pauseTime = 0;
+                    if (previousDirection == 2 && direction == 1)
+                        setAnimationState("walk back right", "");
+                    else if (previousDirection == 2 && direction == 3)
+                        setAnimationState("walk right", "");
+                    else if (previousDirection == 4 && direction == 1)
+                        setAnimationState("walk back left", "");
+                    else if (previousDirection == 4 && direction == 3)
+                        setAnimationState("walk left", "");
+                } else {
+                    if (direction == 1) {
+                        setAnimationState("walk back right", "");
+                    } else if (direction == 2) {
+                        setAnimationState("walk right", "");
+                    } else if (direction == 3) {
+                        setAnimationState("walk left", "");
+                    } else if (direction == 4) {
+                        setAnimationState("walk left", "");
+                    }
+
+                }
+            } else {
+                if(getStateName().contains("right") && getStateName().contains("back")) {
+                    setAnimationState("idle back right", "");
+                } else if(getStateName().contains("left") && getStateName().contains("back")) {
+                    setAnimationState("idle back left", "");
+                } else if(getStateName().contains("right")) {
+                    setAnimationState("idle right", "");
+                } else {
+                    setAnimationState("idle left", "");
+                }
+            }
+        }
+    }
+
     public double getFieldOfView() {
         return fieldOfView;
     }
@@ -188,16 +245,48 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     public void update(){
         super.update();
 
-        Double y = getPositionY() + getPathY();
-        Double x = getPositionX() + getPathX();
-        Integer yLoc = y.intValue();
-        Integer xLoc = x.intValue();
-        pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
+        if(pauseTime <= pauseCap) {
+            pauseTime += 1;
+            Double y = getPositionY();
+            Double x = getPositionX();
+            Integer yLoc = y.intValue();
+            Integer xLoc = x.intValue();
+            pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
+        } else {
+            Double y = getPositionY() + getPathY();
+            Double x = getPositionX() + getPathX();
+            Integer yLoc = y.intValue();
+            Integer xLoc = x.intValue();
+            pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
+        }
+
+        if(!isDead())
+            decideAnimationState();
+
+        previousDirection = direction;
+        previousPositionX = getPositionX();
+        previousPositionY = getPositionY();
+    }
+
+    public boolean isMoving() {
+        if(previousPositionX == getPositionX() && previousPositionY == getPositionY()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isDead() {
+        if(dead) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isInView(AnimatedSprite player, ArrayList<Rectangle2D> coverList){
-        this.setPositionY(this.getPositionY() + this.getPathY());
-        this.setPositionX(this.getPositionX() + this.getPathX());
+        if(pauseTime > pauseCap) {
+            this.setPositionY(this.getPositionY() + this.getPathY());
+            this.setPositionX(this.getPositionX() + this.getPathX());
+        }
         this.isFacing();
         Vec2d enemyFacing;
         Vec2d enemyPos = new Vec2d(this.getPositionX() + this.getUnscaledWidth() / 2, this.getPositionY() + this.getUnscaledHeight() / 2);
@@ -205,12 +294,20 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         Vec2d enemyToPlayer = new Vec2d(playerPos.x - enemyPos.x, playerPos.y - enemyPos.y);
         if (this.getDirection() == 1) {
             enemyFacing = new Vec2d(this.getUnscaledWidth() / 2 + this.getPositionX(), this.getPositionY() - 10000);
+//            if(!stateName.equals("walk back left"))
+//                setAnimationState("walk back left", "");
         } else if (this.getDirection() == 2) {
             enemyFacing = new Vec2d(this.getPositionX() + this.getUnscaledWidth() + 1000, this.getPositionY() + this.getUnscaledHeight() / 2);
+//            if(!stateName.equals("walk right"))
+//                setAnimationState("walk right", "");
         } else if (this.getDirection() == 3) {
             enemyFacing = new Vec2d(this.getUnscaledWidth() / 2 + this.getPositionX(), this.getPositionY() + this.getUnscaledHeight() + 10000);
+//            if(!stateName.equals("walk right"))
+//                setAnimationState("walk right", "");
         } else {
             enemyFacing = new Vec2d(this.getPositionX() - 10000, this.getPositionY() + this.getUnscaledHeight() / 2);
+//            if(!stateName.equals("walk left"))
+//                setAnimationState("walk left", "");
         }
 
         //NORMALIZE VECTORS//

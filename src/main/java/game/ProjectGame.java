@@ -146,9 +146,9 @@ public class ProjectGame extends Game {
         player.setPositionX(550);
         player.setPositionY(700);
         enemies = new ArrayList<>();
-        enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
+        enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
         enemy01.setSpriteSheetJson("resources/gator_sheet.json");
-        enemy01.setDelay(100);
+        enemy01.setDelay(75);
         enemy01.setPositionX(250);
         enemy01.setPositionY(550);
         enemy01.addRoute(0, 800, 2, 1);
@@ -158,9 +158,9 @@ public class ProjectGame extends Game {
         enemy01.addKey();
 
 
-        enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle");
+        enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
         enemy02.setSpriteSheetJson("resources/gator_sheet.json");
-        enemy02.setDelay(100);
+        enemy02.setDelay(75);
         enemy02.setPositionX(700);
         enemy02.setPositionY(150);
         enemy02.addRoute(0, -800, 2, 3);
@@ -215,7 +215,8 @@ public class ProjectGame extends Game {
             for (int i = 0; i < enemies.size(); i++) {
                 if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
                     damageTimer = 0;
-                    player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);
+                    if(player.getLifeCount() != 0)
+                        player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);
                     player.setLifeCount(player.getLifeCount()-1);
                     if (player.getLifeCount() == 0) {
                         complete = true;
@@ -233,7 +234,7 @@ public class ProjectGame extends Game {
             for (int i = 0; i < playerBullets.size(); i++) {
                 Bullet bul = playerBullets.get(i);
                 bul.update(pressedKeys);
-                System.out.println(bul.getShotTimer());
+              //  System.out.println(bul.getShotTimer());
                 if (bul.getShotTimer() >= bul.getShotCap()) {
 
                     playerBullets.remove(i);
@@ -343,7 +344,13 @@ public class ProjectGame extends Game {
                     if (bul.collidesWith(enemies.get(i))) {
                         enemies.get(i).dead = true;
                         enemies.get(i).enemyBullet = null;
-                        enemies.get(i).setAnimationState("dying", "dead");
+                         if(enemies.get(i).getStateName().contains("right")) {
+                             enemies.get(i).setDelay(90);
+                             enemies.get(i).setAnimationState("dying right", "dead right");
+                         } else {
+                             enemies.get(i).setDelay(90);
+                             enemies.get(i).setAnimationState("dying left", "dead left");
+                         }
                         playerBullets.remove(j);
                     }
                 }

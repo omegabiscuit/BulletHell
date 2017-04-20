@@ -117,7 +117,8 @@ public class AnimatedSprite extends Sprite {
     }
 
     public void setAnimationState(String state, String ns) {
-        currentFrame = 0;
+        if(stateName != state)
+            currentFrame = 0;
 
         nextState = ns;
 
@@ -208,6 +209,8 @@ public class AnimatedSprite extends Sprite {
                 currentFrame = 0;
             }
         }
+        if(getId() == "enemy")
+            System.out.println(stateName);
         super.setImage(stateFrames.get(currentFrame));
     }
 
