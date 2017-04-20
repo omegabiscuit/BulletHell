@@ -9,6 +9,8 @@ import engine.Tweens.TweenableParams;
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
 import engine.display.Sprite;
+import engine.events.*;
+import engine.events.Event;
 import engine.util.GameClock;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ import static java.lang.Math.PI;
 /**
  * Created by Brigadoon on 3/30/2017.
  */
-public class Enemy extends AnimatedSprite implements ItemListener {
+public class Enemy extends AnimatedSprite implements IEventListener {
     ArrayList<double[]> routePatternTemplate = new ArrayList<>();
     ArrayList<double[]> routePattern = new ArrayList<>();
     GameClock clock = new GameClock();
@@ -33,10 +35,11 @@ public class Enemy extends AnimatedSprite implements ItemListener {
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double previousDirection;
     double awareness=0; //how aware the enemy is to the player's presence
-    public Boolean shooting = false;
     public GameClock bulletClock = null;
     public Bullet enemyBullet = null;
     public boolean dead = false;
+    ArrayList<String> knifeSounds = new ArrayList<>();
+    SoundManagerClass soundEffects = new SoundManagerClass();
 
     Rectangle pickpocketRect;
 
@@ -53,10 +56,15 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     public Enemy(String id) {
         super(id, "", "");
+
         pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
        // pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
         previousPositionX = getPositionX();
         previousPositionY = getPositionY();
+
+     //   pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        knifeSounds.add("resources/knife3.mp3");
+
     }
 
     public Enemy(String id, String fileName) {
@@ -69,10 +77,15 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     public Enemy(String id, String fileName, String startState) {
         super(id, fileName, startState);
+
         pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
       //  pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
         previousPositionX = getPositionX();
         previousPositionY = getPositionY();
+
+    //    pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+        knifeSounds.add("resources/knife3.mp3");
+
     }
 
 
@@ -188,6 +201,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
     }
 
+
     public void decideAnimationState() {
 
         if(previousDirection != 0) {
@@ -228,19 +242,10 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
     }
 
-    public double getFieldOfView() {
-        return fieldOfView;
-    }
-
-
-    public double getDirection() {
-        return direction;
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-
-    }
+//
+//    @Override
+//    public void itemStateChanged(ItemEvent e) {
+//    }
 
     public void update(){
         super.update();
@@ -341,8 +346,6 @@ public class Enemy extends AnimatedSprite implements ItemListener {
 
     }
 
-
-
     public void addKnife() {
         knifeCount++;
     }
@@ -363,5 +366,28 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         keyCount = 0;
         knifeCount = 0;
    }
+
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event.getEventType() == "throwKnife"){
+            soundEffects.playMusic(knifeSounds.get((int)Math.random()*knifeSounds.size()));//random knife sound
+            System.out.println("play Enemy Knife sound");
+        }
+    }
+
+    @Override
+    public void handleEvent(Event event, Sprite sprite) {
+
+    }
+
+    public double getFieldOfView() {
+        return fieldOfView;
+    }
+
+
+    public double getDirection() {
+        return direction;
+    }
 
 }

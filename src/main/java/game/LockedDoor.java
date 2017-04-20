@@ -17,7 +17,7 @@ public class LockedDoor extends AnimatedSprite {
         super(id, fileName, startState);
 
         doorCollider = new Rectangle((int)getPositionX(), (int)getPositionY(), 128, 64);
-        System.out.println(doorCollider);
+        //System.out.println(doorCollider);
     }
 
     public void update() {

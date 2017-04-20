@@ -2,6 +2,9 @@ package game;
 
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
+import engine.display.Sprite;
+import engine.events.*;
+import engine.events.Event;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -16,11 +19,15 @@ import java.util.EventListener;
  */
 
 
-public class Player extends AnimatedSprite implements EventListener{
+public class Player extends AnimatedSprite implements IEventListener {
+
+    SoundManagerClass soundEffects = new SoundManagerClass();
+    ArrayList<String> knifeSounds = new ArrayList<>();
 
 
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
+    public boolean isDead = false;
     public Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
     Heart life3 = new Heart("Heart", "heart.png");
@@ -34,6 +41,9 @@ public class Player extends AnimatedSprite implements EventListener{
         lifeArray.add(life3);
         lifeCount = lifeArray.size();
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
+        knifeSounds.add("resources/knife1.mp3");
+        knifeSounds.add("resources/knife2.mp3");
+
     }
 
     public Player(String id, String fileName) {
@@ -132,5 +142,18 @@ public class Player extends AnimatedSprite implements EventListener{
 
     public Rectangle2D getHitbox() {
         return hitbox;
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event.getEventType() == "throwKnife"){
+            soundEffects.playMusic(knifeSounds.get((int)Math.random()*3));//choose a random knife sound
+            System.out.println("play Player Knife sound");
+        }
+    }
+
+    @Override
+    public void handleEvent(Event event, Sprite sprite) {
+
     }
 }
