@@ -140,9 +140,9 @@ public class Player extends AnimatedSprite implements IEventListener {
 
     @Override
     public void handleEvent(Event event) {
-        if(event.getEventType() == "collidedEvent"){
-            soundEffects.playSoundEffect("knife1.wav");
-            System.out.println("playSound");
+        if(event.getEventType() == "throwKnife"){
+            //soundEffects.playSoundEffect("knife1.wav");
+            System.out.println("play Player Knife sound");
         }
     }
 

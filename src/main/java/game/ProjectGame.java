@@ -33,6 +33,7 @@ public class ProjectGame extends Game {
     TweenEvent tweenEvent;
     boolean complete = false;
     Event collidedEvent;
+    Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
     //  Platformer platform = new Platformer("Rectangele", "platform.png");
     //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
@@ -88,7 +89,9 @@ public class ProjectGame extends Game {
         this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
-        GlobalCooldown = new GameClock();
+        throwKnife = new Event();
+        throwKnife.setEventType("throwKnife");
+
         currentLevel = 0;
 
         damageTimer = 100;
@@ -280,32 +283,34 @@ public class ProjectGame extends Game {
             }
         }
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).update();
-            if (!enemies.get(i).dead) {
-                if (enemies.get(i).isInView(player,myLevel.coverList)) {
+            Enemy currentEnemy = enemies.get(i);
+            currentEnemy.update();
+            if (!currentEnemy.dead) {
+                if (currentEnemy.isInView(player,myLevel.coverList)) {
                     if (complete == false) {
-                        if (enemies.get(i).enemyBullet == null) {
-                            enemies.get(i).bulletClock = new GameClock();
-                            enemies.get(i).enemyBullet = new Bullet("bullet", "knife.png", 0.2);
-                            enemies.get(i).enemyBullet.setStart(enemies.get(i).getPositionX() + enemies.get(i).getUnscaledWidth() / 2, enemies.get(i).getPositionY() + enemies.get(i).getUnscaledHeight() / 2);
-                            enemies.get(i).enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
+                        if (currentEnemy.enemyBullet == null) {
+                            currentEnemy.bulletClock = new GameClock();
+                            currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.2);
+                            currentEnemy.enemyBullet.setStart(currentEnemy.getPositionX() + currentEnemy.getUnscaledWidth() / 2, currentEnemy.getPositionY() + currentEnemy.getUnscaledHeight() / 2);
+                            currentEnemy.enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
                             TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
-                            Tween enemyBulletmovement = new Tween(enemies.get(i).enemyBullet, enemyBulletPath);
-                            enemyBulletmovement.animate(TweenableParams.X, enemies.get(i).enemyBullet.startValX, enemies.get(i).enemyBullet.endValX, 0.2);
-                            enemyBulletmovement.animate(TweenableParams.Y, enemies.get(i).enemyBullet.startValY, enemies.get(i).enemyBullet.endValY, 0.2);
+                            Tween enemyBulletmovement = new Tween(currentEnemy.enemyBullet, enemyBulletPath);
+                            enemyBulletmovement.animate(TweenableParams.X, currentEnemy.enemyBullet.startValX, currentEnemy.enemyBullet.endValX, 0.2);
+                            enemyBulletmovement.animate(TweenableParams.Y, currentEnemy.enemyBullet.startValY, currentEnemy.enemyBullet.endValY, 0.2);
                             TweenJuggler.getInstance().add(enemyBulletmovement);
+                            currentEnemy.handleEvent(throwKnife);
                         }
                     }
-                    if (enemies.get(i).bulletClock != null) { //delete bullet after .2 seconds
-                        if (enemies.get(i).bulletClock.getElapsedTime() > 300) {
-                            enemies.get(i).bulletClock = null;
-                            enemies.get(i).enemyBullet = null;
+                    if (currentEnemy.bulletClock != null) { //delete bullet after .2 seconds
+                        if (currentEnemy.bulletClock.getElapsedTime() > 300) {
+                            currentEnemy.bulletClock = null;
+                            currentEnemy.enemyBullet = null;
                         }
                     }
-                    if (enemies.get(i).enemyBullet != null) {
-                        if (enemies.get(i).enemyBullet.collidesWith(player)) {
+                    if (currentEnemy.enemyBullet != null) {
+                        if (currentEnemy.enemyBullet.collidesWith(player)) {
                             player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
-                            enemies.get(i).enemyBullet = null;
+                            currentEnemy.enemyBullet = null;
                             player.setLifeCount(player.getLifeCount()-1);
                             if (player.getLifeCount() == 0) {
                                 complete = true;
@@ -515,7 +520,7 @@ public class ProjectGame extends Game {
 
         playerBullets.add(bul);
 
-        player.handleEvent(collidedEvent);
+        player.handleEvent(throwKnife);
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);

@@ -9,6 +9,8 @@ import engine.Tweens.TweenableParams;
 import engine.display.AnimatedSprite;
 import engine.display.DisplayObject;
 import engine.display.Sprite;
+import engine.events.*;
+import engine.events.Event;
 import engine.util.GameClock;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ import static java.lang.Math.PI;
 /**
  * Created by Brigadoon on 3/30/2017.
  */
-public class Enemy extends AnimatedSprite implements ItemListener {
+public class Enemy extends AnimatedSprite implements IEventListener {
     ArrayList<double[]> routePatternTemplate = new ArrayList<>();
     ArrayList<double[]> routePattern = new ArrayList<>();
     GameClock clock = new GameClock();
@@ -167,19 +169,7 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         }
     }
 
-    public double getFieldOfView() {
-        return fieldOfView;
-    }
 
-
-    public double getDirection() {
-        return direction;
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-
-    }
 
     public void update(){
         super.update();
@@ -238,5 +228,27 @@ public class Enemy extends AnimatedSprite implements ItemListener {
         super.draw(g);
         ((Graphics2D) g).draw(pickpocketRect);
 
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event.getEventType() == "throwKnife"){
+            //soundEffects.playSoundEffect("knife1.wav");
+            System.out.println("play Enemy Knife sound");
+        }
+    }
+
+    @Override
+    public void handleEvent(Event event, Sprite sprite) {
+
+    }
+
+    public double getFieldOfView() {
+        return fieldOfView;
+    }
+
+
+    public double getDirection() {
+        return direction;
     }
 }
