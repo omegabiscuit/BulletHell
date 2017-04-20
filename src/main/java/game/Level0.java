@@ -8,6 +8,7 @@ import engine.display.AnimatedSprite;
 
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -68,6 +69,8 @@ public class Level0 extends Room {
     Sprite dbthin1;
     Sprite dbthin2;
 
+    Platformer crate;
+
     Platformer collider1;
     Platformer collider2;
     Platformer collider3;
@@ -78,6 +81,8 @@ public class Level0 extends Room {
     Platformer collider8;
 
     LockedDoor door1;
+
+    ArrayList<Rectangle2D> coverList;
 
     public Level0(String id) {
         super(id);
@@ -353,6 +358,12 @@ public class Level0 extends Room {
         corner2.setScaleX(-1);
         addChild(corner2);
 
+        crate = new Platformer("cover", "crate.png");
+        crate.setPositionX(550);
+        crate.setPositionY(400);
+        coverList = new ArrayList<>(); //list of cover sprites
+        coverList.add(convertToCover(crate));
+
         collisionArray.add(collider1);
         collisionArray.add(collider2);
         collisionArray.add(collider3);
@@ -361,8 +372,11 @@ public class Level0 extends Room {
         collisionArray.add(collider6);
         collisionArray.add(collider7);
         collisionArray.add(collider8);
+        collisionArray.add(crate);
 
         doors.add(door1);
+
+
     }
 
     public void draw(Graphics g) {
@@ -445,6 +459,8 @@ public class Level0 extends Room {
         collider8.draw(g);
 
         door1.draw(g);
+
+        crate.draw(g);
     }
 
     public void update() {

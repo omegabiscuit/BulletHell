@@ -24,10 +24,6 @@ import game.Level0;
 
 public class ProjectGame extends Game {
 
-
-    /* Create a sprite object for our game. We'll use mario */
-    Sprite mario = new Sprite("Mario", "gator.png");
-
     GameClock GlobalCooldown;
     QuestManager myQuestManager = new QuestManager();
     Event PickedUpEvent;
@@ -45,10 +41,8 @@ public class ProjectGame extends Game {
     SoundManagerClass music = new SoundManagerClass();
     Sprite background = new Sprite("Background", "background.png");
     ArrayList<Platformer> collisionArray = new ArrayList<>();
-    //private AnimatedSprite player;
     private Player player;
 
-    ArrayList<Heart> lifeArray = new ArrayList<>();
     Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
     Heart life3 = new Heart("Heart", "heart.png");
@@ -57,7 +51,7 @@ public class ProjectGame extends Game {
     String itemString = "";
     boolean pickpocket = false;
     Rectangle2D cover;
-    ArrayList<Rectangle2D> coverList;
+    //ArrayList<Rectangle2D> coverList;
 
     ///Level 0////
     private Enemy enemy01;
@@ -169,7 +163,7 @@ public class ProjectGame extends Game {
         coin.setPositionY(250);
         coin.setPositionX(660);
         //Rectangle2D rect = new Rectangle2D.Float(600,400,700,500);
-        coverList = new ArrayList<Rectangle2D>(); //list of cover sprites
+        //coverList = new ArrayList<Rectangle2D>(); //list of cover sprites
         //coverList.add(rect);
 
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
@@ -197,7 +191,9 @@ public class ProjectGame extends Game {
 
 
         super.update(pressedKeys);
-        player.update(pressedKeys);
+        if(player != null) {
+            player.update(pressedKeys);
+        }
 
         if (damageTimer < damageCap) {
             damageTimer++;
@@ -287,7 +283,7 @@ public class ProjectGame extends Game {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
             if (!enemies.get(i).dead) {
-                if (enemies.get(i).isInView(player,coverList)) {
+                if (enemies.get(i).isInView(player,myLevel.coverList)) {
                     if (complete == false) {
                         if (enemies.get(i).enemyBullet == null) {
                             enemies.get(i).bulletClock = new GameClock();
@@ -309,7 +305,6 @@ public class ProjectGame extends Game {
                     }
                     if (enemies.get(i).enemyBullet != null) {
                         if (enemies.get(i).enemyBullet.collidesWith(player)) {
-                            System.out.println("collided");
                             player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                             enemies.get(i).enemyBullet = null;
                             player.setLifeCount(player.getLifeCount()-1);

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import engine.display.DisplayObjectContainer;
+import engine.display.Sprite;
 
 /**
  * Created by Tyler on 4/17/2017.
@@ -95,5 +96,9 @@ public class Room extends DisplayObjectContainer{
         if(fadeComplete) {
             fadingIn = false;
         }
+    }
+
+    public Rectangle2D convertToCover(Sprite sprite){
+        return new Rectangle2D.Double(sprite.getPositionX(),sprite.getPositionY(),sprite.getUnscaledWidth(),sprite.getUnscaledHeight());
     }
 }

@@ -20,7 +20,7 @@ public class Heart extends Sprite implements IEventListener {
 
         if (event.getEventType()=="Collision") {
             this.toggleVisibility();
-            System.out.println("this is being called");
+           // System.out.println("this is being called");
         }
     }
 
