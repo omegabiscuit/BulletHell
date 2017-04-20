@@ -31,6 +31,7 @@ public class ProjectGame extends Game {
     Event die;
     Event reduceLife;
     TweenEvent tweenEvent;
+    boolean pause = false;
     boolean complete = false;
     Event collidedEvent;
     Event throwKnife;
@@ -161,8 +162,6 @@ public class ProjectGame extends Game {
         enemy02.addRoute(400, 0, 2, 2);
 
 
-
-
         coin.setPositionY(250);
         coin.setPositionX(660);
         //Rectangle2D rect = new Rectangle2D.Float(600,400,700,500);
@@ -194,7 +193,7 @@ public class ProjectGame extends Game {
 
 
         super.update(pressedKeys);
-        if(player != null) {
+        if (player != null && !player.isDead) {
             player.update(pressedKeys);
         }
 
@@ -203,12 +202,12 @@ public class ProjectGame extends Game {
         }
 
 
-        if (player != null) {
+        if (player != null && !player.isDead) {
             for (int i = 0; i < enemies.size(); i++) {
                 if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
                     damageTimer = 0;
-                    player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);
-                    player.setLifeCount(player.getLifeCount()-1);
+                    player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);
+                    player.setLifeCount(player.getLifeCount() - 1);
                     if (player.getLifeCount() == 0) {
                         complete = true;
                     }
@@ -234,7 +233,7 @@ public class ProjectGame extends Game {
             TweenJuggler.getInstance().nextFrame();
 
             boolean pickpocketTrigger = false;
-            for(int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
 
                 Enemy enemy = enemies.get(i);
                 if (player.getHitBox().intersects(enemy.getPickpocketRect())) {
@@ -265,7 +264,7 @@ public class ProjectGame extends Game {
                 for (int i = 0; i < myLevel.getDoors().size(); i++) {
                     if (player.getHitBox().intersects(myLevel.getDoors().get(i).getDoorCollider()) && myLevel.getDoors().get(i).stateName == "door_closed") {
                         myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
-                        keyCount --;
+                        keyCount--;
                     }
                 }
             }
@@ -276,6 +275,7 @@ public class ProjectGame extends Game {
         if (pressedKeys.contains("P")) {
             for (int i = 0; i < player.getLifeArray().size(); i++) {
                 complete = false;
+                player.isDead = false;
                 player.getLifeArray().get(i).toggleVisibility();
                 player.setLifeCount(player.getLifeArray().size());
                 player.setPositionX(550);
@@ -286,7 +286,7 @@ public class ProjectGame extends Game {
             Enemy currentEnemy = enemies.get(i);
             currentEnemy.update();
             if (!currentEnemy.dead) {
-                if (currentEnemy.isInView(player,myLevel.coverList)) {
+                if (currentEnemy.isInView(player, myLevel.coverList)) {
                     if (complete == false) {
                         if (currentEnemy.enemyBullet == null) {
                             currentEnemy.bulletClock = new GameClock();
@@ -309,25 +309,23 @@ public class ProjectGame extends Game {
                     }
                     if (currentEnemy.enemyBullet != null) {
                         if (currentEnemy.enemyBullet.collidesWith(player)) {
-                            player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
+                            player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                             currentEnemy.enemyBullet = null;
-                            player.setLifeCount(player.getLifeCount()-1);
+                            player.setLifeCount(player.getLifeCount() - 1);
                             if (player.getLifeCount() == 0) {
                                 complete = true;
+                                player.isDead = true;
                                 break;
                             }
                         }
                     }
                 }
-                
-                
-                
-                
-                
+
+
                 for (int j = 0; j < playerBullets.size(); j++) {
                     Bullet bul = playerBullets.get(j);
-                    for(int k=0; k < myLevel.collisionArray.size();k++){
-                        if(bul.collidesWith(myLevel.collisionArray.get(k))){
+                    for (int k = 0; k < myLevel.collisionArray.size(); k++) {
+                        if (bul.collidesWith(myLevel.collisionArray.get(k))) {
                             playerBullets.remove(j);
                             System.out.println("collided with cover");
                             break;
@@ -433,7 +431,6 @@ public class ProjectGame extends Game {
         }
 
 
-
         if (player != null) {
             player.draw(g);
         }
@@ -491,7 +488,6 @@ public class ProjectGame extends Game {
         g.drawString(itemString, 200, 90);
 
 
-
         if (pickpocket) {
 
             g.drawString("Press E to pickpocket", 400, 400);
@@ -504,23 +500,24 @@ public class ProjectGame extends Game {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Bullet bul = new Bullet("bullet", "knife.png", 0.2);
-        double mouseX = e.getX();
-        double mouseY = e.getY();
+        if (!player.isDead) {
+            Bullet bul = new Bullet("bullet", "knife.png", 0.2);
+            double mouseX = e.getX();
+            double mouseY = e.getY();
 
-        bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
-        bul.setEnd(mouseX, mouseY);
+            bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
+            bul.setEnd(mouseX, mouseY);
 
 
-        TweenTransitions bulletPath = new TweenTransitions("linearTransition");
-        Tween bulletmovement = new Tween(bul, bulletPath);
-        bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX, 0.2);
-        bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
-        TweenJuggler.getInstance().add(bulletmovement);
+            TweenTransitions bulletPath = new TweenTransitions("linearTransition");
+            Tween bulletmovement = new Tween(bul, bulletPath);
+            bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX, 0.2);
+            bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
+            TweenJuggler.getInstance().add(bulletmovement);
 
-        playerBullets.add(bul);
+            playerBullets.add(bul);
 
-        player.handleEvent(throwKnife);
+            player.handleEvent(throwKnife);
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
@@ -529,7 +526,7 @@ public class ProjectGame extends Game {
         double maxWc = player.getCenterX() + (player.getUnscaledWidth() / 2);
         double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
         */
-
+        }
     }
 
     /**

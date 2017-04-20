@@ -27,6 +27,7 @@ public class Player extends AnimatedSprite implements IEventListener {
 
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
+    public boolean isDead = false;
     public Heart life1 = new Heart("Heart", "heart.png");
     Heart life2 = new Heart("Heart", "heart.png");
     Heart life3 = new Heart("Heart", "heart.png");
