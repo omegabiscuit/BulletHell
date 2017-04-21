@@ -18,6 +18,11 @@ public class Room extends DisplayObjectContainer{
     boolean fadingIn;
     boolean fadingOut;
 
+    boolean doneFading;
+
+    ArrayList<Rectangle2D> coverList;
+    public ArrayList<Platformer> collisionArray = new ArrayList<>();
+
 
     private static double fadeSpeed = 0.01;
 
@@ -27,6 +32,8 @@ public class Room extends DisplayObjectContainer{
 
         fadingIn = false;
         fadingOut = false;
+
+        doneFading = false;
     }
 
     public void draw(Graphics g) {
@@ -63,7 +70,7 @@ public class Room extends DisplayObjectContainer{
         boolean fadeComplete = true;
         for (int i = 0; i < children.size(); i++) {
             DisplayObjectContainer child = children.get(i);
-            if (child.getTransparency() > 0.0) {
+            if (child.getTransparency() > 0.00001) {
                 child.setTransparency((float) (child.getTransparency() - fadeSpeed));
                 fadeComplete = false;
             } else {
@@ -73,6 +80,7 @@ public class Room extends DisplayObjectContainer{
 
         if(fadeComplete) {
             fadingOut = false;
+            doneFading = fadeComplete;
         }
     }
 
@@ -81,11 +89,13 @@ public class Room extends DisplayObjectContainer{
     }
 
     protected void applyFadeIn() {
+
+
         ArrayList<DisplayObjectContainer> children = getChildren();
         boolean fadeComplete = true;
         for (int i = 0; i < children.size(); i++) {
             DisplayObjectContainer child = children.get(i);
-            if (child.getTransparency() < 1.0) {
+            if (child.getTransparency() < 0.9999 ) {
                 child.setTransparency((float) (child.getTransparency() + fadeSpeed));
                 fadeComplete = false;
             } else {
@@ -95,10 +105,63 @@ public class Room extends DisplayObjectContainer{
 
         if(fadeComplete) {
             fadingIn = false;
+            doneFading = fadeComplete;
         }
     }
 
     public Rectangle2D convertToCover(Sprite sprite){
         return new Rectangle2D.Double(sprite.getPositionX(),sprite.getPositionY(),sprite.getUnscaledWidth(),sprite.getUnscaledHeight());
+    }
+
+
+    public void disableRoom() {
+
+    }
+
+    public void moveRoomX(double movex) {
+
+        ArrayList<DisplayObjectContainer> children = getChildren();
+        for (int i = 0; i < children.size(); i++) {
+
+            DisplayObjectContainer child = children.get(i);
+
+
+            child.setPositionX(child.getPositionX() + movex);
+
+
+        }
+    }
+
+
+    public void moveRoomY(double movey) {
+
+        ArrayList<DisplayObjectContainer> children = getChildren();
+        for (int i = 0; i < children.size(); i++) {
+
+            DisplayObjectContainer child = children.get(i);
+            child.setPositionY(child.getPositionY() + movey);
+
+        }
+    }
+
+    public void mapDoorToRoom(int doorIndx, Room nextRoom) {
+        doors.get(doorIndx).setNextRoom(nextRoom);
+    }
+
+
+    public void hide() {
+        ArrayList<DisplayObjectContainer> children = getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            DisplayObjectContainer child = children.get(i);
+            child.setTransparency((float)0.0);
+        }
+    }
+
+    public boolean getDoneFading() {
+        return doneFading;
+    }
+
+    public void setDoneFading(boolean done) {
+
     }
 }

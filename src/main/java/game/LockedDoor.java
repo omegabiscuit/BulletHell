@@ -11,12 +11,13 @@ import java.util.ArrayList;
 public class LockedDoor extends AnimatedSprite {
 
     Rectangle doorCollider;
+    Room nextRoom;
 
     public LockedDoor(String id, String fileName, String startState) {
 
         super(id, fileName, startState);
 
-        doorCollider = new Rectangle((int)getPositionX(), (int)getPositionY(), 128, 64);
+        doorCollider = new Rectangle((int)getPositionX(), (int)getPositionY(), 128, 40);
     }
 
     public void update() {
@@ -33,6 +34,15 @@ public class LockedDoor extends AnimatedSprite {
     public Rectangle2D getDoorCollider() {
         return doorCollider;
     }
+
+    public void setNextRoom(Room next) {
+        nextRoom = next;
+    }
+
+    public Room getNextRoom() {
+        return nextRoom;
+    }
+
 
     @Override
     public void setPositionX(double x) {

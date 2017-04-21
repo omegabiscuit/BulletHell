@@ -66,7 +66,9 @@ public class ProjectGame extends Game {
     int damageCap = 100;
     int damageTimer;
     int currentLevel;
+
     Level0 myLevel;
+    Level1 myLevel1;
 
     ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
     ArrayList<Enemy> enemies;
@@ -77,6 +79,14 @@ public class ProjectGame extends Game {
     static GameClock clock;
 
     SoundManagerClass soundEffects = new SoundManagerClass();
+
+
+    Room currentRoom;
+    Room queuedRoom;
+
+    double transitionY;
+    double transitionYSpeed = 5;
+    double transitionYCurrent;
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -186,9 +196,24 @@ public class ProjectGame extends Game {
             myLevel.registerEnemy(enemy02);
             myLevel.run();
 
+            myLevel1 = new Level1("Room2");
+            addChild(myLevel1);
+           // myLevel1.registerEnemy(enemy01);
+          //  myLevel.registerEnemy(enemy02);
+
+            myLevel1.run();
+            myLevel1.hide();
+            
+            myLevel.mapDoorToRoom(0, myLevel1);
+
+            currentRoom = myLevel;
+
         }
 
         pickpocketEnemy = null;
+
+        transitionY = 615;
+        transitionYCurrent = 615;
 
     }
 
@@ -202,12 +227,21 @@ public class ProjectGame extends Game {
 
 
         super.update(pressedKeys);
+
+        //moveGameY(1);
+
+
         if (player != null && !player.isDead) {
             player.update(pressedKeys);
         }
 
         if (damageTimer < damageCap) {
             damageTimer++;
+        }
+
+        if(transitionYCurrent < transitionY) {
+            moveGameY(transitionYSpeed);
+            transitionYCurrent += transitionYSpeed;
         }
 
 
@@ -276,17 +310,22 @@ public class ProjectGame extends Game {
             }
 
 
-                for (int i = 0; i < myLevel.getDoors().size(); i++) {
+                for (int i = 0; i < currentRoom.getDoors().size(); i++) {
 
-                    if (player.getHitBox().intersects(myLevel.getDoors().get(i).getDoorCollider()) && myLevel.getDoors().get(i).stateName == "door_closed") {
+                    if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_closed") {
                         if (keyCount > 0) {
                             soundEffects.playMusic("resources/chains.wav");
-                            myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
+                            currentRoom.getDoors().get(i).setAnimationState("door_opening", "door_open");
                             itemString = "Door unlocked";
                             keyCount--;
                         } else {
                             soundEffects.playMusic("resources/door_locked.wav");
                         }
+                    } else if(player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open") {
+                        currentRoom.fadeOut();
+                        queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
+                        queuedRoom.fadeIn();
+                        transitionYCurrent = 0;
                     }
                 }
             
@@ -308,7 +347,7 @@ public class ProjectGame extends Game {
             Enemy currentEnemy = enemies.get(i);
             currentEnemy.update();
             if (!currentEnemy.dead) {
-                if (currentEnemy.isInView(player, myLevel.coverList)) {
+                if (currentEnemy.isInView(player, currentRoom.coverList)) {
                     if (complete == false) {
                         if (currentEnemy.enemyBullet == null) {
                             currentEnemy.bulletClock = new GameClock();
@@ -346,8 +385,8 @@ public class ProjectGame extends Game {
 
                 for (int j = 0; j < playerBullets.size(); j++) {
                     Bullet bul = playerBullets.get(j);
-                    for (int k = 0; k < myLevel.collisionArray.size(); k++) {
-                        if (bul.collidesWith(myLevel.collisionArray.get(k))) {
+                    for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+                        if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
                             playerBullets.remove(j);
                          //  System.out.println("collided with cover");
                             break;
@@ -369,13 +408,25 @@ public class ProjectGame extends Game {
             }
         }
 
-        myLevel.update();
+        currentRoom.update();
+
+        if(queuedRoom != null) {
+            queuedRoom.update();
+
+            if(queuedRoom.getDoneFading() && currentRoom.getDoneFading()) {
+                
+                queuedRoom.setDoneFading(false);
+                currentRoom.setDoneFading(false);
+                currentRoom = queuedRoom;
+                queuedRoom = null;
+            }
+        }
     }
 
 
     public void checkCollisions(AnimatedSprite sprite) {
-        for (int i = 0; i < myLevel.collisionArray.size(); i++) {
-            collide(sprite, myLevel.collisionArray.get(i));
+        for (int i = 0; i < currentRoom.collisionArray.size(); i++) {
+            collide(sprite, currentRoom.collisionArray.get(i));
 
         }
 
@@ -438,7 +489,16 @@ public class ProjectGame extends Game {
 
         if (background != null) {
             background.draw(g);
-            myLevel.draw(g);
+
+        }
+
+
+        if(queuedRoom != null) {
+            queuedRoom.draw(g);
+        }
+
+        if(currentRoom != null) {
+            currentRoom.draw(g);
         }
 
 
@@ -577,6 +637,34 @@ public class ProjectGame extends Game {
         enemy.emptyEnemyInventory();
     }
 
+    public void switchRooms(Room original, Room next) {
+        
+    }
+
+
+    public void moveGameX(double movex) {
+
+          ArrayList<DisplayObjectContainer> children = getChildren();
+          for (int i = 0; i < children.size(); i++) {
+              DisplayObjectContainer child = children.get(i);
+              if(child instanceof Room)
+                  ((Room)child).moveRoomX(movex);
+          }
+    }
+
+    public void moveGameY(double movey) {
+
+       ArrayList<DisplayObjectContainer> children = getChildren();
+       for (int i = 0; i < children.size(); i++) {
+           DisplayObjectContainer child = children.get(i);
+           if(child instanceof Room)
+               ((Room)child).moveRoomY(movey);
+       }                                                              }
+
+    public void setGamePositionY(double y) {
+
+    }
+
     /**
      * Quick main class that simply creates an instance of our game and starts the timer
      * that calls update() and draw() every frame
@@ -589,4 +677,5 @@ public class ProjectGame extends Game {
 
 
     }
+
 }

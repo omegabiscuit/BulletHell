@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Level0 extends Room {
 
-    public ArrayList<Platformer> collisionArray = new ArrayList<>();
+
     SoundManagerClass music = new SoundManagerClass();
 
     Sprite tile1;
@@ -83,7 +83,7 @@ public class Level0 extends Room {
 
     LockedDoor door1;
 
-    ArrayList<Rectangle2D> coverList;
+
 
     public Level0(String id) {
         super(id);
@@ -234,9 +234,10 @@ public class Level0 extends Room {
         door1.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
         addChild(door1);
 
+
         collider8 = new Platformer("collider", "alpha_3x1.png");
         collider8.setPositionX(door1.getPositionX() - tile1.getUnscaledWidth());
-        collider8.setPositionY(door1.getPositionY() - 2*tile1.getUnscaledHeight()/3);
+        collider8.setPositionY(door1.getPositionY() - 3*tile1.getUnscaledHeight()/4);
         addChild(collider8);
 
         back4 = new Sprite("back", "pillar_door_right.png");
@@ -364,6 +365,7 @@ public class Level0 extends Room {
         crate.setPositionY(400);
         coverList = new ArrayList<>(); //list of cover sprites
         coverList.add(convertToCover(crate));
+        addChild(crate);
 
         collisionArray.add(collider1);
         collisionArray.add(collider2);

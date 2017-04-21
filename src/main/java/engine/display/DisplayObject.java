@@ -451,7 +451,7 @@ public class DisplayObject {
 		
 	}
 	public void setTransparency(float a){
-		if(a<1 && a>0){
+		if(a<=1 && a>=0){
 		alpha = a;
 		}
 		
