@@ -51,6 +51,15 @@ public class Level1 extends Room {
     Platformer collider1;
     Platformer collider2;
 
+    Platformer cover1;
+    Platformer cover2;
+
+    Sprite coverBottom1;
+    Sprite coverBottom2;
+
+    Sprite coverShadow1;
+    Sprite coverShadow2;
+
 
     public Level1(String id) {
         super(id);
@@ -74,7 +83,7 @@ public class Level1 extends Room {
         addChild(tile3);
 
         wall1 = new Sprite("tile", "dark_brick_thin.png");
-        wall1.setPositionX(tile3.getPositionX() + tile3.getUnscaledWidth());
+        wall1.setPositionX(tile3.getPositionX() + tile3.getUnscaledWidth() - 4);
         wall1.setPositionY(tile3.getPositionY());
         addChild(wall1);
 
@@ -105,7 +114,7 @@ public class Level1 extends Room {
         addChild(wall6);
 
         wall7 = new Sprite("tile", "dark_brick_thin.png");
-        wall7.setPositionX(tile2.getPositionX() - wall7.getUnscaledWidth());
+        wall7.setPositionX(tile2.getPositionX() - wall7.getUnscaledWidth() + 4);
         wall7.setPositionY(tile2.getPositionY());
         addChild(wall7);
 
@@ -169,10 +178,20 @@ public class Level1 extends Room {
         tile10.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*2);
         addChild(tile10);
 
-        collider1 = new Platformer("tile", "cover1.png");
-        collider1.setPositionX(tile10.getPositionX());
-        collider1.setPositionY(tile10.getPositionY());
-        addChild(collider1);
+        cover1 = new Platformer("tile", "cover_top_only_horizontal.png");
+        cover1.setPositionX(tile10.getPositionX());
+        cover1.setPositionY(tile10.getPositionY());
+        coverList = new ArrayList<>(); //list of cover sprites
+        coverList.add(convertToCover(cover1));
+        addChild(cover1);
+        coverBottom1 = new Sprite("corner", "cover_bottom.png");
+        coverBottom1.setPositionX(cover1.getPositionX());
+        coverBottom1.setPositionY(cover1.getPositionY() + cover1.getUnscaledHeight());
+        addChild(coverBottom1);
+        coverShadow1 = new Sprite("corner", "cover_shadow_right_bottom.png");
+        coverShadow1.setPositionX(cover1.getPositionX() - 16);
+        coverShadow1.setPositionY(cover1.getPositionY());
+        addChild(coverShadow1);
 
         tile11 = new Sprite("tile", "tile.png");
         tile11.setPositionX(tile2.getPositionX() + 4);
@@ -200,10 +219,20 @@ public class Level1 extends Room {
         tile14.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*2);
         addChild(tile14);
 
-        collider2 = new Platformer("tile", "cover1.png");
-        collider2.setPositionX(tile14.getPositionX());
-        collider2.setPositionY(tile14.getPositionY());
-        addChild(collider2);
+        cover2 = new Platformer("tile", "cover_top_only_horizontal.png");
+        cover2.setPositionX(tile14.getPositionX());
+        cover2.setPositionY(tile14.getPositionY());
+        coverList.add(convertToCover(cover2));
+        addChild(cover2);
+        coverBottom2 = new Sprite("corner", "cover_bottom.png");
+        coverBottom2.setPositionX(cover2.getPositionX());
+        coverBottom2.setPositionY(cover2.getPositionY() + cover2.getUnscaledHeight());
+        addChild(coverBottom2);
+        coverShadow2 = new Sprite("corner", "cover_shadow_left_bottom.png");
+        coverShadow2.setPositionX(cover2.getPositionX() - 16);
+        coverShadow2.setPositionY(cover2.getPositionY());
+        addChild(coverShadow2);
+
 
         tile15 = new Sprite("tile", "tile.png");
         tile15.setPositionX(tile3.getPositionX() - 4);
@@ -228,7 +257,8 @@ public class Level1 extends Room {
 
 
         collisionArray.add(collider1);
-        collisionArray.add(collider2);
+        collisionArray.add(cover1);
+        collisionArray.add(cover2);
 
     }
 
@@ -269,8 +299,19 @@ public class Level1 extends Room {
         back2.draw(g);
         back3.draw(g);
 
+        coverShadow1.draw(g);
+        coverShadow2.draw(g);
+
+        coverBottom1.draw(g);
+        coverBottom2.draw(g);
+
+        cover1.draw(g);
+        cover2.draw(g);
+
         collider1.draw(g);
-        collider2.draw(g);
+       // collider2.draw(g);
+
+
     }
 
     public void update() {

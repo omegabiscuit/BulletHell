@@ -71,6 +71,8 @@ public class Level0 extends Room {
     Sprite dbthin2;
 
     Platformer crate;
+    Sprite coverBottom1;
+    Sprite coverShadow1;
 
     Platformer collider1;
     Platformer collider2;
@@ -360,12 +362,20 @@ public class Level0 extends Room {
         corner2.setScaleX(-1);
         addChild(corner2);
 
-        crate = new Platformer("cover", "cover1.png");
-        crate.setPositionX(550);
-        crate.setPositionY(400);
+        crate = new Platformer("cover", "cover_top_only_horizontal.png");
+        crate.setPositionX(tile9.getPositionX());
+        crate.setPositionY(tile9.getPositionY() + 64);
         coverList = new ArrayList<>(); //list of cover sprites
         coverList.add(convertToCover(crate));
         addChild(crate);
+        coverBottom1 = new Sprite("corner", "cover_bottom.png");
+        coverBottom1.setPositionX(crate.getPositionX());
+        coverBottom1.setPositionY(crate.getPositionY() + crate.getUnscaledHeight());
+        addChild(coverBottom1);
+        coverShadow1 = new Sprite("corner", "cover_shadow.png");
+        coverShadow1.setPositionX(crate.getPositionX() - 16);
+        coverShadow1.setPositionY(crate.getPositionY());
+        addChild(coverShadow1);
 
         collisionArray.add(collider1);
         collisionArray.add(collider2);
@@ -461,9 +471,12 @@ public class Level0 extends Room {
         collider7.draw(g);
         collider8.draw(g);
 
+        coverShadow1.draw(g);
+
         door1.draw(g);
 
         crate.draw(g);
+        coverBottom1.draw(g);
     }
 
     public void update() {

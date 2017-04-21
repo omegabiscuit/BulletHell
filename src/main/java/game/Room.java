@@ -164,4 +164,24 @@ public class Room extends DisplayObjectContainer{
     public void setDoneFading(boolean done) {
 
     }
+
+//    public void createCover(Platformer top, Sprite bottom, Sprite shadow, double posX, double posY) {
+//        top = new Platformer("cover", "cover_top_only_horizontal.png");
+//        top.setPositionX(posX);
+//        top.setPositionY(posY);
+//
+//        coverList.add(convertToCover(top));
+//        addChild(top);
+//        bottom = new Sprite("corner", "cover_bottom.png");
+//        bottom.setPositionX(top.getPositionX());
+//        bottom.setPositionY(top.getPositionY() + top.getUnscaledHeight());
+//        addChild(bottom);
+//        shadow = new Sprite("corner", "cover_shadow.png");
+//        shadow.setPositionX(top.getPositionX() - 16);
+//        shadow.setPositionY(top.getPositionY());
+//        addChild(shadow);
+//
+//        collisionArray.add(top);
+//    }
+
 }
