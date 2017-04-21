@@ -109,17 +109,6 @@ public class ProjectGame extends Game {
         background.setScaleX(5);
         background.setScaleY(5);
 
-
-//        lifeArray.add(life1);
-//        lifeArray.add(life2);
-//        lifeArray.add(life3);
-//        lifeCount = lifeArray.size();
-        life1.setPositionX(390);
-        life1.setPositionY(40);
-        life2.setPositionX(420);
-        life2.setPositionY(40);
-        life3.setPositionX(450);
-        life3.setPositionY(40);
         background.setScaleX(5);
         background.setScaleY(5);
 
@@ -128,6 +117,13 @@ public class ProjectGame extends Game {
         player = new Player("player", "resources/player_sheet.png", "idle_right");
         player.setSpriteSheetJson("resources/player_sheet.json");
         player.setDelay(100);
+
+        player.getLifeArray().get(0).setPositionX(390);
+        player.getLifeArray().get(0).setPositionY(40);
+        player.getLifeArray().get(1).setPositionX(420);
+        player.getLifeArray().get(1).setPositionY(40);
+        player.getLifeArray().get(2).setPositionX(450);
+        player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
         knifeCount = 0;
@@ -290,8 +286,8 @@ public class ProjectGame extends Game {
             for (int i = 0; i < player.getLifeArray().size(); i++) {
                 complete = false;
                 player.isDead = false;
-                player.getLifeArray().get(i).toggleVisibility();
-                player.setLifeCount(player.getLifeArray().size());
+//                player.getLifeArray().get(i).toggleVisibility();
+                player.setLifeCount(3);
                 player.setPositionX(550);
                 player.setPositionY(700);
             }
@@ -323,7 +319,8 @@ public class ProjectGame extends Game {
                     }
                     if (currentEnemy.enemyBullet != null) {
                         if (currentEnemy.enemyBullet.collidesWith(player)) {
-                            player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
+                            player.handleEvent(reduceLife);
+                            //player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                             currentEnemy.enemyBullet = null;
                             player.setLifeCount(player.getLifeCount() - 1);
                             if (player.getLifeCount() == 0) {
@@ -491,13 +488,23 @@ public class ProjectGame extends Game {
 //            }
 
 
-        if (player.life1 != null) {
-            for (int i = 0; i < player.getLifeArray().size(); i++) {
-                if (player.getLifeArray().get(i).getVisibility())
-                    player.getLifeArray().get(i).draw(g);
-
+        if(player.lifeCount>0){
+            player.getLifeArray().get(0).draw(g);
+            if(player.lifeCount>1){
+                player.getLifeArray().get(1).draw(g);
+                if(player.lifeCount>2){
+                    player.getLifeArray().get(2).draw(g);
+                }
             }
         }
+
+//        if (player.life1 != null) {
+//            for (int i = 0; i < player.getLifeArray().size(); i++) {
+//                if (player.getLifeArray().get(i).getVisibility())
+//                    player.getLifeArray().get(i).draw(g);
+//
+//            }
+//        }
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.setColor(Color.RED);

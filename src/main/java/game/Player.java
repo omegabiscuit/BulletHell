@@ -28,14 +28,17 @@ public class Player extends AnimatedSprite implements IEventListener {
 
     ArrayList<Heart> lifeArray = new ArrayList<>();
     public boolean isDead = false;
-    public Heart life1 = new Heart("Heart", "heart.png");
-    Heart life2 = new Heart("Heart", "heart.png");
-    Heart life3 = new Heart("Heart", "heart.png");
+    Heart life1;
+    Heart life2;
+    Heart life3;
     int lifeCount;
     Rectangle2D hitbox;
 
     public Player(String id, String fileName, String startState) {
         super(id, fileName, startState);
+        life1 = new Heart("Heart", "heart.png");
+        life2 = new Heart("Heart", "heart.png");
+        life3 = new Heart("Heart", "heart.png");
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
@@ -149,6 +152,9 @@ public class Player extends AnimatedSprite implements IEventListener {
         if(event.getEventType() == "throwKnife"){
             soundEffects.playMusic(knifeSounds.get((int)Math.random()*3));//choose a random knife sound
             System.out.println("play Player Knife sound");
+        }
+        if(event.getEventType() == "collision"){
+            lifeCount-=1;
         }
     }
 

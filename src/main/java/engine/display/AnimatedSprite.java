@@ -209,8 +209,8 @@ public class AnimatedSprite extends Sprite {
                 currentFrame = 0;
             }
         }
-        if(getId() == "enemy")
-            System.out.println(stateName);
+//        if(getId() == "enemy")
+//            System.out.println(stateName);
         super.setImage(stateFrames.get(currentFrame));
     }
 
