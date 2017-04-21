@@ -57,11 +57,7 @@ public class ProjectGame extends Game {
     //ArrayList<Rectangle2D> coverList;
 
     ///Level 0////
-    private Enemy enemy01;
-    private Enemy enemy02;
 
-
-    int offset = 1;
 
     int damageCap = 100;
     int damageTimer;
@@ -153,29 +149,7 @@ public class ProjectGame extends Game {
 
         player.setPositionX(550);
         player.setPositionY(700);
-        enemies = new ArrayList<>();
-        enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
-        enemy01.setSpriteSheetJson("resources/gator_sheet.json");
-        enemy01.setDelay(75);
-        enemy01.setPositionX(250);
-        enemy01.setPositionY(550);
-        enemy01.addRoute(0, 800, 2, 1);
-        enemy01.addRoute(400, 0, 2, 1);
-        enemy01.addRoute(0, -800, 2, 3);
-        enemy01.addRoute(-400, 0, 4, 4);
-        enemy01.addKey();
 
-
-        enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
-        enemy02.setSpriteSheetJson("resources/gator_sheet.json");
-        enemy02.setDelay(75);
-        enemy02.setPositionX(700);
-        enemy02.setPositionY(150);
-        enemy02.addRoute(0, -800, 2, 3);
-        enemy02.addRoute(-400, 0, 2, 4);
-        enemy02.addRoute(0, 800, 2, 1);
-        enemy02.addRoute(400, 0, 2, 2);
-        enemy02.addKnife();
 
         coin.setPositionY(250);
         coin.setPositionX(660);
@@ -186,12 +160,10 @@ public class ProjectGame extends Game {
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
         if (currentLevel == 0) {
 
-            enemies.add(enemy01);
-            enemies.add(enemy02);
+
             myLevel = new Level0("Room1");
             addChild(myLevel);
-            myLevel.registerEnemy(enemy01);
-            myLevel.registerEnemy(enemy02);
+
             myLevel.run();
 
             myLevel1 = new Level1("Room2");
@@ -207,7 +179,7 @@ public class ProjectGame extends Game {
             currentRoom = myLevel;
 
         }
-
+        enemies = currentRoom.enemies;
         pickpocketEnemy = null;
 
         transitionY = 615;
@@ -215,7 +187,9 @@ public class ProjectGame extends Game {
 
 
         backgroundMusic.playMusic("resources/oceanOperator.mp3");
+
     }
+
 
 
     /**
@@ -292,7 +266,6 @@ public class ProjectGame extends Game {
         }
 
         if (pressedKeys.contains("E")) {
-//            Random rand = new Random();
             if (pickpocket == true && pickpocketEnemy != null) {
 
                 lootEnemy(pickpocketEnemy);
@@ -326,6 +299,7 @@ public class ProjectGame extends Game {
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
                         transitionYCurrent = 0;
+                        enemies = queuedRoom.enemies;
                     }
                 }
             
@@ -349,8 +323,7 @@ public class ProjectGame extends Game {
                 if (currentEnemy.isInView(player, currentRoom.coverList)) {
                     if (complete == false) {
                         if (currentEnemy.enemyBullet == null) {
-                            currentEnemy.bulletClock = new GameClock();
-                            currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.2);
+                            currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.4);
                             currentEnemy.enemyBullet.setStart(currentEnemy.getPositionX() + currentEnemy.getUnscaledWidth() / 2, currentEnemy.getPositionY() + currentEnemy.getUnscaledHeight() / 2);
                             currentEnemy.enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
                             TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
@@ -361,16 +334,9 @@ public class ProjectGame extends Game {
                             currentEnemy.handleEvent(throwKnife);
                         }
                     }
-                    if (currentEnemy.bulletClock != null) { //delete bullet after .2 seconds
-                        if (currentEnemy.bulletClock.getElapsedTime() > 300) {
-                            currentEnemy.bulletClock = null;
-                            currentEnemy.enemyBullet = null;
-                        }
-                    }
                     if (currentEnemy.enemyBullet != null) {
                         if (currentEnemy.enemyBullet.collidesWith(player)) {
                             player.handleEvent(reduceLife);
-                            //player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);////AMED PLEASE FIX THIS LINE FOR ME!!!!
                             currentEnemy.enemyBullet = null;
                             player.setLifeCount(player.getLifeCount() - 1);
                             if (player.getLifeCount() == 0) {
@@ -388,7 +354,6 @@ public class ProjectGame extends Game {
                     for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
                         if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
                             playerBullets.remove(j);
-                         //  System.out.println("collided with cover");
                             break;
                         }
                     }

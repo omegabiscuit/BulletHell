@@ -12,8 +12,10 @@ import engine.display.Sprite;
  */
 public class Room extends DisplayObjectContainer{
 
+
+
     protected ArrayList<LockedDoor> doors;
-   // protected ArrayList<Enemy> enemies;
+    protected ArrayList<Enemy> enemies = new ArrayList<>();
 
     boolean fadingIn;
     boolean fadingOut;
@@ -53,7 +55,6 @@ public class Room extends DisplayObjectContainer{
     }
 
     public void registerEnemy(Enemy enemy) {
-    //    enemies.add(enemy);
         addChild(enemy);
     }
 
@@ -62,6 +63,7 @@ public class Room extends DisplayObjectContainer{
     }
 
     public void fadeOut() {
+
         fadingOut = true;
     }
 
