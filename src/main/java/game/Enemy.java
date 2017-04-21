@@ -372,7 +372,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     public void handleEvent(Event event) {
         if(event.getEventType() == "throwKnife"){
             soundEffects.playMusic(knifeSounds.get((int)Math.random()*knifeSounds.size()));//random knife sound
-            System.out.println("play Enemy Knife sound");
+        //    System.out.println("play Enemy Knife sound");
         }
     }
 

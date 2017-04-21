@@ -359,7 +359,7 @@ public class Level0 extends Room {
         corner2.setScaleX(-1);
         addChild(corner2);
 
-        crate = new Platformer("cover", "crate.png");
+        crate = new Platformer("cover", "cover1.png");
         crate.setPositionX(550);
         crate.setPositionY(400);
         coverList = new ArrayList<>(); //list of cover sprites

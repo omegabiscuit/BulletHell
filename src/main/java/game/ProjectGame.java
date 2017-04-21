@@ -76,6 +76,8 @@ public class ProjectGame extends Game {
 
     static GameClock clock;
 
+    SoundManagerClass soundEffects = new SoundManagerClass();
+
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
      */
@@ -269,15 +271,21 @@ public class ProjectGame extends Game {
 //                }
             }
 
-            if (keyCount > 0) {
+
                 for (int i = 0; i < myLevel.getDoors().size(); i++) {
+
                     if (player.getHitBox().intersects(myLevel.getDoors().get(i).getDoorCollider()) && myLevel.getDoors().get(i).stateName == "door_closed") {
-                        myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
-                        itemString = "Door unlocked";
-                        keyCount --;
+                        if (keyCount > 0) {
+                            soundEffects.playMusic("resources/chains.wav");
+                            myLevel.getDoors().get(i).setAnimationState("door_opening", "door_open");
+                            itemString = "Door unlocked";
+                            keyCount--;
+                        } else {
+                            soundEffects.playMusic("resources/door_locked.wav");
+                        }
                     }
                 }
-            }
+            
 
             pressedKeys.remove("E");
         }
@@ -338,7 +346,7 @@ public class ProjectGame extends Game {
                     for (int k = 0; k < myLevel.collisionArray.size(); k++) {
                         if (bul.collidesWith(myLevel.collisionArray.get(k))) {
                             playerBullets.remove(j);
-                            System.out.println("collided with cover");
+                         //  System.out.println("collided with cover");
                             break;
                         }
                     }

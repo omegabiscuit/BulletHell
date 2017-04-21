@@ -151,7 +151,7 @@ public class Player extends AnimatedSprite implements IEventListener {
     public void handleEvent(Event event) {
         if(event.getEventType() == "throwKnife"){
             soundEffects.playMusic(knifeSounds.get((int)Math.random()*3));//choose a random knife sound
-            System.out.println("play Player Knife sound");
+         //   System.out.println("play Player Knife sound");
         }
         if(event.getEventType() == "collision"){
             lifeCount-=1;
