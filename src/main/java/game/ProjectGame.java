@@ -24,7 +24,7 @@ import game.Level0;
 
 public class ProjectGame extends Game {
 
-    GameClock GlobalCooldown;
+    SoundManagerClass backgroundMusic;
     QuestManager myQuestManager = new QuestManager();
     Event PickedUpEvent;
     Event fadeOutEvent;
@@ -84,6 +84,8 @@ public class ProjectGame extends Game {
     public ProjectGame() {
         super("BulletHell", 1200, 900);
         die = new Event();
+        backgroundMusic = new SoundManagerClass();
+
         reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
@@ -148,7 +150,7 @@ public class ProjectGame extends Game {
         enemy01.setPositionX(250);
         enemy01.setPositionY(550);
         enemy01.addRoute(0, 800, 2, 1);
-        enemy01.addRoute(400, 0, 2, 2);
+        enemy01.addRoute(400, 0, 2, 1);
         enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
         enemy01.addKey();
@@ -185,7 +187,7 @@ public class ProjectGame extends Game {
         }
 
         pickpocketEnemy = null;
-
+        backgroundMusic.playMusic("resources/oceanOperator.mp3");
     }
 
 
@@ -294,7 +296,6 @@ public class ProjectGame extends Game {
             for (int i = 0; i < player.getLifeArray().size(); i++) {
                 complete = false;
                 player.isDead = false;
-//                player.getLifeArray().get(i).toggleVisibility();
                 player.setLifeCount(3);
                 player.setPositionX(550);
                 player.setPositionY(700);
