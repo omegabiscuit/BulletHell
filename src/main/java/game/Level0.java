@@ -21,6 +21,9 @@ public class Level0 extends Room {
 
     SoundManagerClass music = new SoundManagerClass();
 
+    private Enemy enemy01;
+    private Enemy enemy02;
+
     Sprite tile1;
     Sprite tile2;
     Sprite tile3;
@@ -90,6 +93,35 @@ public class Level0 extends Room {
     }
 
     public void run() {
+
+        enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
+        enemy01.setSpriteSheetJson("resources/gator_sheet.json");
+        enemy01.setDelay(75);
+        enemy01.setPositionX(250);
+        enemy01.setPositionY(550);
+        enemy01.addRoute(0, 800, 2, 1);
+        enemy01.addRoute(400, 0, 2, 1);
+        enemy01.addRoute(0, -800, 2, 3);
+        enemy01.addRoute(-400, 0, 4, 4);
+        enemy01.addKey();
+
+
+        enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
+        enemy02.setSpriteSheetJson("resources/gator_sheet.json");
+        enemy02.setDelay(75);
+        enemy02.setPositionX(700);
+        enemy02.setPositionY(150);
+        enemy02.addRoute(0, -800, 2, 3);
+        enemy02.addRoute(-400, 0, 2, 4);
+        enemy02.addRoute(0, 800, 2, 1);
+        enemy02.addRoute(400, 0, 2, 2);
+        enemy02.addKnife();
+
+        enemies = new ArrayList<>();
+        enemies.add(enemy01);
+        enemies.add(enemy02);
+
+
         //map stuff
         tile1 = new Sprite("tile1", "tile.png");
         tile1.setPositionX(256);
@@ -469,5 +501,9 @@ public class Level0 extends Room {
     public void update() {
         super.update();
         door1.update();
+    }
+
+    public ArrayList<Enemy> getEnemies(){
+        return this.enemies;
     }
 }
