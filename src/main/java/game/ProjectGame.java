@@ -283,11 +283,11 @@ public class ProjectGame extends Game {
 
 
             if (player != null && !player.isDead) {
-                for (int i = 0; i < enemies.size(); i++) {
-                    if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && player.canGetHurt()) {
-                        damageThePlayer();
-                    }
-                }
+//                for (int i = 0; i < enemies.size(); i++) {
+//                    if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && player.canGetHurt()) {
+//                        damageThePlayer();
+//                    }
+//                }
 
                 for(int i = 0; i < currentRoom.getSpikeList().size(); i++) {
                     SpikeTile spikes = currentRoom.getSpikeList().get(i);
