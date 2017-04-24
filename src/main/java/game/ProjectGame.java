@@ -149,7 +149,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 5;
-        knifeCount = 5;
+        knifeCount = 20;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -175,10 +175,8 @@ public class ProjectGame extends Game {
         if (currentLevel == 0) {
 
             myLevel = new Level0("Room1");
-            myLevel2 = new ahmedslevel("Room4", player);
-            myLevel3 = new BrighamLevel("Room3");
-            addChild(myLevel);
             myLevel.run();
+            addChild(myLevel);
 
 
             myLevel1 = new Level1("Room2");
@@ -204,7 +202,7 @@ public class ProjectGame extends Game {
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0,myLevel2);
             myLevel2.mapDoorToRoom(0,myLevel3);
-            //myLevel3.mapDoorToRoom(0,myLevel3);
+            myLevel3.mapDoorToRoom(0,bossLevel);
             //myLevel3.mapDoorToRoom(0,bossLevel);
 
 

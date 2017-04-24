@@ -18,14 +18,18 @@ public class BrighamLevel extends Room {
 
     Platform collider1;
     Platform collider2;
-    Platform leftCollider;
     Platform collider3;
-    Platform rightCollider;
     Platform collider4;
+    Platform leftCollider;
+    Platform rightCollider;
+
     Platform doorCollider;
     Platform wallCollider;
     Platform thinWallLeft;
     Platform thinWallRight;
+    Platform bottomLeft;
+    Platform bottomRight;
+    Platform bottom;
 
     Enemy enemy01;
     Enemy enemy02;
@@ -75,19 +79,6 @@ public class BrighamLevel extends Room {
         enemy03.addRoute(800,0,2,2);
 
 
-
-
-//        enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
-//        enemy02.setSpriteSheetJson("resources/gator_sheet.json");
-//        enemy02.setDelay(75);
-//        enemy02.setPositionX(700);
-//        enemy02.setPositionY(150);
-//        enemy02.addRoute(0, -800, 2, 3);
-//        enemy02.addRoute(-400, 0, 2, 4);
-//        enemy02.addRoute(0, 800, 2, 1);
-//        enemy02.addRoute(400, 0, 2, 2);
-//        enemy02.addKnife();
-
         enemies = new ArrayList<>();
         enemies.add(enemy01);
         enemies.add(enemy02);
@@ -113,6 +104,22 @@ public class BrighamLevel extends Room {
         startTile.setPositionX(628);
         startTile.setPositionY(map.getPositionY() + 810);
         addChild(startTile);
+
+        bottom = new Platform("collider", "alpha_1x1.png");
+        bottom.setPositionX(startTile.getPositionX());
+        bottom.setPositionY(startTile.getPositionY()+128);
+        addChild(bottom);
+
+        bottomLeft = new Platform("collider", "alpha_3x1.png");
+        bottomLeft.setPositionX(map.getPositionX());
+        bottomLeft.setPositionY(map.getPositionY()+map.getUnscaledHeight());
+        addChild(bottomLeft);
+
+        bottomRight = new Platform("collider", "alpha_3x1.png");
+        bottomRight.setPositionX(map.getPositionX()+504);
+        bottomRight.setPositionY(map.getPositionY()+map.getUnscaledHeight());
+        addChild(bottomRight);
+
 
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider1.setPositionX(640);
@@ -196,8 +203,9 @@ public class BrighamLevel extends Room {
         collisionArray.add(wallCollider);
         collisionArray.add(thinWallLeft);
         collisionArray.add(thinWallRight);
-        //collisionArray.add(door1);
-
+        collisionArray.add(bottom);
+        collisionArray.add(bottomLeft);
+        collisionArray.add(bottomRight);
 
 
 
