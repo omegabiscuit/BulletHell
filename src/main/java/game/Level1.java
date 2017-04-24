@@ -66,6 +66,8 @@ public class Level1 extends Room {
     Sprite coverShadow1;
     Sprite coverShadow2;
 
+    LockedDoor door1;
+
     SpikeTile spikes;
 
     TreasureChest chest;
@@ -77,6 +79,10 @@ public class Level1 extends Room {
 
     public void run() {
         //map stuff
+
+
+
+
         tile1 = new Sprite("tile", "tile_dark.png");
         tile1.setPositionX(512);
         tile1.setPositionY(44);
@@ -113,6 +119,7 @@ public class Level1 extends Room {
         wall2.setScaleX(-1);
         addChild(wall2);
 
+        wall3 = new Sprite("tile", "top_tile_1.png");
         wall3 = new Sprite("tile", "top_tile_1.png");
         wall3.setPositionX(wall2.getPositionX() - wall1.getUnscaledWidth());
         wall3.setPositionY(wall2.getPositionY() - wall2.getUnscaledHeight());
@@ -322,6 +329,16 @@ public class Level1 extends Room {
         collisionArray.add(cover1);
         collisionArray.add(cover2);
 
+        door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
+        door1.setSpriteSheetJson("resources/door_opening.json");
+        door1.setDelay(100);
+        door1.setPositionX(back1.getPositionX());
+        door1.setPositionY(back1.getPositionY());
+        addChild(door1);
+
+        doors.add(door1);
+        removeChild(back1);
+
     }
 
     public void draw(Graphics g) {
@@ -381,14 +398,18 @@ public class Level1 extends Room {
         collider7.draw(g);
         collider8.draw(g);
        // collider2.draw(g);
-
+        door1.draw(g);
 
     }
 
     public void update() {
         super.update();
         spikes.update();
+
+        door1.update();
+
         chest.update();
+
     }
 
 

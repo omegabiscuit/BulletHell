@@ -97,7 +97,11 @@ public class BrighamLevel extends Room {
         //map stuff
         map = new Sprite("map", "BrighamLevelFinal.png");
         map.setPositionX(200);
+
+        map.setPositionY(-1950);
+
         map.setPositionY(-800);
+
         addChild(map);
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");

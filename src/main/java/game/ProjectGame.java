@@ -63,9 +63,12 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
+
     ahmedslevel myLevel2;
-    BrighamLevel myLevel3;
+
     BossLevel bossLevel;
+
+    BrighamLevel myLevel3;
 
 
     ArrayList<Enemy> enemies;
@@ -145,7 +148,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionX(450);
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
-        keyCount = 0;
+        keyCount = 5;
         knifeCount = 5;
         // player.setHasPhysics(true);
 
@@ -168,11 +171,12 @@ public class ProjectGame extends Game {
         //coverList.add(rect);
 
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
-        myLevel = new Level0("Room1");
+
         if (currentLevel == 0) {
 
-
-
+            myLevel = new Level0("Room1");
+            myLevel2 = new ahmedslevel("Room4");
+            myLevel3 = new BrighamLevel("Room3");
             addChild(myLevel);
             myLevel.run();
 
@@ -206,15 +210,31 @@ public class ProjectGame extends Game {
 
             currentRoom = myLevel;
 
+           myLevel1.mapDoorToRoom(0,myLevel2);
+
+            myLevel2.run();
+            myLevel2.hide();
+
+
+            myLevel2.mapDoorToRoom(0,myLevel3);
+            myLevel3.run();
+            myLevel3.hide();
+
         }
+
+
+
          if(currentLevel == 3){
 
          }
 
          if(currentLevel == 4){
+
+
              bossLevel = new BossLevel("Room4", player);
              bossLevel.run();
              currentRoom = bossLevel;
+
 
 
          }
@@ -579,10 +599,7 @@ public class ProjectGame extends Game {
                 g.drawString("Press P to play again", 400, 400);
 
             }
-            if (keyCount == 5) {
-                g.drawString("Congrats, you win!", 400, 40);
-                pause();
-            }
+
 
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, 140, 30);
