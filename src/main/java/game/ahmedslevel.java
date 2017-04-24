@@ -65,7 +65,7 @@ public class ahmedslevel extends Room{
     public void run(){
         map = new Sprite("map","ahmedslevel.png");
         map.setPositionX(300);
-        map.setPositionY(0);
+        map.setPositionY(-1200);
         coverList = new ArrayList<>();
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
@@ -73,7 +73,7 @@ public class ahmedslevel extends Room{
         door1.setDelay(100);
 
         door1.setPositionX(600);
-        door1.setPositionY(50);
+        door1.setPositionY(-1150);
         addChild(door1);
 
 
@@ -126,6 +126,8 @@ public class ahmedslevel extends Room{
         cover8 = new Platform("cover2","cover1.png");
 
 
+
+
         topcover1 = new Platform("cover1","cover_top_only.png");
 
         topcover1.setPositionX(345);
@@ -150,6 +152,19 @@ public class ahmedslevel extends Room{
         topcover7 = new Platform("cover2","cover_top_only.png");
         topcover8 = new Platform("cover2","cover_top_only.png");
 
+
+
+        addChild(cover1);
+        addChild(cover2);
+        addChild(cover3);
+        addChild(cover4);
+        addChild(cover5);
+        addChild(cover6);
+
+
+        addChild(topcover1);
+        addChild(topcover2);
+        addChild(topcover3);
 
 
         cover1.setPositionX(345);
@@ -230,6 +245,10 @@ public class ahmedslevel extends Room{
         enemies = new ArrayList<>();
         enemies.add(enemy01);
         enemies.add(enemy02);
+
+
+
+
 
         doors.add(door1);
 
