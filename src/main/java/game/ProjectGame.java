@@ -190,6 +190,7 @@ public class ProjectGame extends Game {
              myLevel3.run();
              currentRoom = myLevel3;
          }
+
         enemies = currentRoom.enemies;
         pickpocketEnemy = null;
 
@@ -244,6 +245,8 @@ public class ProjectGame extends Game {
                         damageThePlayer();
                     }
                 }
+
+
 
                 if (player.playerCollidesWith(coin)) {
                     coin.handleEvent(collidedEvent);
@@ -314,6 +317,18 @@ public class ProjectGame extends Game {
                         queuedRoom.fadeIn();
                         transitionYCurrent = 0;
                         enemies = queuedRoom.enemies;
+                    }
+                }
+
+                for(int i = 0; i < currentRoom.getChests().size(); i++) {
+                    TreasureChest chest = currentRoom.getChests().get(i);
+                    if(player.feetCollideWith(chest) && chest.getStateName() == "closed") {
+                        chest.setAnimationState("open", "");
+                        if(chest.getItem().equals("key")) {
+                            keyCount++;
+                        } else if(chest.getItem().equals("knife")) {
+                            knifeCount++;
+                        }
                     }
                 }
 

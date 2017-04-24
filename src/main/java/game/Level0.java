@@ -88,6 +88,8 @@ public class Level0 extends Room {
 
     LockedDoor door1;
 
+  // TurtleBoss tb;
+
 
 
     public Level0(String id) {
@@ -409,6 +411,13 @@ public class Level0 extends Room {
         coverShadow1.setPositionY(crate.getPositionY());
         addChild(coverShadow1);
 
+
+//        tb = new TurtleBoss("tb", "resources/turtle_boss.png", "idle");
+//        tb.setSpriteSheetJson("resources/turtle_boss.json");
+//        tb.setPositionX(tile11.getPositionX() );
+//        tb.setPositionY(tile11.getPositionY());
+//        addChild(tb);
+
         collisionArray.add(collider1);
         collisionArray.add(collider2);
         collisionArray.add(collider3);
@@ -503,6 +512,8 @@ public class Level0 extends Room {
         collider7.draw(g);
         collider8.draw(g);
 
+       // tb.draw(g);
+
         coverShadow1.draw(g);
 
         door1.draw(g);
@@ -514,6 +525,7 @@ public class Level0 extends Room {
     public void update() {
         super.update();
         door1.update();
+      //  tb.update();
     }
 
     public ArrayList<Enemy> getEnemies(){
