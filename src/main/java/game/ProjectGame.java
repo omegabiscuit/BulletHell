@@ -36,14 +36,11 @@ public class ProjectGame extends Game {
     Event collidedEvent;
     Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
-    //  Platform platform = new Platform("Rectangele", "platform.png");
-    //  Platform platform1 = new Platform("Rectangele", "platform.png");
 
     boolean start = false;
 
     Sprite background = new Sprite("Background", "background.png");
     Sprite menuScreen = new Sprite("menuScreen","menu-screen.jpg");
-    ArrayList<Platform> collisionArray = new ArrayList<>();
     private Player player;
 
     Heart life1 = new Heart("Heart", "heart.png");
@@ -66,7 +63,7 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
-    BrighamLevel myLevel3;
+    BrighamLevel myLevel2;
 
     ArrayList<Bullet> playerBullets = new ArrayList<>();
     ArrayList<Enemy> enemies;
@@ -178,17 +175,23 @@ public class ProjectGame extends Game {
 
             myLevel1.run();
             myLevel1.hide();
-            
-            myLevel.mapDoorToRoom(0, myLevel1);
+            myLevel.mapDoorToRoom(0, myLevel2);
+
+            myLevel2 = new BrighamLevel("Room3");
+            addChild(myLevel2);
+            myLevel2.run();
+            myLevel2.hide();
+            myLevel.mapDoorToRoom(0, myLevel2);
+            currentRoom = myLevel2;
 
             currentRoom = myLevel;
 
         }
          if(currentLevel == 3){
-             myLevel3 = new BrighamLevel("Room3");
-             addChild(myLevel3);
-             myLevel3.run();
-             currentRoom = myLevel3;
+             myLevel2 = new BrighamLevel("Room3");
+             addChild(myLevel2);
+             myLevel2.run();
+             currentRoom = myLevel2;
          }
         enemies = currentRoom.enemies;
         pickpocketEnemy = null;
@@ -313,7 +316,7 @@ public class ProjectGame extends Game {
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
                         transitionYCurrent = 0;
-                        enemies = queuedRoom.enemies;
+                        //enemies = queuedRoom.enemies;
                     }
                 }
 
@@ -403,6 +406,7 @@ public class ProjectGame extends Game {
                     queuedRoom.setDoneFading(false);
                     currentRoom.setDoneFading(false);
                     currentRoom = queuedRoom;
+                    enemies = currentRoom.enemies;
                     queuedRoom = null;
                 }
             }
