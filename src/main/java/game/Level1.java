@@ -50,6 +50,12 @@ public class Level1 extends Room {
 
     Platform collider1;
     Platform collider2;
+    Platform collider3;
+    Platform collider4;
+    Platform collider5;
+    Platform collider6;
+    Platform collider7;
+    Platform collider8;
 
     Platform cover1;
     Platform cover2;
@@ -63,6 +69,8 @@ public class Level1 extends Room {
     LockedDoor door1;
 
     SpikeTile spikes;
+
+    TreasureChest chest;
 
 
     public Level1(String id) {
@@ -85,10 +93,20 @@ public class Level1 extends Room {
         tile2.setPositionY(tile1.getPositionY());
         addChild(tile2);
 
+        collider5 = new Platform("collider", "alpha_2x1.png");
+        collider5.setPositionX(tile2.getPositionX() - tile2.getUnscaledWidth());
+        collider5.setPositionY(tile2.getPositionY());
+        addChild(collider5);
+
         tile3 = new Sprite("tile", "dark_brick.png");
         tile3.setPositionX(tile1.getPositionX() + tile1.getUnscaledWidth());
         tile3.setPositionY(tile1.getPositionY());
         addChild(tile3);
+
+        collider6 = new Platform("collider", "alpha_2x1.png");
+        collider6.setPositionX(tile3.getPositionX());
+        collider6.setPositionY(tile3.getPositionY());
+        addChild(collider6);
 
         wall1 = new Sprite("tile", "dark_brick_thin.png");
         wall1.setPositionX(tile3.getPositionX() + tile3.getUnscaledWidth() - 4);
@@ -217,6 +235,16 @@ public class Level1 extends Room {
         back2.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*5);
         addChild(back2);
 
+        collider4 = new Platform("collider", "alpha_1x6.png");
+        collider4.setPositionX(back2.getPositionX() - back2.getUnscaledWidth());
+        collider4.setPositionY(back2.getPositionY() - back2.getUnscaledHeight());
+        addChild(collider4);
+
+        collider7 = new Platform("collider", "alpha_2x1.png");
+        collider7.setPositionX(back2.getPositionX() - back2.getUnscaledWidth());
+        collider7.setPositionY(back2.getPositionY());
+        addChild(collider7);
+
 
         tile13 = new Sprite("tile", "tile.png");
         tile13.setPositionX(tile3.getPositionX() - 4);
@@ -258,12 +286,32 @@ public class Level1 extends Room {
         back3.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*5);
         addChild(back3);
 
+        collider3 = new Platform("collider", "alpha_1x6.png");
+        collider3.setPositionX(back3.getPositionX() + back3.getUnscaledWidth());
+        collider3.setPositionY(back3.getPositionY() - back3.getUnscaledHeight());
+        addChild(collider3);
+
+        collider8 = new Platform("collider", "alpha_2x1.png");
+        collider8.setPositionX(back3.getPositionX());
+        collider8.setPositionY(back3.getPositionY());
+        addChild(collider8);
+
+
+
         spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes.setSpriteSheetJson("resources/spikes.json");
         spikes.setPositionX(tile6.getPositionX());
         spikes.setPositionY(tile6.getPositionY());
         addChild(spikes);
         spikeList.add(spikes);
+
+        chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
+        chest.setSpriteSheetJson("resources/treasure_chest.json");
+        chest.setPositionX(tile11.getPositionX() + chest.getUnscaledHeight());
+        chest.setPositionY(tile11.getPositionY() - chest.getUnscaledHeight() - 5);
+        chest.placeItemInChest("key");
+        addChild(chest);
+        chests.add(chest);
 
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider1.setPositionX(tile1.getPositionX() - tile1.getUnscaledWidth());
@@ -272,6 +320,12 @@ public class Level1 extends Room {
 
 
         collisionArray.add(collider1);
+        collisionArray.add(collider3);
+        collisionArray.add(collider4);
+        collisionArray.add(collider5);
+        collisionArray.add(collider6);
+        collisionArray.add(collider7);
+        collisionArray.add(collider8);
         collisionArray.add(cover1);
         collisionArray.add(cover2);
 
@@ -325,6 +379,7 @@ public class Level1 extends Room {
         back3.draw(g);
 
         spikes.draw(g);
+        chest.draw(g);
 
         coverShadow1.draw(g);
         coverShadow2.draw(g);
@@ -336,6 +391,12 @@ public class Level1 extends Room {
         cover2.draw(g);
 
         collider1.draw(g);
+        collider3.draw(g);
+        collider4.draw(g);
+        collider5.draw(g);
+        collider6.draw(g);
+        collider7.draw(g);
+        collider8.draw(g);
        // collider2.draw(g);
         door1.draw(g);
 
@@ -344,7 +405,11 @@ public class Level1 extends Room {
     public void update() {
         super.update();
         spikes.update();
+
         door1.update();
+
+        chest.update();
+
     }
 
 

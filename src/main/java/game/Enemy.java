@@ -34,8 +34,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     double fieldOfView = 80;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double previousDirection;
-    double awareness=0; //how aware the enemy is to the player's presence
-    public GameClock bulletClock = null;
+    public double awareness=0; //how aware the enemy is to the player's presence
     public Bullet enemyBullet = null;
     public boolean dead = false;
     ArrayList<String> knifeSounds = new ArrayList<>();

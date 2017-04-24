@@ -36,14 +36,11 @@ public class ProjectGame extends Game {
     Event collidedEvent;
     Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
-    //  Platform platform = new Platform("Rectangele", "platform.png");
-    //  Platform platform1 = new Platform("Rectangele", "platform.png");
 
     boolean start = false;
 
     Sprite background = new Sprite("Background", "background.png");
     Sprite menuScreen = new Sprite("menuScreen","menu-screen.jpg");
-    ArrayList<Platform> collisionArray = new ArrayList<>();
     private Player player;
 
     Heart life1 = new Heart("Heart", "heart.png");
@@ -61,15 +58,19 @@ public class ProjectGame extends Game {
 
 
    // int damageCap = 100;
-  //  int damageTimer;
+
     int currentLevel;
 
     Level0 myLevel;
     Level1 myLevel1;
+
     ahmedslevel myLevel2;
+
+    BossLevel bossLevel;
+
     BrighamLevel myLevel3;
 
-    ArrayList<Bullet> playerBullets = new ArrayList<>();
+
     ArrayList<Enemy> enemies;
 
     Enemy pickpocketEnemy;
@@ -90,14 +91,18 @@ public class ProjectGame extends Game {
     double transitionYSpeed = 5;
     double transitionYCurrent;
 
+
+    int x;
+
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public ProjectGame() {
+
         super("BulletHell", 1200, 900);
         die = new Event();
         backgroundMusic = new SoundManagerClass();
-
+        x=0;
         reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
@@ -113,7 +118,7 @@ public class ProjectGame extends Game {
         throwKnife.setEventType("throwKnife");
 
 
-        currentLevel = 0;//0 = base , 3=brigham's level
+        currentLevel = 4;//0 = base , 3=brigham's level
 
 
        // damageTimer = 100;
@@ -177,17 +182,20 @@ public class ProjectGame extends Game {
             myLevel.run();
 
             myLevel1 = new Level1("Room2");
+
             addChild(myLevel1);
             addChild(myLevel2);
             addChild(myLevel3);
            // myLevel1.registerEnemy(enemy01);
           //  myLevel.registerEnemy(enemy02);
 
+
             myLevel1.run();
             myLevel1.hide();
+            addChild(myLevel1);
             
             myLevel.mapDoorToRoom(0, myLevel1);
-            currentLevel++;
+
 
             currentRoom = myLevel;
 
@@ -206,21 +214,20 @@ public class ProjectGame extends Game {
 
 
          if(currentLevel == 3){
-             myLevel3 = new BrighamLevel("Room3");
-             addChild(myLevel3);
-             myLevel3.run();
 
-             myLevel3.mapDoorToRoom(0,myLevel1);
-             currentRoom = myLevel3;
          }
 
          if(currentLevel == 4){
-             myLevel2 = new ahmedslevel("Room4");
-             myLevel2.run();
-             currentRoom = myLevel2;
+
+
+             bossLevel = new BossLevel("Room4", player);
+             bossLevel.run();
+             currentRoom = bossLevel;
+
 
 
          }
+
         enemies = currentRoom.enemies;
         pickpocketEnemy = null;
 
@@ -243,6 +250,10 @@ public class ProjectGame extends Game {
 
 
         super.update(pressedKeys);
+//        if(!backgroundMusic.play && x==0){
+//            x=1;
+//            backgroundMusic.playMusic("resources/oceanOperator.mp3");
+//        }
 
         if (state == STATE.MENU) {
 
@@ -276,6 +287,8 @@ public class ProjectGame extends Game {
                     }
                 }
 
+
+
                 if (player.playerCollidesWith(coin)) {
                     coin.handleEvent(collidedEvent);
                     myQuestManager.handleEvent(PickedUpEvent);
@@ -284,12 +297,12 @@ public class ProjectGame extends Game {
                 checkCollisions(player);
 
 
-                for (int i = 0; i < playerBullets.size(); i++) {
-                    Bullet bul = playerBullets.get(i);
+                for (int i = 0; i < player.playerBullets.size(); i++) {
+                    Bullet bul = player.playerBullets.get(i);
                     bul.update(pressedKeys);
                     if (bul.getShotTimer() >= bul.getShotCap()) {
 
-                        playerBullets.remove(i);
+                        player.playerBullets.remove(i);
                     }
                 }
 
@@ -348,6 +361,18 @@ public class ProjectGame extends Game {
                     }
                 }
 
+                for(int i = 0; i < currentRoom.getChests().size(); i++) {
+                    TreasureChest chest = currentRoom.getChests().get(i);
+                    if(player.feetCollideWith(chest) && chest.getStateName() == "closed") {
+                        chest.setAnimationState("open", "");
+                        if(chest.getItem().equals("key")) {
+                            keyCount++;
+                        } else if(chest.getItem().equals("knife")) {
+                            knifeCount++;
+                        }
+                    }
+                }
+
 
                 pressedKeys.remove("E");
             }
@@ -400,11 +425,11 @@ public class ProjectGame extends Game {
                     }
 
 
-                    for (int j = 0; j < playerBullets.size(); j++) {
-                        Bullet bul = playerBullets.get(j);
+                    for (int j = 0; j < player.playerBullets.size(); j++) {
+                        Bullet bul = player.playerBullets.get(j);
                         for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
                             if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
-                                playerBullets.remove(j);
+                                player.playerBullets.remove(j);
                                 break;
                             }
                         }
@@ -418,7 +443,7 @@ public class ProjectGame extends Game {
                                 enemies.get(i).setDelay(90);
                                 enemies.get(i).setAnimationState("dying left", "dead left");
                             }
-                            playerBullets.remove(j);
+                            player.playerBullets.remove(j);
                         }
                     }
                 }
@@ -434,6 +459,7 @@ public class ProjectGame extends Game {
                     queuedRoom.setDoneFading(false);
                     currentRoom.setDoneFading(false);
                     currentRoom = queuedRoom;
+                    enemies = currentRoom.enemies;
                     queuedRoom = null;
                 }
             }
@@ -534,8 +560,8 @@ public class ProjectGame extends Game {
             }
 
 
-            for (int i = 0; i < playerBullets.size(); i++) {
-                Bullet bul = playerBullets.get(i);
+            for (int i = 0; i < player.playerBullets.size(); i++) {
+                Bullet bul = player.playerBullets.get(i);
                 if (bul != null) {
                     bul.draw(g);
                 }
@@ -557,7 +583,7 @@ public class ProjectGame extends Game {
 
 
             g.setFont(new Font("ARIAL", Font.PLAIN, 48));
-            if (complete == true) {
+            if (complete == true || player.isDead) {
                 g.drawString("You are dead!", 400, 40);
                 g.drawString("Press P to play again", 400, 400);
 
@@ -665,7 +691,7 @@ public class ProjectGame extends Game {
             bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
             TweenJuggler.getInstance().add(bulletmovement);
 
-            playerBullets.add(bul);
+            player.playerBullets.add(bul);
 
             player.handleEvent(throwKnife);
         }
