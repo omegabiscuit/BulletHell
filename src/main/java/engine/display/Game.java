@@ -124,6 +124,18 @@ public class Game extends DisplayObjectContainer implements ActionListener, KeyL
 			gameTimer.stop();
 		}
 	}
+
+	public void reset(){
+		if (gameTimer == null) {
+			gameTimer = new Timer(1000 / FRAMES_PER_SEC, this);
+			gameTimer.start();
+
+
+		} else {
+			gameTimer.start();
+		}
+		startTime = System.currentTimeMillis();
+	}
 	
 	public void exitGame(){
 		stop();

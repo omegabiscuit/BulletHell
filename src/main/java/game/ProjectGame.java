@@ -149,7 +149,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 5;
-        knifeCount = 5;
+        knifeCount = 20;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -175,10 +175,8 @@ public class ProjectGame extends Game {
         if (currentLevel == 0) {
 
             myLevel = new Level0("Room1");
-            myLevel2 = new ahmedslevel("Room4", player);
-            myLevel3 = new BrighamLevel("Room3");
-            addChild(myLevel);
             myLevel.run();
+            addChild(myLevel);
 
 
             myLevel1 = new Level1("Room2");
@@ -204,8 +202,8 @@ public class ProjectGame extends Game {
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0,myLevel2);
             myLevel2.mapDoorToRoom(0,myLevel3);
-            //myLevel3.mapDoorToRoom(0,myLevel3);
             myLevel3.mapDoorToRoom(0,bossLevel);
+            //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
             currentRoom = myLevel;
@@ -221,12 +219,6 @@ public class ProjectGame extends Game {
             //myLevel3.hide();
 
         }
-
-
-
-         if(currentLevel == 3){
-
-         }
 
          if(currentLevel == 4){
 
@@ -389,12 +381,49 @@ public class ProjectGame extends Game {
             }
 
             if (pressedKeys.contains("P")) {
-                for (int i = 0; i < player.getLifeArray().size(); i++) {
+                if (complete == true){
                     complete = false;
+                    currentLevel = 0;
+                    myLevel = new Level0("Room1");
+                    myLevel.run();
+                    addChild(myLevel);
+
+
+                    myLevel1 = new Level1("Room2");
+                    myLevel1.run();
+                    myLevel1.hide();
+                    addChild(myLevel1);
+
+                    myLevel2 = new ahmedslevel("Room3", player);
+                    myLevel2.run();
+                    myLevel2.hide();
+                    addChild(myLevel2);
+
+                    myLevel3 = new BrighamLevel("Room4");
+                    myLevel3.run();
+                    myLevel3.hide();
+                    addChild(myLevel3);
+
+                    bossLevel = new BossLevel("Room5",player);
+                    bossLevel.run();
+                    bossLevel.hide();
+                    addChild(bossLevel);
+
+                    myLevel.mapDoorToRoom(0, myLevel1);
+                    myLevel1.mapDoorToRoom(0,myLevel2);
+                    myLevel2.mapDoorToRoom(0,myLevel3);
+                    myLevel3.mapDoorToRoom(0,bossLevel);
+                    currentRoom = myLevel;
+
+                    enemies = currentRoom.enemies;
+
                     player.isDead = false;
                     player.setLifeCount(3);
                     player.setPositionX(550);
                     player.setPositionY(700);
+                }
+                else{
+                    state = STATE.PAUSE;
                 }
             }
 

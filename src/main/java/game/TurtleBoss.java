@@ -4,6 +4,8 @@ import engine.display.AnimatedSprite;
 import engine.events.Event;
 import engine.events.IEventListener;
 
+import java.awt.*;
+
 /**
  * Created by Tyler on 4/24/2017.
  */
@@ -50,6 +52,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
     public void update() {
         super.update();
 
+
         if (stateName == "idle")
             setDelay(300);
 
@@ -59,7 +62,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
             setDelay(150);
         }
 
-        if (turtleDamageTimer < turtleDamageBuffer) {
+        if (turtleDamageTimer < turtleDamageBuffer && dead == false) {
             turtleDamageTimer++;
             if (turtleDamageTimer % 5 == 0 && !(turtleDamageTimer % 10 == 0)) {
                 setTransparency(0);
@@ -74,5 +77,21 @@ public class TurtleBoss extends Enemy implements IEventListener {
         if (dead == true) {
 
         }
+    }
+
+    public void draw(Graphics g) {
+        super.draw(g);
+
+        g.setFont(new Font("ARIAL", Font.PLAIN, 48));
+        if (dead == true) {
+            g.drawString("Congrats! You defeated Gangsta Turtle!", 400, 40);
+        }
+
+
+
+
+
+
+
     }
 }
