@@ -23,6 +23,7 @@ public class Player extends AnimatedSprite implements IEventListener {
 
     SoundManagerClass soundEffects = new SoundManagerClass();
     ArrayList<String> knifeSounds = new ArrayList<>();
+    public ArrayList<Bullet> playerBullets = new ArrayList<>();
 
 
 
@@ -171,6 +172,8 @@ public class Player extends AnimatedSprite implements IEventListener {
         }
         return false;
     }
+
+
 
     public ArrayList<Heart> getLifeArray() {
         return lifeArray;
