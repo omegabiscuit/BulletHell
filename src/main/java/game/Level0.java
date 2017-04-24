@@ -10,6 +10,7 @@ import engine.display.AnimatedSprite;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Brigadoon on 4/17/2017.
@@ -107,7 +108,7 @@ public class Level0 extends Room {
         enemy01.addRoute(400, 0, 2, 2);
         enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
-        enemy01.addKey();
+
 
 
         enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
@@ -124,6 +125,9 @@ public class Level0 extends Room {
         enemies = new ArrayList<>();
         enemies.add(enemy01);
         enemies.add(enemy02);
+
+        random = new Random();
+        enemies.get(random.nextInt(enemies.size())).addKey();
 
 
         //map stuff

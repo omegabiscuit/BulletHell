@@ -5,6 +5,7 @@ import engine.display.Sprite;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Brigadoon on 4/23/2017.
@@ -66,7 +67,7 @@ public class BrighamLevel extends Room {
         enemy01.addRoute(0, -300, 5, 3);
         enemy01.addRoute(-800, 0, 4, 4);
         enemy01.addRoute(0, -800, 4, 3);
-        enemy01.addKey();
+
 
         enemy02 = new Enemy("enemy", "resources/gator_sheet.png","idle left");
         enemy02.setSpriteSheetJson("resources/gator_sheet.json");
@@ -86,10 +87,16 @@ public class BrighamLevel extends Room {
         enemy03.addRoute(800,0,2,2);
 
 
+
+
         enemies = new ArrayList<>();
         enemies.add(enemy01);
         enemies.add(enemy02);
         enemies.add(enemy03);
+
+        random = new Random();
+        enemies.get(random.nextInt(enemies.size())).addKey();
+
 
 
         //map stuff

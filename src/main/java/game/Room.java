@@ -4,6 +4,8 @@ package game;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
+
 import engine.display.DisplayObjectContainer;
 import engine.display.Sprite;
 
@@ -20,6 +22,7 @@ public class Room extends DisplayObjectContainer{
 
     boolean fadingIn;
     boolean fadingOut;
+    Random random;
 
     boolean doneFading;
 

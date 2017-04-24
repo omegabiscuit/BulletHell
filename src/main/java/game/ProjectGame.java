@@ -148,8 +148,8 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionX(450);
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
-        keyCount = 5;
-        knifeCount = 20;
+        keyCount = 0;
+        knifeCount = 4;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);

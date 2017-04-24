@@ -13,6 +13,7 @@ import engine.display.AnimatedSprite;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ahmedslevel extends Room {
 
@@ -86,7 +87,7 @@ public class ahmedslevel extends Room {
         this.enemy01.addRoute(500.0D, 0.0D, 2.0D, 2.0D);
         this.enemy01.addRoute(0.0D, -400.0D, 2.0D, 3.0D);
         this.enemy01.addRoute(-500.0D, 0.0D, 4.0D, 4.0D);
-        this.enemy01.addKey();
+
 
 
         this.enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
@@ -98,7 +99,7 @@ public class ahmedslevel extends Room {
         this.enemy02.addRoute(-500.0D, 0.0D, 2.0D, 4.0D);
 
         this.enemy02.addRoute(500.0D, 0.0D, 4.0D, 2.0D);
-        this.enemy02.addKey();
+
 
 
         addChild(map);
@@ -248,6 +249,9 @@ public class ahmedslevel extends Room {
         enemies = new ArrayList<>();
         enemies.add(enemy01);
         enemies.add(enemy02);
+
+        random = new Random();
+        enemies.get(random.nextInt(enemies.size())).addKey();
 
 
         doors.add(door1);
