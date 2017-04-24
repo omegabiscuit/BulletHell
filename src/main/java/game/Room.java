@@ -23,18 +23,16 @@ public class Room extends DisplayObjectContainer{
     boolean doneFading;
 
     ArrayList<Rectangle2D> coverList;
-    public ArrayList<Platform> collisionArray = new ArrayList<>();
+    ArrayList<Platform> collisionArray = new ArrayList<>();
 
 
     private static double fadeSpeed = 0.01;
 
     public Room(String id) {
         super(id);
-        doors = new ArrayList<LockedDoor>();
-
+        doors = new ArrayList<>();
         fadingIn = false;
         fadingOut = false;
-
         doneFading = false;
     }
 

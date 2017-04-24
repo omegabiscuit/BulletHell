@@ -47,7 +47,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     double previousPositionY;
 
     int pauseTime;
-    int pauseCap = 150;
+    int pauseCap = 0;
 
 
     /*****Inventory Stuff*****/
