@@ -37,6 +37,8 @@ public class Player extends AnimatedSprite implements IEventListener {
     private int playerDamageBuffer;
     private int playerDamageTimer;
 
+    Rectangle2D feetCollider;
+
     public Player(String id, String fileName, String startState) {
         super(id, fileName, startState);
         life1 = new Heart("Heart", "heart.png");
@@ -51,6 +53,8 @@ public class Player extends AnimatedSprite implements IEventListener {
         knifeSounds.add("resources/knife2.mp3");
         playerDamageBuffer = 100;
         playerDamageTimer = playerDamageBuffer;
+
+        feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
     }
 
     public Player(String id, String fileName) {
@@ -62,6 +66,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
         playerDamageBuffer = 100;
         playerDamageTimer = playerDamageBuffer;
+        feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY() + getUnscaledHeight() - 10, getUnscaledWidth(), 10);
     }
 
     @Override
@@ -83,6 +88,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains("W")) {
             this.setPositionY(this.getPositionY() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
+            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
             moving = true;
             if (this.getStateName().contains("right") && !this.getStateName().equals("run_back_right")) {
                 this.setAnimationState("run_back_right", "");
@@ -96,6 +102,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains("S")) {
             this.setPositionY(this.getPositionY() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
+            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
             moving = true;
             if (this.getStateName().contains("right") && !this.getStateName().equals("run_front_right")) {
                 this.setAnimationState("run_front_right", "");
@@ -108,6 +115,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains("D")) {
             this.setPositionX(this.getPositionX() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
+            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
             moving = true;
             if (!this.getStateName().equals("run_back_right") && !this.getStateName().equals("run_front_right")) {
                 this.setAnimationState("run_front_right", "");
@@ -117,6 +125,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains("A")) {
             this.setPositionX(this.getPositionX() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
+            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
             moving = true;
             if (!this.getStateName().equals("run_back_left") && !this.getStateName().equals("run_front_left")) {
                 this.setAnimationState("run_front_left", "");
@@ -153,6 +162,14 @@ public class Player extends AnimatedSprite implements IEventListener {
             return false;
         }
         return true;
+    }
+
+    public boolean feetCollideWith(DisplayObject object) {
+        Rectangle2D objRect = new Rectangle2D.Double(object.getPositionX(),object.getPositionY(),object.getUnscaledWidth(),object.getUnscaledHeight());
+        if(this.feetCollider.intersects(objRect)){
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Heart> getLifeArray() {
