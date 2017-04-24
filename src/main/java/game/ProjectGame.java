@@ -66,6 +66,7 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
+    ahmedslevel myLevel4;
     BrighamLevel myLevel3;
 
     ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
@@ -111,7 +112,7 @@ public class ProjectGame extends Game {
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
-        currentLevel = 3;//0 = base , 3=brigham's level
+        currentLevel = 4;//0 = base , 3=brigham's level  //4 = ahmedslevel
 
         damageTimer = 100;
 
@@ -141,7 +142,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
-        knifeCount = 0;
+        knifeCount = 5;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -163,10 +164,11 @@ public class ProjectGame extends Game {
         //coverList.add(rect);
 
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
+        myLevel = new Level0("Room1");
         if (currentLevel == 0) {
 
 
-            myLevel = new Level0("Room1");
+
             addChild(myLevel);
 
             myLevel.run();
@@ -179,7 +181,7 @@ public class ProjectGame extends Game {
             myLevel1.run();
             myLevel1.hide();
             
-            myLevel.mapDoorToRoom(0, myLevel1);
+            myLevel.mapDoorToRoom(0, myLevel);
 
             currentRoom = myLevel;
 
@@ -187,7 +189,17 @@ public class ProjectGame extends Game {
          if(currentLevel == 3){
              myLevel3 = new BrighamLevel("Room3");
              myLevel3.run();
+
+             myLevel3.mapDoorToRoom(0,myLevel1);
              currentRoom = myLevel3;
+         }
+
+         if(currentLevel == 4){
+             myLevel4 = new ahmedslevel("Room4");
+             myLevel4.run();
+             currentRoom = myLevel4;
+
+
          }
         enemies = currentRoom.enemies;
         pickpocketEnemy = null;
@@ -583,6 +595,8 @@ public class ProjectGame extends Game {
             // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
             g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
             g.drawString(itemString, 200, 90);
+            g.drawString("Knife Count: " + Integer.toString(knifeCount), 200, 150);
+
 
 
             if (pickpocket) {
@@ -622,7 +636,7 @@ public class ProjectGame extends Game {
             }
         }
         else if (state == STATE.GAME){
-        if (!player.isDead) {
+        if (!player.isDead && knifeCount!=0) {
             Bullet bul = new Bullet("bullet", "knife.png", 0.2);
             double mouseX = e.getX();
             double mouseY = e.getY();
@@ -630,7 +644,7 @@ public class ProjectGame extends Game {
             System.out.print(pressed[0]);
             System.out.print(" , ");
             System.out.println(pressed[1]);
-
+            knifeCount--;
             bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
             bul.setEnd(mouseX, mouseY);
 
