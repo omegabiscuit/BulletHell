@@ -10,11 +10,11 @@ import engine.display.Sprite;
 import engine.display.AnimatedSprite;
 
 
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-public class ahmedslevel extends Room{
+
+public class ahmedslevel extends Room {
 
 
     SoundManagerClass music = new SoundManagerClass();
@@ -52,18 +52,17 @@ public class ahmedslevel extends Room{
     Platform topcover8;
     LockedDoor door1;
 
+    Player player;
 
 
-
-
-    public ahmedslevel(String id) {
+    public ahmedslevel(String id, Player player) {
         super(id);
+        this.player = player;
     }
 
 
-
-    public void run(){
-        map = new Sprite("map","ahmedslevel.png");
+    public void run() {
+        map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
         map.setPositionY(-1200);
         coverList = new ArrayList<>();
@@ -101,57 +100,72 @@ public class ahmedslevel extends Room{
         this.enemy02.addKey();
 
 
-
-
         addChild(map);
-
 
 
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider2 = new Platform("collider2", "alpha_3x1.png");
         collider3 = new Platform("collider3", "alpha_1x6.png");
-        collider4 = new Platform("collider4","alpha_1x6.png");
+        collider4 = new Platform("collider4", "alpha_1x6.png");
         collider5 = new Platform("collider5", "alpha_3x1.png");
         collider6 = new Platform("collider6", "alpha_1x6.png");
 
-        cover1 = new Platform("cover1","cover1.png");
+        cover1 = new Platform("cover1", "cover1.png");
+        cover1.setPositionX(345);
+        cover1.setPositionY(map.getPositionY() + 300);
+
+        cover2 = new Platform("cover2", "cover1.png");
+        cover2.setPositionX(346);
+        cover2.setPositionY(map.getPositionY() + 550);
+
+        cover3 = new Platform("cover2", "cover1.png");
+        cover3.setPositionX(445);
+        cover3.setPositionY(map.getPositionY() + 300);
+
+        cover4 = new Platform("cover2", "cover1.png");
+        cover4.setPositionX(600);
+        cover4.setPositionY(map.getPositionY() + 450);
+
+        cover5 = new Platform("cover2", "cover1.png");
+        cover5.setPositionX(850);
+        cover5.setPositionY(map.getPositionY() + 300);
+
+        cover6 = new Platform("cover2", "cover1.png");
+        cover6.setPositionX(850);
+        cover6.setPositionY(map.getPositionY() + 600);
+
+//        cover7 = new Platform("cover2","cover1.png");
+//
+//        cover8 = new Platform("cover2","cover1.png");
 
 
-        cover2 = new Platform("cover2","cover1.png");
-        cover3 = new Platform("cover2","cover1.png");
-        cover4 = new Platform("cover2","cover1.png");
-        cover5 = new Platform("cover2","cover1.png");
-        cover6 = new Platform("cover2","cover1.png");
-        cover7 = new Platform("cover2","cover1.png");
-        cover8 = new Platform("cover2","cover1.png");
-
-
-
-
-        topcover1 = new Platform("cover1","cover_top_only.png");
-
+        topcover1 = new Platform("cover1", "cover_top_only.png");
         topcover1.setPositionX(345);
-        topcover1.setPositionY(300);
+        topcover1.setPositionY(map.getPositionY() + 300);
 
 
-        topcover2 = new Platform("cover2","cover_top_only.png");
+        topcover2 = new Platform("cover2", "cover_top_only.png");
         topcover2.setPositionX(346);
-        topcover2.setPositionY(550);
-        topcover3 = new Platform("cover2","cover_top_only.png");
-        topcover3.setPositionX(445);
-        topcover3.setPositionY(300);
-        topcover4 = new Platform("cover2","cover_top_only.png");
-        topcover4.setPositionX(600);
-        topcover4.setPositionY(450);
-        topcover5 = new Platform("cover2","cover_top_only.png");
-        topcover5.setPositionX(850);
-        topcover5.setPositionY(300);
-        topcover6 = new Platform("cover2","cover_top_only.png");
-        topcover6.setPositionX(850);
-        topcover6.setPositionY(600);
-        topcover7 = new Platform("cover2","cover_top_only.png");
-        topcover8 = new Platform("cover2","cover_top_only.png");
+        topcover2.setPositionY(map.getPositionY() + 550);
 
+        topcover3 = new Platform("cover2", "cover_top_only.png");
+        topcover3.setPositionX(445);
+        topcover3.setPositionY(map.getPositionY() + 300);
+
+        topcover4 = new Platform("cover2", "cover_top_only.png");
+        topcover4.setPositionX(600);
+        topcover4.setPositionY(map.getPositionY() + 450);
+
+        topcover5 = new Platform("cover2", "cover_top_only.png");
+        topcover5.setPositionX(850);
+        topcover5.setPositionY(map.getPositionY() + 300);
+
+        topcover6 = new Platform("cover2", "cover_top_only.png");
+        topcover6.setPositionX(850);
+        topcover6.setPositionY(map.getPositionY() + 600);
+
+//        topcover7 = new Platform("cover2","cover_top_only.png");
+//        topcover8 = new Platform("cover2","cover_top_only.png");
 
 
         addChild(cover1);
@@ -167,79 +181,63 @@ public class ahmedslevel extends Room{
         addChild(topcover3);
 
 
-        cover1.setPositionX(345);
-        cover1.setPositionY(300);
-        cover2.setPositionX(346);
-        cover2.setPositionY(550);
-
-
-        cover3.setPositionX(445);
-        cover3.setPositionY(300);
-
-        cover4.setPositionX(600);
-        cover4.setPositionY(450);
-
-        cover5.setPositionX(850);
-        cover5.setPositionY(300);
-
-        cover6.setPositionX(850);
-        cover6.setPositionY(600);
-
-
         //shadow1.setPositionY(cover1.getPositionY()+cover1.getUnscaledWidth() + 50);
 
 
         collider1.setPositionX(320);
-       collider1.setPositionY(-50);
+        collider1.setPositionY(map.getPositionY() + -50);
 
         collider2.setPositionX(700);
-        collider2.setPositionY(-10);
+        collider2.setPositionY(map.getPositionY() + -10);
 
         collider3.setPositionX(200);
-        collider3.setPositionY(100);
+        collider3.setPositionY(map.getPositionY() + 100);
 
         collider4.setPositionX(1000);
-        collider4.setPositionY(60);
-        collider4.setPositionY(60);
+        collider4.setPositionY(map.getPositionY() + 60);
+        collider4.setPositionY(map.getPositionY() + 60);
 
         collider5.setPositionX(220);
-       collider5.setPositionY(-10);
+        collider5.setPositionY(map.getPositionY() + -10);
 
 
         addChild(collider1);
         addChild(collider2);
-       addChild(collider3);
+        addChild(collider3);
         addChild(collider4);
         addChild(collider5);
 
         collisionArray.add(collider1);
-
-
-       collisionArray.add(collider2);
+        collisionArray.add(collider2);
         collisionArray.add(collider3);
         collisionArray.add(collider4);
         collisionArray.add(collider5);
+        collisionArray.add(topcover1);
+        collisionArray.add(topcover2);
+        collisionArray.add(topcover3);
+        collisionArray.add(topcover4);
+        collisionArray.add(topcover5);
+        collisionArray.add(topcover6);
 
 
         coverList.add(convertToCover(topcover1));
-        collisionArray.add(topcover1);
+
 
         coverList.add(convertToCover(topcover2));
-        collisionArray.add(topcover2);
+
 
         coverList.add(convertToCover(topcover3));
-        collisionArray.add(topcover3);
+
 
         coverList.add(convertToCover(topcover4));
-        collisionArray.add(topcover4);
 
 
 
         coverList.add(convertToCover(topcover5));
-        collisionArray.add(topcover5);
+
 
         coverList.add(convertToCover(topcover6));
-        collisionArray.add(topcover6);
+
 
 
         enemies = new ArrayList<>();
@@ -247,15 +245,12 @@ public class ahmedslevel extends Room{
         enemies.add(enemy02);
 
 
-
-
-
         doors.add(door1);
 
 
     }
 
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         super.draw(g);
 
         map.draw(g);
@@ -280,7 +275,8 @@ public class ahmedslevel extends Room{
         door1.draw(g);
 
     }
-    public void update(){
+
+    public void update() {
         super.update();
         door1.update();
 

@@ -88,7 +88,7 @@ public class ProjectGame extends Game {
     Room queuedRoom;
 
     double transitionY;
-    double transitionYSpeed = 5;
+    double transitionYSpeed = 9;
     double transitionYCurrent;
 
 
@@ -118,10 +118,10 @@ public class ProjectGame extends Game {
         throwKnife.setEventType("throwKnife");
 
 
-        currentLevel = 4;//0 = base , 3=brigham's level
+        currentLevel = 0;//0 = base , 3=brigham's level
 
 
-       // damageTimer = 100;
+
 
 
         PickedUpEvent.setEventType("CoinPickedUp");
@@ -175,7 +175,7 @@ public class ProjectGame extends Game {
         if (currentLevel == 0) {
 
             myLevel = new Level0("Room1");
-            myLevel2 = new ahmedslevel("Room4");
+            myLevel2 = new ahmedslevel("Room4", player);
             myLevel3 = new BrighamLevel("Room3");
             addChild(myLevel);
             myLevel.run();
@@ -186,7 +186,7 @@ public class ProjectGame extends Game {
             myLevel1.hide();
             addChild(myLevel1);
 
-            myLevel2 = new ahmedslevel("Room3");
+            myLevel2 = new ahmedslevel("Room3", player);
             myLevel2.run();
             myLevel2.hide();
             addChild(myLevel2);
@@ -368,7 +368,7 @@ public class ProjectGame extends Game {
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
                         transitionYCurrent = 0;
-                        enemies = queuedRoom.enemies;
+                        enemies = new ArrayList<>();
                     }
                 }
 

@@ -60,6 +60,8 @@ public class Level1 extends Room {
     Platform cover1;
     Platform cover2;
 
+    Platform doorCollider;
+
     Sprite coverBottom1;
     Sprite coverBottom2;
 
@@ -335,6 +337,13 @@ public class Level1 extends Room {
         door1.setPositionX(back1.getPositionX());
         door1.setPositionY(back1.getPositionY());
         addChild(door1);
+
+        doorCollider = new Platform("collide", "alpha_6x1.png");
+        doorCollider.setPositionX(door1.getPositionX());
+        doorCollider.setPositionY(door1.getPositionY()-90);
+        addChild(doorCollider);
+
+        collisionArray.add(doorCollider);
 
         doors.add(door1);
         removeChild(back1);

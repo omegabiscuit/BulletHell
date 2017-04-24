@@ -72,7 +72,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
 
         }
         if (dead == true) {
-            
+
         }
     }
 }
