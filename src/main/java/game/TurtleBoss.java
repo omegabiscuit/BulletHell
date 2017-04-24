@@ -5,7 +5,7 @@ import engine.display.AnimatedSprite;
 /**
  * Created by Tyler on 4/24/2017.
  */
-public class TurtleBoss extends AnimatedSprite {
+public class TurtleBoss extends Enemy{
 
     public int turtleTimer;
 

@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * Created by Brigadoon on 4/24/2017.
  */
-public class BossLevel extends Room{
+public class BossLevel extends Room {
 
     Sprite map;
     Platform collider1;
@@ -39,6 +39,8 @@ public class BossLevel extends Room{
     Random random;
 
     Player player;
+
+    TurtleBoss turtleBoss;
 
 
     GameClock missleClock;
@@ -66,6 +68,14 @@ public class BossLevel extends Room{
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
         map.setPositionY(0);
+        addChild(map);
+
+        turtleBoss = new TurtleBoss("boss", "turtle_boss.png", "idle");
+        turtleBoss.setSpriteSheetJson("resources/turtle_boss.json");
+        turtleBoss.setPositionX(400);
+        turtleBoss.setPositionY(200);
+        addChild(turtleBoss);
+
 
         missle1 = new Bullet("missle", "missle.png", 4);
         missle2 = new Bullet("missle", "missle.png", 4);
@@ -107,6 +117,7 @@ public class BossLevel extends Room{
         addChild(collider3);
         addChild(collider4);
         addChild(collider5);
+        addChild(collider6);
 
         collider1.setPositionX(320);
         collider1.setPositionY(-50);
@@ -147,8 +158,8 @@ public class BossLevel extends Room{
             if (randomDirection == 0) {
                 for (int i = 0; i < missles.size(); i++) {
                     if (i != randomNumber) {
-                        missles.get(i).setStart(map.getPositionX()+30 + offset, 0);
-                        missles.get(i).setEnd(map.getPositionX()+30 + offset, 1300);
+                        missles.get(i).setStart(map.getPositionX() + 30 + offset, 0);
+                        missles.get(i).setEnd(map.getPositionX() + 30 + offset, 1300);
                         TweenTransitions misslePath = new TweenTransitions("linearTransition");
                         Tween misslemovement = new Tween(missles.get(i), misslePath);
                         misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
@@ -160,8 +171,8 @@ public class BossLevel extends Room{
             } else if (randomDirection == 1) {
                 for (int i = 0; i < missles.size(); i++) {
                     if (i != randomNumber) {
-                        missles.get(i).setStart(0, map.getPositionY()+80 + offset);
-                        missles.get(i).setEnd(1300, map.getPositionY()+80 + offset);
+                        missles.get(i).setStart(0, map.getPositionY() + 80 + offset);
+                        missles.get(i).setEnd(1300, map.getPositionY() + 80 + offset);
                         TweenTransitions misslePath = new TweenTransitions("linearTransition");
                         Tween misslemovement = new Tween(missles.get(i), misslePath);
                         misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
@@ -173,7 +184,7 @@ public class BossLevel extends Room{
             }
         }
         for (int i = 0; i < missles.size(); i++) {
-            if(player.playerCollidesWith(missles.get(i)) && player.canGetHurt()){
+            if (player.playerCollidesWith(missles.get(i)) && player.canGetHurt()) {
                 damageThePlayer();
             }
         }
@@ -194,11 +205,14 @@ public class BossLevel extends Room{
 
 
         map.draw(g);
+
+        turtleBoss.draw(g);
+
         for (int i = 0; i < missles.size(); i++) {
             missles.get(i).draw(g);
         }
 
-        //shadow1.draw(g);
+
 
     }
 }
