@@ -111,7 +111,7 @@ public class ProjectGame extends Game {
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
-        currentLevel = 0;//0 = base , 3=brigham's level
+        currentLevel = 3;//0 = base , 3=brigham's level
 
         damageTimer = 100;
 
@@ -575,14 +575,6 @@ public class ProjectGame extends Game {
                     }
                 }
             }
-
-//        if (player.life1 != null) {
-//            for (int i = 0; i < player.getLifeArray().size(); i++) {
-//                if (player.getLifeArray().get(i).getVisibility())
-//                    player.getLifeArray().get(i).draw(g);
-//
-//            }
-//        }
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
             g.setColor(Color.RED);

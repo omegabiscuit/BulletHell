@@ -49,12 +49,12 @@ public class BrighamLevel extends Room {
 
         collider2 = new Platform("collider", "alpha_2x1.png");
 
-        collider2.setPositionX(230);
+        collider2.setPositionX(200);
         collider2.setPositionY(-20);
         addChild(collider2);
 
         collider3 = new Platform("collider", "alpha_1x1.png");
-        collider3.setPositionX(200);
+        collider3.setPositionX(180);
         collider3.setPositionY(-20);
         addChild(collider3);
 
