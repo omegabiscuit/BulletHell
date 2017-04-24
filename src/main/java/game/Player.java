@@ -34,6 +34,9 @@ public class Player extends AnimatedSprite implements IEventListener {
     int lifeCount;
     Rectangle2D hitbox;
 
+    private int playerDamageBuffer;
+    private int playerDamageTimer;
+
     public Player(String id, String fileName, String startState) {
         super(id, fileName, startState);
         life1 = new Heart("Heart", "heart.png");
@@ -46,7 +49,8 @@ public class Player extends AnimatedSprite implements IEventListener {
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
         knifeSounds.add("resources/knife1.mp3");
         knifeSounds.add("resources/knife2.mp3");
-
+        playerDamageBuffer = 100;
+        playerDamageTimer = playerDamageBuffer;
     }
 
     public Player(String id, String fileName) {
@@ -56,11 +60,24 @@ public class Player extends AnimatedSprite implements IEventListener {
         lifeArray.add(life3);
         lifeCount = lifeArray.size()-1;
         hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
+        playerDamageBuffer = 100;
+        playerDamageTimer = playerDamageBuffer;
     }
 
     @Override
     public void update(ArrayList<String> pressedKeys) {
         super.update(pressedKeys);
+
+        if(playerDamageTimer < playerDamageBuffer) {
+            playerDamageTimer++;
+
+            if(playerDamageTimer % 5 == 0 && !(playerDamageTimer % 10 == 0)) {
+                setTransparency(0);
+            } else if(playerDamageTimer % 10 == 0) {
+                setTransparency(1);
+            }
+
+        }
 
         boolean moving = false;
         if (pressedKeys.contains("W")) {
@@ -126,6 +143,18 @@ public class Player extends AnimatedSprite implements IEventListener {
         return false;
     }
 
+    public void gotHurt() {
+
+        playerDamageTimer = 0;
+    }
+
+    public boolean canGetHurt() {
+        if(playerDamageTimer < playerDamageBuffer) {
+            return false;
+        }
+        return true;
+    }
+
     public ArrayList<Heart> getLifeArray() {
         return lifeArray;
     }
@@ -156,8 +185,15 @@ public class Player extends AnimatedSprite implements IEventListener {
             System.out.println(ran);
         }
         if(event.getEventType() == "collision"){
+
             lifeCount-=1;
+            System.out.println("damage buffer");
+            System.out.println(playerDamageBuffer);
+            System.out.println("damage timer");
+            System.out.println(playerDamageTimer);
+
         }
+
     }
 
     @Override

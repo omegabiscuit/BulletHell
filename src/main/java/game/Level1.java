@@ -60,6 +60,8 @@ public class Level1 extends Room {
     Sprite coverShadow1;
     Sprite coverShadow2;
 
+    SpikeTile spikes;
+
 
     public Level1(String id) {
         super(id);
@@ -198,7 +200,7 @@ public class Level1 extends Room {
         tile11.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*3);
         addChild(tile11);
 
-        tile12 = new Sprite("tile", "tile.png");
+        tile12 = new Sprite("tile", "tile_with_column.png");
         tile12.setPositionX(tile2.getPositionX() + 4);
         tile12.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*4);
         addChild(tile12);
@@ -239,7 +241,7 @@ public class Level1 extends Room {
         tile15.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*3);
         addChild(tile15);
 
-        tile16 = new Sprite("tile", "tile.png");
+        tile16 = new Sprite("tile", "tile_with_column.png");
         tile16.setPositionX(tile3.getPositionX() - 4);
         tile16.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*4);
         addChild(tile16);
@@ -249,6 +251,12 @@ public class Level1 extends Room {
         back3.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*5);
         addChild(back3);
 
+        spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes.setSpriteSheetJson("resources/spikes.json");
+        spikes.setPositionX(tile6.getPositionX());
+        spikes.setPositionY(tile6.getPositionY());
+        addChild(spikes);
+        spikeList.add(spikes);
 
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider1.setPositionX(tile1.getPositionX() - tile1.getUnscaledWidth());
@@ -299,6 +307,8 @@ public class Level1 extends Room {
         back2.draw(g);
         back3.draw(g);
 
+        spikes.draw(g);
+
         coverShadow1.draw(g);
         coverShadow2.draw(g);
 
@@ -316,6 +326,7 @@ public class Level1 extends Room {
 
     public void update() {
         super.update();
+        spikes.update();
     }
 
 

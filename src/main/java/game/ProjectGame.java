@@ -60,8 +60,8 @@ public class ProjectGame extends Game {
     ///Level 0////
 
 
-    int damageCap = 100;
-    int damageTimer;
+   // int damageCap = 100;
+  //  int damageTimer;
     int currentLevel;
 
     Level0 myLevel;
@@ -111,9 +111,9 @@ public class ProjectGame extends Game {
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
-        currentLevel = 3;//0 = base , 3=brigham's level
+        currentLevel = 0;//0 = base , 3=brigham's level
 
-        damageTimer = 100;
+       // damageTimer = 100;
 
 
         PickedUpEvent.setEventType("CoinPickedUp");
@@ -223,9 +223,6 @@ public class ProjectGame extends Game {
                 player.update(pressedKeys);
             }
 
-            if (damageTimer < damageCap) {
-                damageTimer++;
-            }
 
             if (transitionYCurrent < transitionY) {
                 moveGameY(transitionYSpeed);
@@ -235,16 +232,18 @@ public class ProjectGame extends Game {
 
             if (player != null && !player.isDead) {
                 for (int i = 0; i < enemies.size(); i++) {
-                    if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
-                        damageTimer = 0;
-                        if (player.getLifeCount() != 0)
-                            player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);
-                        player.setLifeCount(player.getLifeCount() - 1);
-                        if (player.getLifeCount() == 0) {
-                            complete = true;
-                        }
+                    if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && player.canGetHurt()) {
+                        damageThePlayer();
                     }
                 }
+
+                for(int i = 0; i < currentRoom.getSpikeList().size(); i++) {
+                    SpikeTile spikes = currentRoom.getSpikeList().get(i);
+                    if(player.playerCollidesWith(spikes) && spikes.getStateName() == "idle up" && player.canGetHurt()) {
+                        damageThePlayer();
+                    }
+                }
+
                 if (player.playerCollidesWith(coin)) {
                     coin.handleEvent(collidedEvent);
                     myQuestManager.handleEvent(PickedUpEvent);
@@ -360,15 +359,9 @@ public class ProjectGame extends Game {
                         }
                         if (currentEnemy.enemyBullet != null) {
                             System.out.println(currentEnemy.enemyBullet.getShotTimer());
-                            if (currentEnemy.enemyBullet.collidesWith(player)) {
-                                player.handleEvent(reduceLife);
+                            if (currentEnemy.enemyBullet.collidesWith(player) && player.canGetHurt()) {
+                                damageThePlayer();
                                 currentEnemy.enemyBullet = null;
-                                player.setLifeCount(player.getLifeCount() - 1);
-                                if (player.getLifeCount() == 0) {
-                                    complete = true;
-                                    player.isDead = true;
-                                    break;
-                                }
                             }
 
                         }
@@ -720,11 +713,22 @@ public class ProjectGame extends Game {
            DisplayObjectContainer child = children.get(i);
            if(child instanceof Room)
                ((Room)child).moveRoomY(movey);
-       }                                                              }
-
-    public void setGamePositionY(double y) {
-
+       }
     }
+
+    public void damageThePlayer() {
+        if (player.getLifeCount() != 0) {
+            player.gotHurt();
+            player.handleEvent(reduceLife);
+            player.setLifeCount(player.getLifeCount() - 1);
+        }
+        if (player.getLifeCount() == 0) {
+            complete = true;
+            player.isDead = true;
+        }
+    }
+
+
 
     /**
      * Quick main class that simply creates an instance of our game and starts the timer
