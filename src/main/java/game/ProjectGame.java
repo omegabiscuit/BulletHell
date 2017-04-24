@@ -63,8 +63,9 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
-    BossLevel bossLevel;
+    ahmedslevel myLevel2;
     BrighamLevel myLevel3;
+    BossLevel bossLevel;
 
 
     ArrayList<Enemy> enemies;
@@ -173,17 +174,34 @@ public class ProjectGame extends Game {
 
 
             addChild(myLevel);
-
             myLevel.run();
 
+
             myLevel1 = new Level1("Room2");
-
-
             myLevel1.run();
             myLevel1.hide();
             addChild(myLevel1);
+
+            myLevel2 = new ahmedslevel("Room3");
+            myLevel2.run();
+            myLevel2.hide();
+            addChild(myLevel2);
+
+            myLevel3 = new BrighamLevel("Room4");
+            myLevel3.run();
+            myLevel3.hide();
+            addChild(myLevel3);
+
+            bossLevel = new BossLevel("Room5",player);
+            bossLevel.run();
+            bossLevel.hide();
+            addChild(bossLevel);
             
             myLevel.mapDoorToRoom(0, myLevel1);
+            //myLevel1.mapDoorToRoom(0,myLevel2);
+            //myLevel2.mapDoorToRoom(0,myLevel3);
+            //myLevel3.mapDoorToRoom(0,myLevel3);
+            //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
             currentRoom = myLevel;

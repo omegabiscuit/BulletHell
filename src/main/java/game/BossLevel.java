@@ -150,7 +150,7 @@ public class BossLevel extends Room {
     public void update() {
         super.update();
         turtleBoss.update();
-        if (missleClock.getElapsedTime() - missleLaunch > 5000) {
+        if (missleClock.getElapsedTime() - missleLaunch > 5000 && !turtleBoss.isDead()) {
             int offset = 0;
 
             int randomDirection = random.nextInt(4);
@@ -218,6 +218,14 @@ public class BossLevel extends Room {
         for (int i = 0; i < missles.size(); i++) {
             if (player.playerCollidesWith(missles.get(i)) && player.canGetHurt()) {
                 damageThePlayer();
+            }
+        }
+        for(int i=0;i < player.playerBullets.size();i++){
+            if (player.playerBullets.get(i).collidesWith(turtleBoss)){
+                turtleBoss.health--;
+                turtleBoss.gotHurt();
+                player.playerBullets.remove(i);
+                break;
             }
         }
     }
