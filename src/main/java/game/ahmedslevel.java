@@ -65,7 +65,7 @@ public class ahmedslevel extends Room {
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
         map.setPositionY(-1200);
-        coverList = new ArrayList<>();
+//        coverList = new ArrayList<>();
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
         door1.setSpriteSheetJson("resources/door_opening.json");
@@ -112,26 +112,38 @@ public class ahmedslevel extends Room {
 
         cover1 = new Platform("cover1", "cover1.png");
         cover1.setPositionX(345);
+        cover1.setPositionY(300);
+        coverList.add(convertToCover(cover1));
         cover1.setPositionY(map.getPositionY() + 300);
 
         cover2 = new Platform("cover2", "cover1.png");
         cover2.setPositionX(346);
+        cover2.setPositionY(550);
+        coverList.add(convertToCover(cover2));
         cover2.setPositionY(map.getPositionY() + 550);
 
         cover3 = new Platform("cover2", "cover1.png");
         cover3.setPositionX(445);
+        cover3.setPositionY(300);
+        coverList.add(convertToCover(cover3));
         cover3.setPositionY(map.getPositionY() + 300);
 
         cover4 = new Platform("cover2", "cover1.png");
         cover4.setPositionX(600);
+        cover4.setPositionY(450);
+        coverList.add(convertToCover(cover4));
         cover4.setPositionY(map.getPositionY() + 450);
 
         cover5 = new Platform("cover2", "cover1.png");
         cover5.setPositionX(850);
+        cover5.setPositionY(300);
+        coverList.add(convertToCover(cover5));
         cover5.setPositionY(map.getPositionY() + 300);
 
         cover6 = new Platform("cover2", "cover1.png");
         cover6.setPositionX(850);
+        cover6.setPositionY(600);
+        coverList.add(convertToCover(cover6));
         cover6.setPositionY(map.getPositionY() + 600);
 
 //        cover7 = new Platform("cover2","cover1.png");
@@ -179,6 +191,9 @@ public class ahmedslevel extends Room {
         addChild(topcover1);
         addChild(topcover2);
         addChild(topcover3);
+        addChild(topcover4);
+        addChild(topcover5);
+        addChild(topcover6);
 
 
         //shadow1.setPositionY(cover1.getPositionY()+cover1.getUnscaledWidth() + 50);
@@ -219,24 +234,6 @@ public class ahmedslevel extends Room {
         collisionArray.add(topcover5);
         collisionArray.add(topcover6);
 
-
-        coverList.add(convertToCover(topcover1));
-
-
-        coverList.add(convertToCover(topcover2));
-
-
-        coverList.add(convertToCover(topcover3));
-
-
-        coverList.add(convertToCover(topcover4));
-
-
-
-        coverList.add(convertToCover(topcover5));
-
-
-        coverList.add(convertToCover(topcover6));
 
 
 

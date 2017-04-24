@@ -97,10 +97,8 @@ public class BrighamLevel extends Room {
         //map stuff
         map = new Sprite("map", "BrighamLevelFinal.png");
         map.setPositionX(200);
+        map.setPositionY(-1872);
 
-        map.setPositionY(-1950);
-
-        map.setPositionY(-800);
 
         addChild(map);
 
@@ -108,65 +106,80 @@ public class BrighamLevel extends Room {
         door1.setSpriteSheetJson("resources/door_opening.json");
         door1.setDelay(100);
         door1.setPositionX(500);
-        door1.setPositionY(50-900);
+        door1.setPositionY(50 + map.getPositionY());
         addChild(door1);
 
         startTile = new Sprite("startTile", "tile.png");
-        startTile.setPositionX(500);
-        startTile.setPositionY(810-900);
+        startTile.setPositionX(628);
+        startTile.setPositionY(map.getPositionY() + 810);
         addChild(startTile);
 
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider1.setPositionX(640);
-        collider1.setPositionY(-20+900);
+        collider1.setPositionY(-20);
+        coverList.add(convertToCover(collider1));
+        collider1.setPositionY(-20 + map.getPositionY());
         addChild(collider1);
 
         collider2 = new Platform("collider", "alpha_2x1.png");
         collider2.setPositionX(200);
-        collider2.setPositionY(-20+900);
+        collider2.setPositionY(-20);
+        coverList.add(convertToCover(collider2));
+        collider2.setPositionY(-20 + map.getPositionY());
         addChild(collider2);
 
         collider3 = new Platform("collider", "alpha_1x1.png");
         collider3.setPositionX(180);
-        collider3.setPositionY(-20-900);
+        collider3.setPositionY(-20);
+        coverList.add(convertToCover(collider3));
+        collider3.setPositionY(-20 + map.getPositionY());
         addChild(collider3);
 
         collider4 = new Platform("collider", "alpha_2x1.png");
         collider4.setPositionX(270);
-        collider4.setPositionY(-20-900);
+        collider4.setPositionY(-20 + map.getPositionY());
         addChild(collider4);
 
         leftCollider = new Platform("collider","alpha_1x6.png");
         leftCollider.setPositionX(102);
-        leftCollider.setPositionY(-20-900);
+        leftCollider.setPositionY(-20);
+        coverList.add(convertToCover(leftCollider));
+        leftCollider.setPositionY(-20 + map.getPositionY());
         addChild(leftCollider);
 
         rightCollider = new Platform("collider","alpha_1x6.png");
         rightCollider.setPositionX(1006);
-        rightCollider.setPositionY(-20-900);
+        rightCollider.setPositionY(-20);
+        coverList.add(convertToCover(rightCollider));
+        rightCollider.setPositionY(-20 + map.getPositionY());
         addChild(rightCollider);
 
         doorCollider = new Platform("collider", "alpha_2x1.png");
         doorCollider.setPositionX(456);
-        doorCollider.setPositionY(-50-900);
+        doorCollider.setPositionY(-50 + map.getPositionY());
         addChild(doorCollider);
 
         wallCollider = new Platform("collider", "alpha_3x1.png");
         wallCollider.setPositionX(450);
-        wallCollider.setPositionY(410-900);
+        wallCollider.setPositionY(410);
+        coverList.add(convertToCover(wallCollider));
+        wallCollider.setPositionY(410 + map.getPositionY());
         addChild(wallCollider);
 
         thinWallLeft = new Platform("collider", "alpha_thinWallLong.png");
         thinWallLeft.setPositionX(wallCollider.getPositionX()-thinWallLeft.getUnscaledWidth()+10);
-        thinWallLeft.setPositionY(400-900);
+        thinWallLeft.setPositionY(400);
+        coverList.add(convertToCover(thinWallLeft));
+        thinWallLeft.setPositionY(400 + map.getPositionY());
         addChild(thinWallLeft);
 
         thinWallRight = new Platform("collider", "alpha_thinWallLong.png");
         thinWallRight.setPositionX(wallCollider.getPositionX()+wallCollider.getUnscaledWidth()-10);
-        thinWallRight.setPositionY(400-900);
+        thinWallRight.setPositionY(400);
+        coverList.add(convertToCover(thinWallRight));
+        thinWallRight.setPositionY(400 + map.getPositionY());
         addChild(thinWallRight);
 
-        coverList = new ArrayList<>(); //list of cover sprites
 
 
 
@@ -185,15 +198,9 @@ public class BrighamLevel extends Room {
         collisionArray.add(thinWallRight);
         //collisionArray.add(door1);
 
-        coverList.add(convertToCover(collider1));
-        coverList.add(convertToCover(collider2));
-        coverList.add(convertToCover(collider3));
-        coverList.add(convertToCover(leftCollider));
-        coverList.add(convertToCover(rightCollider));
-        coverList.add(convertToCover(wallCollider));
-        coverList.add(convertToCover(doorCollider));
-        coverList.add(convertToCover(thinWallLeft));
-        coverList.add(convertToCover(thinWallRight));
+
+
+
 
         doors.add(door1);
 
@@ -206,15 +213,6 @@ public class BrighamLevel extends Room {
         map.draw(g);
         startTile.draw(g);
         door1.draw(g);
-
-//        collider1.draw(g);
-//        collider2.draw(g);
-//        collider3.draw(g);
-//        collider4.draw(g);
-//        collider5.draw(g);
-//        collider6.draw(g);
-//        collider7.draw(g);
-//        collider8.draw(g);
 
 
 

@@ -23,7 +23,7 @@ public class Room extends DisplayObjectContainer{
 
     boolean doneFading;
 
-    ArrayList<Rectangle2D> coverList;
+    ArrayList<Rectangle2D> coverList = new ArrayList<>();
     ArrayList<Platform> collisionArray = new ArrayList<>();
 
 

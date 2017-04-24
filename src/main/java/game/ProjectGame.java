@@ -202,23 +202,23 @@ public class ProjectGame extends Game {
             addChild(bossLevel);
             
             myLevel.mapDoorToRoom(0, myLevel1);
-            //myLevel1.mapDoorToRoom(0,myLevel2);
-            //myLevel2.mapDoorToRoom(0,myLevel3);
+            myLevel1.mapDoorToRoom(0,myLevel2);
+            myLevel2.mapDoorToRoom(0,myLevel3);
             //myLevel3.mapDoorToRoom(0,myLevel3);
             //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
             currentRoom = myLevel;
 
-           myLevel1.mapDoorToRoom(0,myLevel2);
+           //myLevel1.mapDoorToRoom(0,myLevel2);
 
-            myLevel2.run();
-            myLevel2.hide();
+            //myLevel2.run();
+            //myLevel2.hide();
 
 
-            myLevel2.mapDoorToRoom(0,myLevel3);
-            myLevel3.run();
-            myLevel3.hide();
+            //myLevel2.mapDoorToRoom(0,myLevel3);
+            //myLevel3.run();
+            //myLevel3.hide();
 
         }
 
@@ -412,6 +412,7 @@ public class ProjectGame extends Game {
                         }
                     }
                     if (currentEnemy.isInView(player, currentRoom.coverList)) {
+                        System.out.println(currentRoom.coverList.get(0));
                         if (complete == false) {
                             if (currentEnemy.enemyBullet == null) {
                                 currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.4);
