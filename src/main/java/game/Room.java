@@ -23,7 +23,7 @@ public class Room extends DisplayObjectContainer{
     boolean doneFading;
 
     ArrayList<Rectangle2D> coverList;
-    public ArrayList<Platformer> collisionArray = new ArrayList<>();
+    public ArrayList<Platform> collisionArray = new ArrayList<>();
 
 
     private static double fadeSpeed = 0.01;
@@ -167,8 +167,8 @@ public class Room extends DisplayObjectContainer{
 
     }
 
-//    public void createCover(Platformer top, Sprite bottom, Sprite shadow, double posX, double posY) {
-//        top = new Platformer("cover", "cover_top_only_horizontal.png");
+//    public void createCover(Platform top, Sprite bottom, Sprite shadow, double posX, double posY) {
+//        top = new Platform("cover", "cover_top_only_horizontal.png");
 //        top.setPositionX(posX);
 //        top.setPositionY(posY);
 //

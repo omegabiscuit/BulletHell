@@ -73,18 +73,18 @@ public class Level0 extends Room {
     Sprite dbthin1;
     Sprite dbthin2;
 
-    Platformer crate;
+    Platform crate;
     Sprite coverBottom1;
     Sprite coverShadow1;
 
-    Platformer collider1;
-    Platformer collider2;
-    Platformer collider3;
-    Platformer collider4;
-    Platformer collider5;
-    Platformer collider6;
-    Platformer collider7;
-    Platformer collider8;
+    Platform collider1;
+    Platform collider2;
+    Platform collider3;
+    Platform collider4;
+    Platform collider5;
+    Platform collider6;
+    Platform collider7;
+    Platform collider8;
 
     LockedDoor door1;
 
@@ -102,7 +102,7 @@ public class Level0 extends Room {
         enemy01.setPositionX(250);
         enemy01.setPositionY(550);
         enemy01.addRoute(0, 800, 2, 1);
-        enemy01.addRoute(400, 0, 2, 1);
+        enemy01.addRoute(400, 0, 2, 2);
         enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
         enemy01.addKey();
@@ -145,7 +145,7 @@ public class Level0 extends Room {
         tile4.setPositionY(tile3.getPositionY() + tile3.getUnscaledHeight());
         addChild(tile4);
 
-        collider4 = new Platformer("collider", "alpha_3x1.png");
+        collider4 = new Platform("collider", "alpha_3x1.png");
         collider4.setPositionX(tile4.getPositionX() - tile4.getUnscaledWidth());
         collider4.setPositionY(tile4.getPositionY());
         addChild(collider4);
@@ -191,7 +191,7 @@ public class Level0 extends Room {
         tile12.setPositionY(tile8.getPositionY());
         addChild(tile12);
 
-        collider6 = new Platformer("collider", "alpha_3x1.png");
+        collider6 = new Platform("collider", "alpha_3x1.png");
         collider6.setPositionX(tile12.getPositionX() - tile12.getUnscaledWidth());
         collider6.setPositionY(tile12.getPositionY() + tile12.getUnscaledHeight());
         addChild(collider6);
@@ -216,7 +216,7 @@ public class Level0 extends Room {
         tile16.setPositionY(tile12.getPositionY());
         addChild(tile16);
 
-        collider5 = new Platformer("collider", "alpha_1x1.png");
+        collider5 = new Platform("collider", "alpha_1x1.png");
         collider5.setPositionX(tile16.getPositionX());
         collider5.setPositionY(tile16.getPositionY());
         addChild(collider5);
@@ -247,7 +247,7 @@ public class Level0 extends Room {
         back1.setPositionY(ctile1.getPositionY() - ctile1.getUnscaledHeight());
         addChild(back1);
 
-        collider1 = new Platformer("collider", "alpha_3x1.png");
+        collider1 = new Platform("collider", "alpha_3x1.png");
         collider1.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
         collider1.setPositionY(back1.getPositionY());
         addChild(collider1);
@@ -269,7 +269,7 @@ public class Level0 extends Room {
         addChild(door1);
 
 
-        collider8 = new Platformer("collider", "alpha_3x1.png");
+        collider8 = new Platform("collider", "alpha_3x1.png");
         collider8.setPositionX(door1.getPositionX() - tile1.getUnscaledWidth());
         collider8.setPositionY(door1.getPositionY() - 3*tile1.getUnscaledHeight()/4);
         addChild(collider8);
@@ -279,7 +279,7 @@ public class Level0 extends Room {
         back4.setPositionY(ctile4.getPositionY() - ctile4.getUnscaledHeight());
         addChild(back4);
 
-        collider7 = new Platformer("collider", "alpha_2x1.png");
+        collider7 = new Platform("collider", "alpha_2x1.png");
         collider7.setPositionX(back4.getPositionX());
         collider7.setPositionY(back4.getPositionY());
         addChild(collider7);
@@ -340,12 +340,12 @@ public class Level0 extends Room {
         toptile10.setScaleX(-1);
         addChild(toptile10);
 
-        collider2 = new Platformer("collider", "alpha_1x4.png");
+        collider2 = new Platform("collider", "alpha_1x4.png");
         collider2.setPositionX(back1.getPositionX() - back1.getUnscaledWidth());
         collider2.setPositionY(back1.getPositionY() + back1.getUnscaledHeight());
         addChild(collider2);
 
-        collider3 = new Platformer("collider", "alpha_1x4.png");
+        collider3 = new Platform("collider", "alpha_1x4.png");
         collider3.setPositionX(back4.getPositionX() + back4.getUnscaledWidth());
         collider3.setPositionY(back4.getPositionY() + back4.getUnscaledHeight());
         addChild(collider3);
@@ -394,7 +394,7 @@ public class Level0 extends Room {
         corner2.setScaleX(-1);
         addChild(corner2);
 
-        crate = new Platformer("cover", "cover_top_only_horizontal.png");
+        crate = new Platform("cover", "cover_top_only_horizontal.png");
         crate.setPositionX(tile9.getPositionX());
         crate.setPositionY(tile9.getPositionY() + 64);
         coverList = new ArrayList<>(); //list of cover sprites

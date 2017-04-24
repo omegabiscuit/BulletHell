@@ -4,10 +4,10 @@ import engine.display.Sprite;
 import engine.events.Event;
 import engine.events.IEventListener;
 
-public class Platformer extends Sprite implements IEventListener {
+public class Platform extends Sprite implements IEventListener {
 	
 	
-	public Platformer(String id, String imageFileName) {
+	public Platform(String id, String imageFileName) {
         super(id, imageFileName);
     }
 

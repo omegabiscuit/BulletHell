@@ -36,13 +36,13 @@ public class ProjectGame extends Game {
     Event collidedEvent;
     Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
-    //  Platformer platform = new Platformer("Rectangele", "platform.png");
-    //  Platformer platform1 = new Platformer("Rectangele", "platform.png");
+    //  Platform platform = new Platform("Rectangele", "platform.png");
+    //  Platform platform1 = new Platform("Rectangele", "platform.png");
 
     boolean start = false;
 
     Sprite background = new Sprite("Background", "background.png");
-    ArrayList<Platformer> collisionArray = new ArrayList<>();
+    ArrayList<Platform> collisionArray = new ArrayList<>();
     private Player player;
 
     Heart life1 = new Heart("Heart", "heart.png");
@@ -65,6 +65,7 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
+    BrighamLevel myLevel3;
 
     ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
     ArrayList<Enemy> enemies;
@@ -106,7 +107,7 @@ public class ProjectGame extends Game {
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
-        currentLevel = 0;
+        currentLevel = 3;//0 = base , 3=brigham's level
 
         damageTimer = 100;
 
@@ -179,6 +180,11 @@ public class ProjectGame extends Game {
             currentRoom = myLevel;
 
         }
+         if(currentLevel == 3){
+             myLevel3 = new BrighamLevel("Room3");
+             myLevel3.run();
+             currentRoom = myLevel3;
+         }
         enemies = currentRoom.enemies;
         pickpocketEnemy = null;
 
@@ -320,6 +326,12 @@ public class ProjectGame extends Game {
             Enemy currentEnemy = enemies.get(i);
             currentEnemy.update();
             if (!currentEnemy.dead) {
+                if (currentEnemy.enemyBullet != null){
+                    currentEnemy.enemyBullet.update(pressedKeys);
+                    if (currentEnemy.enemyBullet.getShotTimer() >= currentEnemy.enemyBullet.getShotCap()) {
+                        currentEnemy.enemyBullet = null;
+                    }
+                }
                 if (currentEnemy.isInView(player, currentRoom.coverList)) {
                     if (complete == false) {
                         if (currentEnemy.enemyBullet == null) {
@@ -328,13 +340,14 @@ public class ProjectGame extends Game {
                             currentEnemy.enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
                             TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
                             Tween enemyBulletmovement = new Tween(currentEnemy.enemyBullet, enemyBulletPath);
-                            enemyBulletmovement.animate(TweenableParams.X, currentEnemy.enemyBullet.startValX, currentEnemy.enemyBullet.endValX, 0.2);
-                            enemyBulletmovement.animate(TweenableParams.Y, currentEnemy.enemyBullet.startValY, currentEnemy.enemyBullet.endValY, 0.2);
+                            enemyBulletmovement.animate(TweenableParams.X, currentEnemy.enemyBullet.startValX, currentEnemy.enemyBullet.endValX, 0.4);
+                            enemyBulletmovement.animate(TweenableParams.Y, currentEnemy.enemyBullet.startValY, currentEnemy.enemyBullet.endValY, 0.4);
                             TweenJuggler.getInstance().add(enemyBulletmovement);
                             currentEnemy.handleEvent(throwKnife);
                         }
                     }
                     if (currentEnemy.enemyBullet != null) {
+                        System.out.println(currentEnemy.enemyBullet.getShotTimer());
                         if (currentEnemy.enemyBullet.collidesWith(player)) {
                             player.handleEvent(reduceLife);
                             currentEnemy.enemyBullet = null;
@@ -345,6 +358,7 @@ public class ProjectGame extends Game {
                                 break;
                             }
                         }
+
                     }
                 }
 
@@ -426,7 +440,7 @@ public class ProjectGame extends Game {
 //    }
 
 
-    public void collide(Sprite sprite, Platformer platform) {
+    public void collide(Sprite sprite, Platform platform) {
         if (sprite.collidesWith(platform)) {
             if (sprite.getPositionX() + sprite.getUnscaledWidth() > platform.getPositionX()
                     && sprite.getPositionY() + sprite.getUnscaledHeight() / 2 > platform.getPositionY() && sprite.getPositionY() < platform.getPositionY() + platform.getUnscaledHeight()
@@ -567,6 +581,10 @@ public class ProjectGame extends Game {
             Bullet bul = new Bullet("bullet", "knife.png", 0.2);
             double mouseX = e.getX();
             double mouseY = e.getY();
+            double[] pressed = {mouseX,mouseY};
+            System.out.print(pressed[0]);
+            System.out.print(" , ");
+            System.out.println(pressed[1]);
 
             bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
             bul.setEnd(mouseX, mouseY);
