@@ -70,10 +70,10 @@ public class BossLevel extends Room {
         map.setPositionY(0);
         addChild(map);
 
-        turtleBoss = new TurtleBoss("boss", "turtle_boss.png", "idle");
+        turtleBoss = new TurtleBoss("boss", "resources/turtle_boss.png", "idle");
         turtleBoss.setSpriteSheetJson("resources/turtle_boss.json");
-        turtleBoss.setPositionX(400);
-        turtleBoss.setPositionY(200);
+        turtleBoss.setPositionX(map.getPositionX() + 500);
+        turtleBoss.setPositionY(map.getPositionY());
         addChild(turtleBoss);
 
 
@@ -149,13 +149,14 @@ public class BossLevel extends Room {
 
     public void update() {
         super.update();
-        if (missleClock.getElapsedTime() - missleLaunch > 3000) {
+        turtleBoss.update();
+        if (missleClock.getElapsedTime() - missleLaunch > 5000) {
             int offset = 0;
-            int randomNumber = random.nextInt(9);
-            int randomDirection = random.nextInt(2);
-            System.out.println(randomNumber);
+
+            int randomDirection = random.nextInt(4);
             missleLaunch = missleClock.getElapsedTime();
             if (randomDirection == 0) {
+                int randomNumber = random.nextInt(9);
                 for (int i = 0; i < missles.size(); i++) {
                     if (i != randomNumber) {
                         missles.get(i).setStart(map.getPositionX() + 30 + offset, 0);
@@ -166,13 +167,14 @@ public class BossLevel extends Room {
                         misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
                         TweenJuggler.getInstance().add(misslemovement);
                     }
-                    offset += 70;
+                    offset += 80;
                 }
             } else if (randomDirection == 1) {
-                for (int i = 0; i < missles.size(); i++) {
+                int randomNumber = random.nextInt(7);
+                for (int i = 0; i < missles.size()-2; i++) {
                     if (i != randomNumber) {
-                        missles.get(i).setStart(0, map.getPositionY() + 80 + offset);
-                        missles.get(i).setEnd(1300, map.getPositionY() + 80 + offset);
+                        missles.get(i).setStart(0, map.getPositionY() + 160 + offset);
+                        missles.get(i).setEnd(1300, map.getPositionY() + 160 + offset);
                         TweenTransitions misslePath = new TweenTransitions("linearTransition");
                         Tween misslemovement = new Tween(missles.get(i), misslePath);
                         misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
@@ -180,6 +182,36 @@ public class BossLevel extends Room {
                         TweenJuggler.getInstance().add(misslemovement);
                     }
                     offset += 90;
+                }
+            }
+            else if (randomDirection == 2) {
+                int randomNumber = random.nextInt(7);
+                for (int i = 0; i < missles.size()-2; i++) {
+                    if (i != randomNumber) {
+                        missles.get(i).setStart(1300, map.getPositionY() + 160 + offset);
+                        missles.get(i).setEnd(-50, map.getPositionY() + 160 + offset);
+                        TweenTransitions misslePath = new TweenTransitions("linearTransition");
+                        Tween misslemovement = new Tween(missles.get(i), misslePath);
+                        misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
+                        misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                        TweenJuggler.getInstance().add(misslemovement);
+                    }
+                    offset += 90;
+                }
+            }
+            if (randomDirection == 3) {
+                int randomNumber = random.nextInt(9);
+                for (int i = 0; i < missles.size(); i++) {
+                    if (i != randomNumber) {
+                        missles.get(i).setStart(map.getPositionX() + 30 + offset, 1300);
+                        missles.get(i).setEnd(map.getPositionX() + 30 + offset, -50);
+                        TweenTransitions misslePath = new TweenTransitions("linearTransition");
+                        Tween misslemovement = new Tween(missles.get(i), misslePath);
+                        misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
+                        misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                        TweenJuggler.getInstance().add(misslemovement);
+                    }
+                    offset += 80;
                 }
             }
         }
