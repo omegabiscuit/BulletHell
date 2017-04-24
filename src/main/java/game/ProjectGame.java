@@ -68,7 +68,7 @@ public class ProjectGame extends Game {
     Level1 myLevel1;
     BrighamLevel myLevel3;
 
-    ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
+    ArrayList<Bullet> playerBullets = new ArrayList<>();
     ArrayList<Enemy> enemies;
 
     Enemy pickpocketEnemy;
@@ -186,6 +186,7 @@ public class ProjectGame extends Game {
         }
          if(currentLevel == 3){
              myLevel3 = new BrighamLevel("Room3");
+             addChild(myLevel3);
              myLevel3.run();
              currentRoom = myLevel3;
          }
