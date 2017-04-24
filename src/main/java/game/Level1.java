@@ -30,6 +30,9 @@ public class Level1 extends Room {
     Sprite tile15;
     Sprite tile16;
 
+    Sprite corner1;
+    Sprite corner2;
+
 
     Sprite wall1;
     Sprite wall2;
@@ -43,6 +46,9 @@ public class Level1 extends Room {
     Sprite wall10;
     Sprite wall11;
     Sprite wall12;
+    Sprite wall13;
+    Sprite wall14;
+    Sprite wall15;
 
     Sprite back1;
     Sprite back2;
@@ -122,7 +128,6 @@ public class Level1 extends Room {
         addChild(wall2);
 
         wall3 = new Sprite("tile", "top_tile_1.png");
-        wall3 = new Sprite("tile", "top_tile_1.png");
         wall3.setPositionX(wall2.getPositionX() - wall1.getUnscaledWidth());
         wall3.setPositionY(wall2.getPositionY() - wall2.getUnscaledHeight());
         addChild(wall3);
@@ -197,6 +202,11 @@ public class Level1 extends Room {
         back1.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight()*5);
         addChild(back1);
 
+        wall13 = new Sprite("tile", "top_tile_horizontal.png");
+        wall13.setPositionX(back1.getPositionX());
+        wall13.setPositionY(back1.getPositionY() - wall13.getUnscaledHeight());
+        addChild(wall13);
+
         tile9 = new Sprite("tile", "tile.png");
         tile9.setPositionX(tile2.getPositionX() + 4);
         tile9.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*1);
@@ -236,6 +246,11 @@ public class Level1 extends Room {
         back2.setPositionX(tile2.getPositionX() + 4);
         back2.setPositionY(tile2.getPositionY() - tile2.getUnscaledHeight()*5);
         addChild(back2);
+
+        wall14 = new Sprite("tile", "top_tile_horizontal.png");
+        wall14.setPositionX(back2.getPositionX());
+        wall14.setPositionY(back2.getPositionY() - wall14.getUnscaledHeight());
+        addChild(wall14);
 
         collider4 = new Platform("collider", "alpha_1x6.png");
         collider4.setPositionX(back2.getPositionX() - back2.getUnscaledWidth());
@@ -283,10 +298,16 @@ public class Level1 extends Room {
         tile16.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*4);
         addChild(tile16);
 
+
         back3 = new Sprite("tile", "pillar_door_left.png");
         back3.setPositionX(tile3.getPositionX() - 4);
         back3.setPositionY(tile3.getPositionY() - tile3.getUnscaledHeight()*5);
         addChild(back3);
+
+        wall15 = new Sprite("tile", "top_tile_horizontal.png");
+        wall15.setPositionX(back3.getPositionX());
+        wall15.setPositionY(back3.getPositionY() - wall15.getUnscaledHeight());
+        addChild(wall15);
 
         collider3 = new Platform("collider", "alpha_1x6.png");
         collider3.setPositionX(back3.getPositionX() + back3.getUnscaledWidth());
@@ -343,6 +364,17 @@ public class Level1 extends Room {
         doorCollider.setPositionY(door1.getPositionY()-90);
         addChild(doorCollider);
 
+        corner1 = new Sprite("corner", "top_corner_right.png");
+        corner1.setPositionX(wall6.getPositionX());
+        corner1.setPositionY(wall6.getPositionY() - corner1.getUnscaledHeight());
+        addChild(corner1);
+
+        corner2 = new Sprite("corner", "top_corner_right.png");
+        corner2.setPositionX(wall12.getPositionX() + corner2.getUnscaledWidth());
+        corner2.setPositionY(wall12.getPositionY() - corner2.getUnscaledHeight());
+        corner2.setScaleX(-1);
+        addChild(corner2);
+
         collisionArray.add(doorCollider);
 
         doors.add(door1);
@@ -382,6 +414,9 @@ public class Level1 extends Room {
         wall10.draw(g);
         wall11.draw(g);
         wall12.draw(g);
+        wall13.draw(g);
+        wall14.draw(g);
+        wall15.draw(g);
 
         back1.draw(g);
         back2.draw(g);
@@ -398,6 +433,9 @@ public class Level1 extends Room {
 
         cover1.draw(g);
         cover2.draw(g);
+
+        corner1.draw(g);
+        corner2.draw(g);
 
         collider1.draw(g);
         collider3.draw(g);
