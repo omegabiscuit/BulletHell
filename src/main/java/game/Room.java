@@ -14,6 +14,7 @@ public class Room extends DisplayObjectContainer{
 
 
     protected ArrayList<SpikeTile> spikeList;
+    protected ArrayList<TreasureChest> chests;
     protected ArrayList<LockedDoor> doors;
     protected ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -33,6 +34,7 @@ public class Room extends DisplayObjectContainer{
         super(id);
         doors = new ArrayList<LockedDoor>();
         spikeList = new ArrayList<SpikeTile>();
+        chests = new ArrayList<TreasureChest>();
 
         fadingIn = false;
         fadingOut = false;
@@ -170,6 +172,10 @@ public class Room extends DisplayObjectContainer{
 
     public ArrayList<SpikeTile> getSpikeList() {
         return spikeList;
+    }
+
+    public ArrayList<TreasureChest> getChests() {
+        return chests;
     }
 
 //    public void createCover(Platform top, Sprite bottom, Sprite shadow, double posX, double posY) {
