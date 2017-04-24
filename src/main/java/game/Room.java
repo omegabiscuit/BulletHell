@@ -13,7 +13,7 @@ import engine.display.Sprite;
 public class Room extends DisplayObjectContainer{
 
 
-
+    protected ArrayList<SpikeTile> spikeList;
     protected ArrayList<LockedDoor> doors;
     protected ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -26,11 +26,14 @@ public class Room extends DisplayObjectContainer{
     ArrayList<Platform> collisionArray = new ArrayList<>();
 
 
+
     private static double fadeSpeed = 0.01;
 
     public Room(String id) {
         super(id);
-        doors = new ArrayList<>();
+        doors = new ArrayList<LockedDoor>();
+        spikeList = new ArrayList<SpikeTile>();
+
         fadingIn = false;
         fadingOut = false;
         doneFading = false;
@@ -163,6 +166,10 @@ public class Room extends DisplayObjectContainer{
 
     public void setDoneFading(boolean done) {
 
+    }
+
+    public ArrayList<SpikeTile> getSpikeList() {
+        return spikeList;
     }
 
 //    public void createCover(Platform top, Sprite bottom, Sprite shadow, double posX, double posY) {
