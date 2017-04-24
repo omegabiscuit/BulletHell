@@ -138,6 +138,7 @@ public class BossLevel extends Room {
         collider6.setPositionY(map.getPositionY() + map.getUnscaledHeight());
 
 
+
         collisionArray.add(collider1);
         collisionArray.add(collider2);
         collisionArray.add(collider3);

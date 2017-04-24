@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SpikeTile extends AnimatedSprite {
 
 
-    private int timerCap = 175;
+    private int timerCap = 125;
     int timer;
 
     public SpikeTile(String id) {

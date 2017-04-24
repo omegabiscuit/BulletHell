@@ -40,6 +40,7 @@ public class ahmedslevel extends Room {
     Platform cover7;
     Platform cover8;
     Platform shadow1;
+    Platform bottomCollider;
 
 
     Platform topcover1;
@@ -176,6 +177,12 @@ public class ahmedslevel extends Room {
         topcover6.setPositionX(850);
         topcover6.setPositionY(map.getPositionY() + 600);
 
+        bottomCollider = new Platform("collider", "alpha_8x1.png");
+        bottomCollider.setPositionX(map.getPositionX() - 128);
+        bottomCollider.setPositionY(map.getPositionY() + map.getUnscaledHeight());
+        coverList.add(convertToCover(bottomCollider));
+        addChild(bottomCollider);
+
 //        topcover7 = new Platform("cover2","cover_top_only.png");
 //        topcover8 = new Platform("cover2","cover_top_only.png");
 
@@ -233,6 +240,7 @@ public class ahmedslevel extends Room {
         collisionArray.add(topcover4);
         collisionArray.add(topcover5);
         collisionArray.add(topcover6);
+        collisionArray.add(bottomCollider);
 
 
 
@@ -268,6 +276,8 @@ public class ahmedslevel extends Room {
         topcover4.draw(g);
         topcover5.draw(g);
         topcover6.draw(g);
+
+        bottomCollider.draw(g);
 
         door1.draw(g);
 

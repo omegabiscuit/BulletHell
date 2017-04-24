@@ -26,6 +26,10 @@ public class BrighamLevel extends Room {
     Platform wallCollider;
     Platform thinWallLeft;
     Platform thinWallRight;
+    Platform bottomCollider;
+    Platform bottomCollider2;
+    Platform bottomCollider3;
+
 
     Enemy enemy01;
     Enemy enemy02;
@@ -181,9 +185,23 @@ public class BrighamLevel extends Room {
         addChild(thinWallRight);
 
 
+        bottomCollider = new Platform("collider", "alpha_6x1.png");
+        bottomCollider.setPositionX(map.getPositionX() - 128*2 - 2*128/3);
+        bottomCollider.setPositionY(map.getPositionY() + map.getUnscaledHeight());
+        coverList.add(convertToCover(bottomCollider));
+        addChild(bottomCollider);
 
+        bottomCollider2 = new Platform("collider", "alpha_6x1.png");
+        bottomCollider2.setPositionX(bottomCollider.getPositionX() + bottomCollider.getUnscaledWidth() + 128);
+        bottomCollider2.setPositionY(bottomCollider.getPositionY());
+        coverList.add(convertToCover(bottomCollider2));
+        addChild(bottomCollider2);
 
-
+        bottomCollider3 = new Platform("collider", "alpha_1x1.png");
+        bottomCollider3.setPositionX(bottomCollider2.getPositionX() - bottomCollider3.getUnscaledWidth());
+        bottomCollider3.setPositionY(bottomCollider2.getPositionY() + bottomCollider3.getUnscaledHeight());
+        coverList.add(convertToCover(bottomCollider3));
+        addChild(bottomCollider3);
 
 
         collisionArray.add(collider1);
@@ -196,6 +214,9 @@ public class BrighamLevel extends Room {
         collisionArray.add(wallCollider);
         collisionArray.add(thinWallLeft);
         collisionArray.add(thinWallRight);
+        collisionArray.add(bottomCollider);
+        collisionArray.add(bottomCollider2);
+        collisionArray.add(bottomCollider3);
         //collisionArray.add(door1);
 
 
@@ -213,8 +234,9 @@ public class BrighamLevel extends Room {
         map.draw(g);
         startTile.draw(g);
         door1.draw(g);
-
-
+        bottomCollider.draw(g);
+        bottomCollider2.draw(g);
+        bottomCollider3.draw(g);
 
 
 
