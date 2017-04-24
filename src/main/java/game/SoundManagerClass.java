@@ -3,15 +3,22 @@ package game;
 
 
 import java.applet.AudioClip;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.*;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
 
 public class SoundManagerClass  {
@@ -45,13 +52,10 @@ public class SoundManagerClass  {
 			Media player = new Media(file.toURI().toString());
 			MediaPlayer play = new MediaPlayer(player);
 			play.play();
-			
-			
-		
-		
-		
+
 	}
-	
-	
-	
 }
+	
+	
+	
+

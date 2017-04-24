@@ -63,7 +63,7 @@ public class ProjectGame extends Game {
 
     Level0 myLevel;
     Level1 myLevel1;
-    ahmedslevel myLevel4;
+    BossLevel myLevel4;
     BrighamLevel myLevel3;
 
     ArrayList<Bullet> playerBullets = new ArrayList<>();
@@ -87,14 +87,18 @@ public class ProjectGame extends Game {
     double transitionYSpeed = 5;
     double transitionYCurrent;
 
+
+    int x;
+
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public ProjectGame() {
+
         super("BulletHell", 1200, 900);
         die = new Event();
         backgroundMusic = new SoundManagerClass();
-
+        x=0;
         reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
@@ -110,7 +114,7 @@ public class ProjectGame extends Game {
         throwKnife.setEventType("throwKnife");
 
 
-        currentLevel = 0;//0 = base , 3=brigham's level
+        currentLevel = 4;//0 = base , 3=brigham's level
 
 
        // damageTimer = 100;
@@ -173,34 +177,24 @@ public class ProjectGame extends Game {
             myLevel.run();
 
             myLevel1 = new Level1("Room2");
-            addChild(myLevel1);
-           // myLevel1.registerEnemy(enemy01);
-          //  myLevel.registerEnemy(enemy02);
+
 
             myLevel1.run();
             myLevel1.hide();
+            addChild(myLevel1);
             
-            myLevel.mapDoorToRoom(0, myLevel);
+            myLevel.mapDoorToRoom(0, myLevel1);
 
-            myLevel2 = new BrighamLevel("Room3");
-            addChild(myLevel2);
-            myLevel2.run();
-            myLevel2.hide();
-            myLevel.mapDoorToRoom(0, myLevel2);
-            currentRoom = myLevel2;
 
             currentRoom = myLevel;
 
         }
          if(currentLevel == 3){
-             myLevel2 = new BrighamLevel("Room3");
-             addChild(myLevel2);
-             myLevel2.run();
-             currentRoom = myLevel2;
+
          }
 
          if(currentLevel == 4){
-             myLevel4 = new ahmedslevel("Room4");
+             myLevel4 = new BossLevel("Room4");
              myLevel4.run();
              currentRoom = myLevel4;
 
@@ -228,6 +222,10 @@ public class ProjectGame extends Game {
 
 
         super.update(pressedKeys);
+//        if(!backgroundMusic.play && x==0){
+//            x=1;
+//            backgroundMusic.playMusic("resources/oceanOperator.mp3");
+//        }
 
         if (state == STATE.MENU) {
 
@@ -329,7 +327,7 @@ public class ProjectGame extends Game {
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
                         transitionYCurrent = 0;
-                        //enemies = queuedRoom.enemies;
+                        enemies = queuedRoom.enemies;
                     }
                 }
 
