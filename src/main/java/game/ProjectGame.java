@@ -239,7 +239,7 @@ public class ProjectGame extends Game {
 
                 for(int i = 0; i < currentRoom.getSpikeList().size(); i++) {
                     SpikeTile spikes = currentRoom.getSpikeList().get(i);
-                    if(player.playerCollidesWith(spikes) && spikes.getStateName() == "idle up" && player.canGetHurt()) {
+                    if(player.feetCollideWith(spikes) && spikes.getStateName() == "idle up" && player.canGetHurt()) {
                         damageThePlayer();
                     }
                 }
