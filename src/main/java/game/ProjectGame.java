@@ -42,6 +42,7 @@ public class ProjectGame extends Game {
     boolean start = false;
 
     Sprite background = new Sprite("Background", "background.png");
+    Sprite menuScreen = new Sprite("menuScreen","menu-screen.jpg");
     ArrayList<Platform> collisionArray = new ArrayList<>();
     private Player player;
 
@@ -76,6 +77,9 @@ public class ProjectGame extends Game {
     static GameClock clock;
 
     SoundManagerClass soundEffects = new SoundManagerClass();
+    private enum STATE{MENU, GAME, PAUSE};
+
+    private STATE state = STATE.MENU;
 
 
     Room currentRoom;
@@ -107,7 +111,7 @@ public class ProjectGame extends Game {
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
-        currentLevel = 3;//0 = base , 3=brigham's level
+        currentLevel = 0;//0 = base , 3=brigham's level
 
         damageTimer = 100;
 
@@ -208,73 +212,77 @@ public class ProjectGame extends Game {
 
         super.update(pressedKeys);
 
+        if (state == STATE.MENU) {
+
+        }
+
         //moveGameY(1);
 
+        else if (state == STATE.GAME) {
+            if (player != null && !player.isDead) {
+                player.update(pressedKeys);
+            }
 
-        if (player != null && !player.isDead) {
-            player.update(pressedKeys);
-        }
+            if (damageTimer < damageCap) {
+                damageTimer++;
+            }
 
-        if (damageTimer < damageCap) {
-            damageTimer++;
-        }
-
-        if(transitionYCurrent < transitionY) {
-            moveGameY(transitionYSpeed);
-            transitionYCurrent += transitionYSpeed;
-        }
+            if (transitionYCurrent < transitionY) {
+                moveGameY(transitionYSpeed);
+                transitionYCurrent += transitionYSpeed;
+            }
 
 
-        if (player != null && !player.isDead) {
-            for (int i = 0; i < enemies.size(); i++) {
-                if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
-                    damageTimer = 0;
-                    if(player.getLifeCount() != 0)
-                        player.getLifeArray().get(player.getLifeCount()-1).handleEvent(reduceLife);
-                    player.setLifeCount(player.getLifeCount()-1);
-                    if (player.getLifeCount() == 0) {
-                        complete = true;
+            if (player != null && !player.isDead) {
+                for (int i = 0; i < enemies.size(); i++) {
+                    if (player.playerCollidesWith(enemies.get(i)) && enemies.get(i).dead == false && damageTimer >= damageCap) {
+                        damageTimer = 0;
+                        if (player.getLifeCount() != 0)
+                            player.getLifeArray().get(player.getLifeCount() - 1).handleEvent(reduceLife);
+                        player.setLifeCount(player.getLifeCount() - 1);
+                        if (player.getLifeCount() == 0) {
+                            complete = true;
+                        }
                     }
                 }
-            }
-            if (player.playerCollidesWith(coin)) {
-                coin.handleEvent(collidedEvent);
-                myQuestManager.handleEvent(PickedUpEvent);
-            }
-            player.update();
-            checkCollisions(player);
-
-
-            for (int i = 0; i < playerBullets.size(); i++) {
-                Bullet bul = playerBullets.get(i);
-                bul.update(pressedKeys);
-                if (bul.getShotTimer() >= bul.getShotCap()) {
-
-                    playerBullets.remove(i);
+                if (player.playerCollidesWith(coin)) {
+                    coin.handleEvent(collidedEvent);
+                    myQuestManager.handleEvent(PickedUpEvent);
                 }
-            }
+                player.update();
+                checkCollisions(player);
 
-            TweenJuggler.getInstance().nextFrame();
 
-            boolean pickpocketTrigger = false;
-            for (int i = 0; i < enemies.size(); i++) {
+                for (int i = 0; i < playerBullets.size(); i++) {
+                    Bullet bul = playerBullets.get(i);
+                    bul.update(pressedKeys);
+                    if (bul.getShotTimer() >= bul.getShotCap()) {
 
-                Enemy enemy = enemies.get(i);
-                if (player.getHitBox().intersects(enemy.getPickpocketRect())) {
-                    pickpocketTrigger = true;
-                    pickpocketEnemy = enemy;
+                        playerBullets.remove(i);
+                    }
                 }
 
+                TweenJuggler.getInstance().nextFrame();
+
+                boolean pickpocketTrigger = false;
+                for (int i = 0; i < enemies.size(); i++) {
+
+                    Enemy enemy = enemies.get(i);
+                    if (player.getHitBox().intersects(enemy.getPickpocketRect())) {
+                        pickpocketTrigger = true;
+                        pickpocketEnemy = enemy;
+                    }
+
+                }
+                pickpocket = pickpocketTrigger;
+                if (!pickpocket)
+                    pickpocketEnemy = null;
             }
-            pickpocket = pickpocketTrigger;
-            if(!pickpocket)
-                pickpocketEnemy = null;
-        }
 
-        if (pressedKeys.contains("E")) {
-            if (pickpocket == true && pickpocketEnemy != null) {
+            if (pressedKeys.contains("E")) {
+                if (pickpocket == true && pickpocketEnemy != null) {
 
-                lootEnemy(pickpocketEnemy);
+                    lootEnemy(pickpocketEnemy);
 //                int n = rand.nextInt(3) + 1;
 //                if (n == 1) {
 //
@@ -286,7 +294,7 @@ public class ProjectGame extends Game {
 //                } else if (n == 3) {
 //                    itemString = "No items found.";
 //                }
-            }
+                }
 
 
                 for (int i = 0; i < currentRoom.getDoors().size(); i++) {
@@ -300,7 +308,7 @@ public class ProjectGame extends Game {
                         } else {
                             soundEffects.playMusic("resources/door_locked.wav");
                         }
-                    } else if(player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open") {
+                    } else if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open") {
                         currentRoom.fadeOut();
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
@@ -308,96 +316,101 @@ public class ProjectGame extends Game {
                         enemies = queuedRoom.enemies;
                     }
                 }
-            
 
-            pressedKeys.remove("E");
-        }
 
-        if (pressedKeys.contains("P")) {
-            for (int i = 0; i < player.getLifeArray().size(); i++) {
-                complete = false;
-                player.isDead = false;
-                player.setLifeCount(3);
-                player.setPositionX(550);
-                player.setPositionY(700);
+                pressedKeys.remove("E");
             }
-        }
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy currentEnemy = enemies.get(i);
-            currentEnemy.update();
-            if (!currentEnemy.dead) {
-                if (currentEnemy.enemyBullet != null){
-                    currentEnemy.enemyBullet.update(pressedKeys);
-                    if (currentEnemy.enemyBullet.getShotTimer() >= currentEnemy.enemyBullet.getShotCap()) {
-                        currentEnemy.enemyBullet = null;
-                    }
+
+            if (pressedKeys.contains("P")) {
+                for (int i = 0; i < player.getLifeArray().size(); i++) {
+                    complete = false;
+                    player.isDead = false;
+                    player.setLifeCount(3);
+                    player.setPositionX(550);
+                    player.setPositionY(700);
                 }
-                if (currentEnemy.isInView(player, currentRoom.coverList)) {
-                    if (complete == false) {
-                        if (currentEnemy.enemyBullet == null) {
-                            currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.4);
-                            currentEnemy.enemyBullet.setStart(currentEnemy.getPositionX() + currentEnemy.getUnscaledWidth() / 2, currentEnemy.getPositionY() + currentEnemy.getUnscaledHeight() / 2);
-                            currentEnemy.enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
-                            TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
-                            Tween enemyBulletmovement = new Tween(currentEnemy.enemyBullet, enemyBulletPath);
-                            enemyBulletmovement.animate(TweenableParams.X, currentEnemy.enemyBullet.startValX, currentEnemy.enemyBullet.endValX, 0.4);
-                            enemyBulletmovement.animate(TweenableParams.Y, currentEnemy.enemyBullet.startValY, currentEnemy.enemyBullet.endValY, 0.4);
-                            TweenJuggler.getInstance().add(enemyBulletmovement);
-                            currentEnemy.handleEvent(throwKnife);
+            }
+
+            if (pressedKeys.contains("K")){
+                state = STATE.PAUSE;
+            }
+            for (int i = 0; i < enemies.size(); i++) {
+                Enemy currentEnemy = enemies.get(i);
+                currentEnemy.update();
+                if (!currentEnemy.dead) {
+                    if (currentEnemy.enemyBullet != null) {
+                        currentEnemy.enemyBullet.update(pressedKeys);
+                        if (currentEnemy.enemyBullet.getShotTimer() >= currentEnemy.enemyBullet.getShotCap()) {
+                            currentEnemy.enemyBullet = null;
                         }
                     }
-                    if (currentEnemy.enemyBullet != null) {
-                        System.out.println(currentEnemy.enemyBullet.getShotTimer());
-                        if (currentEnemy.enemyBullet.collidesWith(player)) {
-                            player.handleEvent(reduceLife);
-                            currentEnemy.enemyBullet = null;
-                            player.setLifeCount(player.getLifeCount() - 1);
-                            if (player.getLifeCount() == 0) {
-                                complete = true;
-                                player.isDead = true;
+                    if (currentEnemy.isInView(player, currentRoom.coverList)) {
+                        if (complete == false) {
+                            if (currentEnemy.enemyBullet == null) {
+                                currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.4);
+                                currentEnemy.enemyBullet.setStart(currentEnemy.getPositionX() + currentEnemy.getUnscaledWidth() / 2, currentEnemy.getPositionY() + currentEnemy.getUnscaledHeight() / 2);
+                                currentEnemy.enemyBullet.setEnd(player.getPositionX(), player.getPositionY());
+                                TweenTransitions enemyBulletPath = new TweenTransitions("linearTransition");
+                                Tween enemyBulletmovement = new Tween(currentEnemy.enemyBullet, enemyBulletPath);
+                                enemyBulletmovement.animate(TweenableParams.X, currentEnemy.enemyBullet.startValX, currentEnemy.enemyBullet.endValX, 0.4);
+                                enemyBulletmovement.animate(TweenableParams.Y, currentEnemy.enemyBullet.startValY, currentEnemy.enemyBullet.endValY, 0.4);
+                                TweenJuggler.getInstance().add(enemyBulletmovement);
+                                currentEnemy.handleEvent(throwKnife);
+                            }
+                        }
+                        if (currentEnemy.enemyBullet != null) {
+                            System.out.println(currentEnemy.enemyBullet.getShotTimer());
+                            if (currentEnemy.enemyBullet.collidesWith(player)) {
+                                player.handleEvent(reduceLife);
+                                currentEnemy.enemyBullet = null;
+                                player.setLifeCount(player.getLifeCount() - 1);
+                                if (player.getLifeCount() == 0) {
+                                    complete = true;
+                                    player.isDead = true;
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+
+
+                    for (int j = 0; j < playerBullets.size(); j++) {
+                        Bullet bul = playerBullets.get(j);
+                        for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+                            if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+                                playerBullets.remove(j);
                                 break;
                             }
                         }
-
-                    }
-                }
-
-
-                for (int j = 0; j < playerBullets.size(); j++) {
-                    Bullet bul = playerBullets.get(j);
-                    for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
-                        if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+                        if (bul.collidesWith(enemies.get(i))) {
+                            enemies.get(i).dead = true;
+                            enemies.get(i).enemyBullet = null;
+                            if (enemies.get(i).getStateName().contains("right")) {
+                                enemies.get(i).setDelay(90);
+                                enemies.get(i).setAnimationState("dying right", "dead right");
+                            } else {
+                                enemies.get(i).setDelay(90);
+                                enemies.get(i).setAnimationState("dying left", "dead left");
+                            }
                             playerBullets.remove(j);
-                            break;
                         }
-                    }
-                    if (bul.collidesWith(enemies.get(i))) {
-                        enemies.get(i).dead = true;
-                        enemies.get(i).enemyBullet = null;
-                         if(enemies.get(i).getStateName().contains("right")) {
-                             enemies.get(i).setDelay(90);
-                             enemies.get(i).setAnimationState("dying right", "dead right");
-                         } else {
-                             enemies.get(i).setDelay(90);
-                             enemies.get(i).setAnimationState("dying left", "dead left");
-                         }
-                        playerBullets.remove(j);
                     }
                 }
             }
-        }
 
-        currentRoom.update();
+            currentRoom.update();
 
-        if(queuedRoom != null) {
-            queuedRoom.update();
+            if (queuedRoom != null) {
+                queuedRoom.update();
 
-            if(queuedRoom.getDoneFading() && currentRoom.getDoneFading()) {
-                
-                queuedRoom.setDoneFading(false);
-                currentRoom.setDoneFading(false);
-                currentRoom = queuedRoom;
-                queuedRoom = null;
+                if (queuedRoom.getDoneFading() && currentRoom.getDoneFading()) {
+
+                    queuedRoom.setDoneFading(false);
+                    currentRoom.setDoneFading(false);
+                    currentRoom = queuedRoom;
+                    queuedRoom = null;
+                }
             }
         }
     }
@@ -465,68 +478,83 @@ public class ProjectGame extends Game {
     public void draw(Graphics g) {
         super.draw(g);
 
-
-        if (background != null) {
-            background.draw(g);
-
-        }
-
-
-        if(queuedRoom != null) {
-            queuedRoom.draw(g);
-        }
-
-        if(currentRoom != null) {
-            currentRoom.draw(g);
-        }
-
-
-        for (int i = 0; i < playerBullets.size(); i++) {
-            Bullet bul = playerBullets.get(i);
-            if (bul != null) {
-                bul.draw(g);
+        if(state == STATE.MENU){
+            if(menuScreen!=null){
+                menuScreen.draw(g);
+                g.setFont(new Font("Helvetica", Font.BOLD, 36));
+                g.setColor(Color.RED);
+                g.drawString("BULLET HELL",450,120);
+                g.setColor(Color.WHITE);
+                g.drawString("Play",getUnscaledWidth()/2+550,210);
+                g.drawRect(getUnscaledWidth()/2+530,170,180,50);
+                g.drawString("Help",getUnscaledWidth()/2+550,310);
+                g.drawRect(getUnscaledWidth()/2+ 530,270,150,50);
+                g.drawString("Quit",getUnscaledWidth()/2+550,410);
+                g.drawRect(getUnscaledWidth()/2 + 530,370,150,50);
             }
         }
+        else if(state == STATE.GAME) {
+            if (background != null) {
+                background.draw(g);
 
-        for (int i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i) != null) {
-                enemies.get(i).draw(g);
-                if (enemies.get(i).enemyBullet != null) {
-                    enemies.get(i).enemyBullet.draw(g);
+            }
+
+
+            if (queuedRoom != null) {
+                queuedRoom.draw(g);
+            }
+
+            if (currentRoom != null) {
+                currentRoom.draw(g);
+            }
+
+
+            for (int i = 0; i < playerBullets.size(); i++) {
+                Bullet bul = playerBullets.get(i);
+                if (bul != null) {
+                    bul.draw(g);
                 }
             }
-        }
+
+            for (int i = 0; i < enemies.size(); i++) {
+                if (enemies.get(i) != null) {
+                    enemies.get(i).draw(g);
+                    if (enemies.get(i).enemyBullet != null) {
+                        enemies.get(i).enemyBullet.draw(g);
+                    }
+                }
+            }
 
 
-        if (player != null) {
-            player.draw(g);
-        }
+            if (player != null) {
+                player.draw(g);
+            }
 
 
-        g.setFont(new Font("ARIAL", Font.PLAIN, 48));
-        if (complete == true) {
-            g.drawString("You are dead!", 400, 40);
-            g.drawString("Press P to play again", 400, 400);
+            g.setFont(new Font("ARIAL", Font.PLAIN, 48));
+            if (complete == true) {
+                g.drawString("You are dead!", 400, 40);
+                g.drawString("Press P to play again", 400, 400);
 
-        }
-        if (keyCount == 5) {
-            g.drawString("Congrats, you win!", 400, 40);
-            pause();
-        }
+            }
+            if (keyCount == 5) {
+                g.drawString("Congrats, you win!", 400, 40);
+                pause();
+            }
 
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 140, 30);
-
-
-        g.setColor(Color.RED);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, 140, 30);
 
 
-        g.setColor(Color.BLACK);
+            g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
 
-        g.setColor(Color.RED);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g.setColor(Color.BLACK);
+
+
+            g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
 //        for(int i=0;i<coverList.size();i++){ //COVER TESTING
 //            g2d.draw(coverList.get(i));
@@ -538,15 +566,15 @@ public class ProjectGame extends Game {
 //            }
 
 
-        if(player.lifeCount>0){
-            player.getLifeArray().get(0).draw(g);
-            if(player.lifeCount>1){
-                player.getLifeArray().get(1).draw(g);
-                if(player.lifeCount>2){
-                    player.getLifeArray().get(2).draw(g);
+            if (player.lifeCount > 0) {
+                player.getLifeArray().get(0).draw(g);
+                if (player.lifeCount > 1) {
+                    player.getLifeArray().get(1).draw(g);
+                    if (player.lifeCount > 2) {
+                        player.getLifeArray().get(2).draw(g);
+                    }
                 }
             }
-        }
 
 //        if (player.life1 != null) {
 //            for (int i = 0; i < player.getLifeArray().size(); i++) {
@@ -556,32 +584,57 @@ public class ProjectGame extends Game {
 //            }
 //        }
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.setColor(Color.RED);
-        g.drawString("--LIFE--", 400, 30);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g.setColor(Color.RED);
+            g.drawString("--LIFE--", 400, 30);
 
-        // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
-        g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
-        g.drawString(itemString, 200, 90);
+            // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
+            g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
+            g.drawString(itemString, 200, 90);
 
 
-        if (pickpocket) {
+            if (pickpocket) {
 
-            g.drawString("Press E to pickpocket", 400, 400);
+                g.drawString("Press E to pickpocket", 400, 400);
 
+            }
         }
+        else if (state == STATE.PAUSE) {
+            if (menuScreen != null) {
+                menuScreen.draw(g);
+                g.setFont(new Font("Helvetica", Font.BOLD, 36));
+                g.setColor(Color.RED);
+                g.drawString("GAME PAUSED", 450, 120);
 
-
+                g.setColor(Color.WHITE);
+                g.drawString("Resume", getUnscaledWidth() / 2 + 550, 210);
+                g.drawRect(getUnscaledWidth() / 2 + 530, 170, 180, 50);
+                g.drawString("Help", getUnscaledWidth() / 2 + 550, 310);
+                g.drawRect(getUnscaledWidth() / 2 + 530, 270, 150, 50);
+                g.drawString("Quit", getUnscaledWidth() / 2 + 550, 410);
+                g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
+            }
+        }
     }
 
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if (state == STATE.MENU){
+            double mouseX = e.getX();
+            double mouseY = e.getY();
+            if(mouseX>=getUnscaledWidth()/2+530 && mouseX<=getUnscaledWidth()/2+680){
+                if(mouseY>=170 && mouseY<=220){
+                    state = STATE.GAME;
+                }
+            }
+        }
+        else if (state == STATE.GAME){
         if (!player.isDead) {
             Bullet bul = new Bullet("bullet", "knife.png", 0.2);
             double mouseX = e.getX();
             double mouseY = e.getY();
-            double[] pressed = {mouseX,mouseY};
+            double[] pressed = {mouseX, mouseY};
             System.out.print(pressed[0]);
             System.out.print(" , ");
             System.out.println(pressed[1]);
@@ -599,6 +652,29 @@ public class ProjectGame extends Game {
             playerBullets.add(bul);
 
             player.handleEvent(throwKnife);
+        }
+        else if (state == STATE.PAUSE){
+            double mouseX = e.getX();
+            double mouseY = e.getY();
+
+            if(mouseX>=getUnscaledWidth()/2+530 && mouseX<=getUnscaledWidth()/2+680){
+                if(mouseY>=170 && mouseY<=220){
+                    state = STATE.GAME;
+                }
+            }
+            if(mouseX>=getUnscaledWidth()/2+530 && mouseX<=getUnscaledWidth()/2+680){
+                if(mouseY>=270 && mouseY<=320){
+                    System.out.println("help button");
+                }
+            }
+            if(mouseX>=getUnscaledWidth()/2+530 && mouseX<=getUnscaledWidth()/2+680){
+                if(mouseY>=370 && mouseY<=420){
+                    System.out.println("quit");
+                    System.exit(1);
+                }
+
+            }
+        }
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
