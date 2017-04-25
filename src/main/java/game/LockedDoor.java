@@ -26,9 +26,9 @@ public class LockedDoor extends AnimatedSprite {
 
     public void draw(Graphics g) {
         super.draw(g);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.setColor(Color.RED);
-        ((Graphics2D) g).draw(doorCollider);
+//        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+//        g.setColor(Color.RED);
+//        ((Graphics2D) g).draw(doorCollider);
     }
 
     public Rectangle2D getDoorCollider() {
