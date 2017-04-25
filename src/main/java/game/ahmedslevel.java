@@ -54,6 +54,9 @@ public class ahmedslevel extends Room {
     Platform topcover8;
     LockedDoor door1;
 
+    SpikeTile spikes;
+    SpikeTile spikes2;
+
     Player player;
 
 
@@ -130,11 +133,25 @@ public class ahmedslevel extends Room {
         coverList.add(convertToCover(cover3));
         cover3.setPositionY(map.getPositionY() + 300);
 
+        spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes.setSpriteSheetJson("resources/spikes.json");
+        spikes.setPositionX(cover3.getPositionX() + spikes.getUnscaledWidth() + 28);
+        spikes.setPositionY(cover3.getPositionY() - 4 + 128*2);
+        addChild(spikes);
+        spikeList.add(spikes);
+
         cover4 = new Platform("cover2", "cover1.png");
         cover4.setPositionX(600);
         cover4.setPositionY(450);
         coverList.add(convertToCover(cover4));
         cover4.setPositionY(map.getPositionY() + 450);
+
+        spikes2 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes2.setSpriteSheetJson("resources/spikes.json");
+        spikes2.setPositionX(cover4.getPositionX() + spikes.getUnscaledWidth() + 128 + 4);
+        spikes2.setPositionY(cover4.getPositionY() - 32);
+        addChild(spikes2);
+        spikeList.add(spikes2);
 
         cover5 = new Platform("cover2", "cover1.png");
         cover5.setPositionX(850);
@@ -263,6 +280,10 @@ public class ahmedslevel extends Room {
         super.draw(g);
 
         map.draw(g);
+
+        spikes.draw(g);
+        spikes2.draw(g);
+
         cover1.draw(g);
         //shadow1.draw(g);
         cover2.draw(g);
@@ -281,6 +302,8 @@ public class ahmedslevel extends Room {
         topcover5.draw(g);
         topcover6.draw(g);
 
+
+
         bottomCollider.draw(g);
 
         door1.draw(g);
@@ -291,6 +314,8 @@ public class ahmedslevel extends Room {
         super.update();
         door1.update();
 
+        spikes.update();
+        spikes2.update();
     }
 
 

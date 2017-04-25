@@ -48,7 +48,15 @@ public class BossLevel extends Room {
     Event reduceLife;
     double missleLaunch;//time of last missle attack
 
+
+
+
     public ArrayList<Bullet> missles;
+
+
+    /****Treasure Chesty Stuff****/
+    TreasureChest chest;
+    int chestTimer;
 
     public BossLevel(String id) {
         super(id);
@@ -135,6 +143,16 @@ public class BossLevel extends Room {
 
         collider6.setPositionX(map.getPositionX());
         collider6.setPositionY(map.getPositionY() + map.getUnscaledHeight());
+
+        /****Treasure Chesty Stuff****/
+        chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
+        chest.setSpriteSheetJson("resources/treasure_chest.json");
+        chest.setPositionX(turtleBoss.getPositionX() - 128*3);
+        chest.setPositionY(turtleBoss.getPositionY() + 128*2);
+        chest.placeItemInChest("knife");
+        addChild(chest);
+        chests.add(chest);
+
 
 
 
@@ -232,6 +250,26 @@ public class BossLevel extends Room {
         else{
             missleLaunch = missleClock.getElapsedTime();
         }
+
+
+
+        /****Treasure Chesty Stuff****/
+        if(chestTimer < 700) {
+            chestTimer++;
+        } else if(chestTimer >= 700 && chest.getStateName() == "open") {
+            chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
+            chest.setSpriteSheetJson("resources/treasure_chest.json");
+            chest.setPositionX(turtleBoss.getPositionX() - 128*3);
+            chest.setPositionY(turtleBoss.getPositionY() + 128*2);
+            chest.placeItemInChest("knife");
+            addChild(chest);
+            chests.clear();
+            chests.add(chest);
+            chestTimer = 0;
+        }
+
+        chest.update();
+
     }
 
     private void damageThePlayer() {
@@ -255,6 +293,10 @@ public class BossLevel extends Room {
         for (int i = 0; i < missles.size(); i++) {
             missles.get(i).draw(g);
         }
+
+        /****Treasure Chesty Stuff****/
+        chest.draw(g);
+
 
 
     }
