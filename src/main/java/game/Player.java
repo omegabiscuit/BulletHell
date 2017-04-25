@@ -13,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventListener;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Brigadoon on 4/16/2017.
@@ -34,6 +35,7 @@ public class Player extends AnimatedSprite implements IEventListener {
     Heart life3;
     int lifeCount;
     Rectangle2D hitbox;
+    char key;
 
     private int playerDamageBuffer;
     private int playerDamageTimer;
@@ -54,6 +56,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         knifeSounds.add("resources/knife2.mp3");
         playerDamageBuffer = 100;
         playerDamageTimer = playerDamageBuffer;
+
 
         feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
     }
@@ -86,7 +89,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         }
 
         boolean moving = false;
-        if (pressedKeys.contains("W")) {
+        if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))) {
             this.setPositionY(this.getPositionY() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
             feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
@@ -100,7 +103,7 @@ public class Player extends AnimatedSprite implements IEventListener {
             }
         }
 
-        if (pressedKeys.contains("S")) {
+        if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_S))) {
             this.setPositionY(this.getPositionY() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
             feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
@@ -113,7 +116,7 @@ public class Player extends AnimatedSprite implements IEventListener {
                 this.setDelay(50);
             }
         }
-        if (pressedKeys.contains("D")) {
+        if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_D))) {
             this.setPositionX(this.getPositionX() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
             feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
@@ -123,7 +126,7 @@ public class Player extends AnimatedSprite implements IEventListener {
                 this.setDelay(50);
             }
         }
-        if (pressedKeys.contains("A")) {
+        if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_A))) {
             this.setPositionX(this.getPositionX() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
             feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);

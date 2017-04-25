@@ -341,7 +341,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     {
 	/* Call the super draw method in DisplayObject class */
         super.draw(g);
-        ((Graphics2D) g).draw(pickpocketRect);
+        //((Graphics2D) g).draw(pickpocketRect);
 
     }
 

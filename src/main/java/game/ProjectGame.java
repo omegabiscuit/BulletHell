@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.text.Normalizer;
@@ -326,7 +327,7 @@ public class ProjectGame extends Game {
                     pickpocketEnemy = null;
             }
 
-            if (pressedKeys.contains("E")) {
+            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_E))) {
                 if (pickpocket == true && pickpocketEnemy != null) {
 
                     lootEnemy(pickpocketEnemy);
@@ -377,10 +378,10 @@ public class ProjectGame extends Game {
                 }
 
 
-                pressedKeys.remove("E");
+                pressedKeys.remove(KeyEvent.getKeyText(KeyEvent.VK_E));
             }
 
-            if (pressedKeys.contains("P")) {
+            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_P))) {
                 if (complete == true){
                     complete = false;
                     currentLevel = 0;
@@ -421,6 +422,7 @@ public class ProjectGame extends Game {
                     player.setLifeCount(3);
                     player.setPositionX(550);
                     player.setPositionY(700);
+                    knifeCount = 4;
                 }
                 else{
                     state = STATE.PAUSE;
