@@ -207,10 +207,6 @@ public class Player extends AnimatedSprite implements IEventListener {
         if(event.getEventType() == "collision"){
 
             lifeCount-=1;
-            System.out.println("damage buffer");
-            System.out.println(playerDamageBuffer);
-            System.out.println("damage timer");
-            System.out.println(playerDamageTimer);
 
         }
 

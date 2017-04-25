@@ -38,6 +38,8 @@ public class BrighamLevel extends Room {
     Platform bottomRight;
     Platform bottom;
 
+    SpikeTile spikes;
+
 
     Enemy enemy01;
     Enemy enemy02;
@@ -103,9 +105,14 @@ public class BrighamLevel extends Room {
         map = new Sprite("map", "BrighamLevelFinal.png");
         map.setPositionX(200);
         map.setPositionY(-1872);
-
-
         addChild(map);
+
+        spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes.setSpriteSheetJson("resources/spikes.json");
+        spikes.setPositionX(map.getPositionX() + map.getUnscaledWidth() / 2 - 128);
+        spikes.setPositionY(map.getPositionY() + 128 + 32 + 16);
+        addChild(spikes);
+        spikeList.add(spikes);
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
         door1.setSpriteSheetJson("resources/door_opening.json");
@@ -258,6 +265,7 @@ public class BrighamLevel extends Room {
         bottomCollider2.draw(g);
         bottomCollider3.draw(g);
 
+        spikes.draw(g);
 
 
     }
@@ -265,6 +273,7 @@ public class BrighamLevel extends Room {
     public void update() {
         super.update();
         door1.update();
+        spikes.update();
     }
 
     public ArrayList<Rectangle2D> getCoverList(){

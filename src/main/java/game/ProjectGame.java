@@ -149,7 +149,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
-        knifeCount = 4;
+        knifeCount = 20;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -484,7 +484,9 @@ public class ProjectGame extends Game {
                                 enemies.get(i).setDelay(90);
                                 enemies.get(i).setAnimationState("dying left", "dead left");
                             }
-                            player.playerBullets.remove(j);
+
+                            if(player.playerBullets.size() > j)
+                                player.playerBullets.remove(j);
                         }
                     }
                 }

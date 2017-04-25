@@ -26,6 +26,11 @@ public class BossLevel extends Room {
     Platform collider5;
     Platform collider6;
 
+    SpikeTile spikes1;
+    SpikeTile spikes2;
+    SpikeTile spikes3;
+    SpikeTile spikes4;
+
     Bullet missle1;
     Bullet missle2;
     Bullet missle3;
@@ -144,6 +149,27 @@ public class BossLevel extends Room {
         collider6.setPositionX(map.getPositionX());
         collider6.setPositionY(map.getPositionY() + map.getUnscaledHeight());
 
+        spikes1 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes1.setSpriteSheetJson("resources/spikes.json");
+        spikes1.setPositionX(map.getPositionX() + map.getUnscaledWidth()/2 - 128/2 - 4);
+        spikes1.setPositionY(map.getPositionY() + map.getUnscaledHeight()/2 + 32 - 8 - 2);
+        addChild(spikes1);
+        spikeList.add(spikes1);
+
+        spikes2 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes2.setSpriteSheetJson("resources/spikes.json");
+        spikes2.setPositionX(spikes1.getPositionX() + 128*2);
+        spikes2.setPositionY(spikes1.getPositionY());
+        addChild(spikes2);
+        spikeList.add(spikes2);
+
+        spikes3 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
+        spikes3.setSpriteSheetJson("resources/spikes.json");
+        spikes3.setPositionX(spikes1.getPositionX() - 128*2);
+        spikes3.setPositionY(spikes1.getPositionY());
+        addChild(spikes3);
+        spikeList.add(spikes3);
+
         /****Treasure Chesty Stuff****/
         chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
         chest.setSpriteSheetJson("resources/treasure_chest.json");
@@ -152,6 +178,9 @@ public class BossLevel extends Room {
         chest.placeItemInChest("knife");
         addChild(chest);
         chests.add(chest);
+
+
+
 
 
 
@@ -270,6 +299,9 @@ public class BossLevel extends Room {
 
         chest.update();
 
+        spikes1.update();
+        spikes2.update();
+        spikes3.update();
     }
 
     private void damageThePlayer() {
@@ -288,14 +320,20 @@ public class BossLevel extends Room {
 
         map.draw(g);
 
+
         turtleBoss.draw(g);
+        spikes1.draw(g);
+        spikes2.draw(g);
+        spikes3.draw(g);
+
+        /****Treasure Chesty Stuff****/
+        chest.draw(g);
+
 
         for (int i = 0; i < missles.size(); i++) {
             missles.get(i).draw(g);
         }
 
-        /****Treasure Chesty Stuff****/
-        chest.draw(g);
 
 
 

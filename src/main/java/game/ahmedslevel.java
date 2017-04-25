@@ -40,7 +40,14 @@ public class ahmedslevel extends Room {
     Platform cover6;
     Platform cover7;
     Platform cover8;
-    Platform shadow1;
+    Sprite coverShadow1;
+    Sprite coverShadow2;
+    Sprite coverShadow3;
+    Sprite coverShadow4;
+    Sprite coverShadow5;
+    Sprite coverShadow6;
+
+
     Platform bottomCollider;
 
 
@@ -120,18 +127,30 @@ public class ahmedslevel extends Room {
         cover1.setPositionY(300);
         coverList.add(convertToCover(cover1));
         cover1.setPositionY(map.getPositionY() + 300);
+        coverShadow1 = new Sprite("covershadow", "cover_shadow_bottom.png");
+        coverShadow1.setPositionX(cover1.getPositionX());
+        coverShadow1.setPositionY(cover1.getPositionY());
+        addChild(coverShadow1);
 
         cover2 = new Platform("cover2", "cover1.png");
         cover2.setPositionX(346);
         cover2.setPositionY(550);
         coverList.add(convertToCover(cover2));
         cover2.setPositionY(map.getPositionY() + 550);
+        coverShadow2 = new Sprite("covershadow", "cover_shadow_right_bottom.png");
+        coverShadow2.setPositionX(cover2.getPositionX() - 16);
+        coverShadow2.setPositionY(cover2.getPositionY());
+        addChild(coverShadow2);
 
         cover3 = new Platform("cover2", "cover1.png");
         cover3.setPositionX(445);
         cover3.setPositionY(300);
         coverList.add(convertToCover(cover3));
         cover3.setPositionY(map.getPositionY() + 300);
+        coverShadow3 = new Sprite("covershadow", "cover_shadow_right_bottom.png");
+        coverShadow3.setPositionX(cover3.getPositionX() - 16);
+        coverShadow3.setPositionY(cover3.getPositionY());
+        addChild(coverShadow3);
 
         spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes.setSpriteSheetJson("resources/spikes.json");
@@ -145,11 +164,16 @@ public class ahmedslevel extends Room {
         cover4.setPositionY(450);
         coverList.add(convertToCover(cover4));
         cover4.setPositionY(map.getPositionY() + 450);
+        coverShadow4 = new Sprite("covershadow", "cover_shadow.png");
+        coverShadow4.setPositionX(cover4.getPositionX() - 16);
+        coverShadow4.setPositionY(cover4.getPositionY());
+        addChild(coverShadow4);
+
 
         spikes2 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes2.setSpriteSheetJson("resources/spikes.json");
-        spikes2.setPositionX(cover4.getPositionX() + spikes.getUnscaledWidth() + 128 + 4);
-        spikes2.setPositionY(cover4.getPositionY() - 32);
+        spikes2.setPositionX(cover4.getPositionX() + spikes.getUnscaledWidth() + 128 + 4 );
+        spikes2.setPositionY(cover4.getPositionY() - 32 + 2);
         addChild(spikes2);
         spikeList.add(spikes2);
 
@@ -158,12 +182,20 @@ public class ahmedslevel extends Room {
         cover5.setPositionY(300);
         coverList.add(convertToCover(cover5));
         cover5.setPositionY(map.getPositionY() + 300);
+        coverShadow5 = new Sprite("covershadow", "cover_shadow_left_bottom.png");
+        coverShadow5.setPositionX(cover5.getPositionX() - 16);
+        coverShadow5.setPositionY(cover5.getPositionY());
+        addChild(coverShadow5);
 
         cover6 = new Platform("cover2", "cover1.png");
         cover6.setPositionX(850);
         cover6.setPositionY(600);
         coverList.add(convertToCover(cover6));
         cover6.setPositionY(map.getPositionY() + 600);
+        coverShadow6 = new Sprite("covershadow", "cover_shadow_left_bottom.png");
+        coverShadow6.setPositionX(cover6.getPositionX() - 16);
+        coverShadow6.setPositionY(cover6.getPositionY());
+        addChild(coverShadow6);
 
 //        cover7 = new Platform("cover2","cover1.png");
 //
@@ -308,6 +340,12 @@ public class ahmedslevel extends Room {
 
         door1.draw(g);
 
+        coverShadow1.draw(g);
+        coverShadow2.draw(g);
+        coverShadow3.draw(g);
+        coverShadow4.draw(g);
+        coverShadow5.draw(g);
+        coverShadow6.draw(g);
     }
 
     public void update() {
