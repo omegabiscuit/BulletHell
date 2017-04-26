@@ -31,7 +31,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     ArrayList<double[]> routePattern = new ArrayList<>();
     GameClock clock = new GameClock();
     Boolean stall = false;
-    double fieldOfView = 80;
+    double fieldOfView = 120;
     double direction;//direction enemy is facing [xpos,ypos] of focal point
     double previousDirection;
     public double awareness=0; //how aware the enemy is to the player's presence

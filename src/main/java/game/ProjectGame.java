@@ -94,6 +94,7 @@ public class ProjectGame extends Game {
     double transitionY;
     double transitionYSpeed = 9;
     double transitionYCurrent;
+    boolean transitionPhase = false;
 
 
     int x;
@@ -323,6 +324,20 @@ public class ProjectGame extends Game {
                 if (!pickpocket)
                     pickpocketEnemy = null;
             }
+            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))){
+                for (int i = 0; i < currentRoom.getDoors().size(); i++) {
+                    if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open" && transitionPhase == false) {
+                        transitionPhase = true;
+                        currentRoom.fadeOut();
+                        queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
+                        queuedRoom.fadeIn();
+                        transitionYCurrent = 0;
+                        enemies = new ArrayList<>();
+                        pressedKeys.remove(KeyEvent.getKeyText(KeyEvent.VK_W));
+                    }
+                }
+
+            }
 
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_E))) {
                 if (pickpocket == true && pickpocketEnemy != null) {
@@ -353,7 +368,8 @@ public class ProjectGame extends Game {
                         } else {
                             soundEffects.playMusic("resources/door_locked.wav");
                         }
-                    } else if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open") {
+                    } else if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open" && transitionPhase == false) {
+                        transitionPhase = true;
                         currentRoom.fadeOut();
                         queuedRoom = currentRoom.getDoors().get(i).getNextRoom();
                         queuedRoom.fadeIn();
@@ -504,6 +520,7 @@ public class ProjectGame extends Game {
                     currentRoom = queuedRoom;
                     enemies = currentRoom.enemies;
                     queuedRoom = null;
+                    transitionPhase = false;
                 }
             }
         }
