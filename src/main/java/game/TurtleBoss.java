@@ -84,7 +84,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
 
         g.setFont(new Font("ARIAL", Font.PLAIN, 48));
         if (dead == true) {
-            g.drawString("Congrats! You defeated Gangsta Turtle!", 400, 40);
+            g.drawString("Congrats! You Win!", 400, 40);
         }
 
 

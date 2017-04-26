@@ -1,5 +1,7 @@
 BulletHell
 
+MEMBERS:bb3uc, ay6xp, tlr8cn
+
 If you can't get the program to run, please follow these steps
 
 1)Install Intellij
