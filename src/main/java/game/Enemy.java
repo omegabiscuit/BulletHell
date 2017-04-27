@@ -37,6 +37,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     public double awareness=0; //how aware the enemy is to the player's presence
     public Bullet enemyBullet = null;
     public boolean dead = false;
+    boolean playerInView = false;
     ArrayList<String> knifeSounds = new ArrayList<>();
     SoundManagerClass soundEffects = new SoundManagerClass();
 
@@ -47,6 +48,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
 
     int pauseTime;
     int pauseCap = 0;
+    Sprite exclamationPoint;
 
 
     /*****Inventory Stuff*****/
@@ -72,6 +74,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
       //  pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
         previousPositionX = getPositionX();
         previousPositionY = getPositionY();
+
     }
 
     public Enemy(String id, String fileName, String startState) {
@@ -84,6 +87,15 @@ public class Enemy extends AnimatedSprite implements IEventListener {
 
     //    pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
         knifeSounds.add("resources/knife3.mp3");
+
+        exclamationPoint = new Sprite("exclamation","exclamation_point.png");
+        exclamationPoint.setPositionX(40);
+//        exclamationPoint.setScaleX(.2);
+//        exclamationPoint.setScaleY(.2);
+        this.addChild(exclamationPoint);
+
+
+        exclamationPoint.setPositionY(-30);
 
     }
 
@@ -327,11 +339,14 @@ public class Enemy extends AnimatedSprite implements IEventListener {
             Line2D line = new Line2D.Double( this.getPositionX(),  this.getPositionY(), player.getPositionX(),player.getPositionY());
             for(int i=0;i<coverList.size();i++){
                 if(line.intersects(coverList.get(i))){
+                    playerInView = false;
                     return false;
                 }
             }
+            playerInView = true;
             return true;
         } else {
+            playerInView = false;
             return false;
         }
     }
@@ -341,6 +356,10 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     {
 	/* Call the super draw method in DisplayObject class */
         super.draw(g);
+        if(playerInView && !isDead()){
+            exclamationPoint.draw(g);
+        }
+
         //((Graphics2D) g).draw(pickpocketRect);
 
     }
