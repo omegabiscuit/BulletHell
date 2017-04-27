@@ -5,6 +5,7 @@ import engine.events.Event;
 import engine.events.IEventListener;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Tyler on 4/24/2017.
@@ -15,6 +16,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
     public int health;
     private int turtleDamageBuffer;
     private int turtleDamageTimer;
+
 
     public TurtleBoss(String id) {
         super(id, "", "");
@@ -29,15 +31,14 @@ public class TurtleBoss extends Enemy implements IEventListener {
 
     public TurtleBoss(String id, String fileName, String startState) {
         super(id, fileName, startState);
+
         setDelay(300);
         health = 5;
         turtleDamageBuffer = 100;
         turtleDamageTimer = turtleDamageBuffer;
-
     }
 
     public void gotHurt() {
-
         turtleDamageTimer = 0;
     }
 

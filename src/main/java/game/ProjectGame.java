@@ -455,7 +455,7 @@ public class ProjectGame extends Game {
                         }
                     }
                     if (currentEnemy.isInView(player, currentRoom.coverList)) {
-                        System.out.println(currentRoom.coverList.get(0));
+//                        System.out.println(currentRoom.coverList.get(0));
                         if (complete == false) {
                             if (currentEnemy.enemyBullet == null) {
                                 currentEnemy.enemyBullet = new Bullet("bullet", "knife.png", 0.4);
@@ -470,7 +470,7 @@ public class ProjectGame extends Game {
                             }
                         }
                         if (currentEnemy.enemyBullet != null) {
-                            System.out.println(currentEnemy.enemyBullet.getShotTimer());
+//                            System.out.println(currentEnemy.enemyBullet.getShotTimer());
                             if (currentEnemy.enemyBullet.collidesWith(player) && player.canGetHurt()) {
                                 damageThePlayer();
                                 currentEnemy.enemyBullet = null;
@@ -729,7 +729,7 @@ public class ProjectGame extends Game {
             }
             if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
                 if (mouseY >= 380 && mouseY <= 450) {
-                    System.out.println("quit");
+
                     System.exit(1);
                 }
 
@@ -740,9 +740,8 @@ public class ProjectGame extends Game {
                 double mouseX = e.getX();
                 double mouseY = e.getY();
                 double[] pressed = {mouseX, mouseY};
-                System.out.print(pressed[0]);
-                System.out.print(" , ");
-                System.out.println(pressed[1]);
+//                System.out.print(pressed[0]);
+
                 knifeCount--;
                 bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
                 bul.setEnd(mouseX, mouseY);
@@ -837,7 +836,7 @@ public class ProjectGame extends Game {
         if (player.getLifeCount() != 0) {
             player.gotHurt();
             player.handleEvent(reduceLife);
-            player.setLifeCount(player.getLifeCount() - 1);
+            //player.setLifeCount(player.getLifeCount() - 1);
         }
         if (player.getLifeCount() == 0) {
             complete = true;

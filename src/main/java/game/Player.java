@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * Created by Brigadoon on 4/16/2017.
@@ -24,6 +25,7 @@ public class Player extends AnimatedSprite implements IEventListener {
 
     SoundManagerClass soundEffects = new SoundManagerClass();
     ArrayList<String> knifeSounds = new ArrayList<>();
+    ArrayList<String> hurtSounds = new ArrayList<>();
     public ArrayList<Bullet> playerBullets = new ArrayList<>();
 
 
@@ -41,6 +43,7 @@ public class Player extends AnimatedSprite implements IEventListener {
     private int playerDamageTimer;
 
     Rectangle2D feetCollider;
+    Random random;
 
     public Player(String id, String fileName, String startState) {
         super(id, fileName, startState);
@@ -54,11 +57,15 @@ public class Player extends AnimatedSprite implements IEventListener {
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
         knifeSounds.add("resources/knife1.mp3");
         knifeSounds.add("resources/knife2.mp3");
+        hurtSounds.add("resources/hurt1.mp3");
+        hurtSounds.add("resources/hurt2.mp3");
+        hurtSounds.add("resources/hurt3.mp3");
         playerDamageBuffer = 100;
         playerDamageTimer = playerDamageBuffer;
 
 
         feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
+        random = new Random();
     }
 
     public Player(String id, String fileName) {
@@ -92,7 +99,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))) {
             this.setPositionY(this.getPositionY() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
-            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
+            feetCollider = new Rectangle2D.Double(getPositionX()+20, getPositionY()+getUnscaledHeight()-10, getUnscaledWidth()-20, 10);
             moving = true;
             if (this.getStateName().contains("right") && !this.getStateName().equals("run_back_right")) {
                 this.setAnimationState("run_back_right", "");
@@ -106,7 +113,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_S))) {
             this.setPositionY(this.getPositionY() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
-            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
+            feetCollider = new Rectangle2D.Double(getPositionX()+20, getPositionY()+getUnscaledHeight()-10, getUnscaledWidth()-20, 10);
             moving = true;
             if (this.getStateName().contains("right") && !this.getStateName().equals("run_front_right")) {
                 this.setAnimationState("run_front_right", "");
@@ -119,7 +126,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_D))) {
             this.setPositionX(this.getPositionX() + 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
-            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
+            feetCollider = new Rectangle2D.Double(getPositionX()+20, getPositionY()+getUnscaledHeight()-10, getUnscaledWidth()-20, 10);
             moving = true;
             if (!this.getStateName().equals("run_back_right") && !this.getStateName().equals("run_front_right")) {
                 this.setAnimationState("run_front_right", "");
@@ -129,7 +136,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_A))) {
             this.setPositionX(this.getPositionX() - 5);
             hitbox = new Rectangle2D.Double(this.getPositionX()+10,this.getPositionY()+10,this.getUnscaledWidth()-10,this.getUnscaledHeight()-10);
-            feetCollider = new Rectangle2D.Double(getPositionX(), getPositionY()+getUnscaledHeight()-10, getUnscaledWidth(), 10);
+            feetCollider = new Rectangle2D.Double(getPositionX()+20, getPositionY()+getUnscaledHeight()-10, getUnscaledWidth()-20, 10);
             moving = true;
             if (!this.getStateName().equals("run_back_left") && !this.getStateName().equals("run_front_left")) {
                 this.setAnimationState("run_front_left", "");
@@ -202,15 +209,11 @@ public class Player extends AnimatedSprite implements IEventListener {
     @Override
     public void handleEvent(Event event) {
         if(event.getEventType() == "throwKnife"){
-            int ran = (int)(Math.random()*2);
-
-            soundEffects.playMusic(knifeSounds.get(ran));//choose a random knife sound
-            System.out.println(ran);
+            soundEffects.playMusic(knifeSounds.get(random.nextInt(2)));//choose a random knife sound
         }
-        if(event.getEventType() == "collision"){
-
+        if(event.getEventType() == "Collision"){
             lifeCount-=1;
-
+            soundEffects.playMusic(hurtSounds.get(random.nextInt(3)));
         }
 
     }

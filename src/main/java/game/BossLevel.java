@@ -62,6 +62,7 @@ public class BossLevel extends Room {
     /****Treasure Chesty Stuff****/
     TreasureChest chest;
     int chestTimer;
+    SoundManagerClass soundManager;
 
     public BossLevel(String id) {
         super(id);
@@ -70,9 +71,12 @@ public class BossLevel extends Room {
     public BossLevel(String id, Player player) {
         super(id);
         this.player = player;
+
     }
 
     public void run() {
+
+        soundManager = new SoundManagerClass();
 
         random = new Random();
         reduceLife = new Event();
@@ -265,6 +269,7 @@ public class BossLevel extends Room {
             for (int i = 0; i < missles.size(); i++) {
                 if (player.playerCollidesWith(missles.get(i)) && player.canGetHurt()) {
                     damageThePlayer();
+                    soundManager.playMusic("resources/turtle_laugh.mp3");
                 }
             }
             for (int i = 0; i < player.playerBullets.size(); i++) {

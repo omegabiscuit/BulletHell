@@ -33,7 +33,7 @@ public class Coin extends Sprite implements IEventListener {
             Tween myTween = new Tween(sprite, new TweenTransitions("linearTransition"));
             myTween.animate(TweenableParams.ALPHA, sprite.getTransparency(), 0, 2);
             TweenJuggler.getInstance().add(myTween);
-            System.out.println("handled");
+//            System.out.println("handled");
         }
         if (event.getEventType() == "CoinPickedUp"){
             if(touched == false){
