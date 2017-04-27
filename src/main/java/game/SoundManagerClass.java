@@ -60,10 +60,10 @@ public class SoundManagerClass {
         MediaPlayer play = new MediaPlayer(player);
         play.play();
 
+
     }
 
     public void setVolume(float amount) {
-
 
 
     }

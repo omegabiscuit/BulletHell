@@ -276,8 +276,19 @@ public class Enemy extends AnimatedSprite implements IEventListener {
             pickpocketRect.setLocation(xLoc - 10, yLoc - 10);
         }
 
-        if(!isDead())
+        if(!isDead()) {
             decideAnimationState();
+
+            if(playerInView){
+                exclamationPoint.setTransparency(1);
+            }
+            else{
+                exclamationPoint.setTransparency(0);
+            }
+        }
+        else{
+            exclamationPoint.setTransparency(0);
+        }
 
         previousDirection = direction;
         previousPositionX = getPositionX();

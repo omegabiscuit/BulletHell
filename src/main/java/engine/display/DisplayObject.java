@@ -319,7 +319,8 @@ public class DisplayObject {
 	AffineTransform at = new AffineTransform();
 	
 	 at.rotate(getRotation(), getPivotX(), getPivotY());
-	 
+
+
 	g2d.transform(at);
 	
 	}
