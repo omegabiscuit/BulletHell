@@ -80,7 +80,7 @@ public class BossLevel extends Room {
 
         random = new Random();
         reduceLife = new Event();
-        reduceLife.setEventType("collision");
+        reduceLife.setEventType("Collision");
 
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
@@ -293,6 +293,8 @@ public class BossLevel extends Room {
         } else if(chestTimer >= 700 && chest.getStateName() == "open") {
             chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
             chest.setSpriteSheetJson("resources/treasure_chest.json");
+//            chest.setPositionX(random.nextInt((int)turtleBoss.getPositionX()-128)+map.getPositionX()+100);
+//            chest.setPositionY(random.nextInt((int)turtleBoss.getPositionY()-128)+map.getPositionY()+300);
             chest.setPositionX(turtleBoss.getPositionX() - 128*3);
             chest.setPositionY(turtleBoss.getPositionY() + 128*2);
             chest.placeItemInChest("knife");

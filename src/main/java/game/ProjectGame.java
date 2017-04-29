@@ -151,7 +151,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
-        knifeCount = 4;
+        knifeCount = 400;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -324,7 +324,7 @@ public class ProjectGame extends Game {
                 if (!pickpocket)
                     pickpocketEnemy = null;
             }
-            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))){
+            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))) {
                 for (int i = 0; i < currentRoom.getDoors().size(); i++) {
                     if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open" && transitionPhase == false) {
                         transitionPhase = true;
@@ -341,8 +341,8 @@ public class ProjectGame extends Game {
 
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_E))) {
                 if (pickpocket == true && pickpocketEnemy != null) {
-
-                    lootEnemy(pickpocketEnemy);
+                    keyCount += pickpocketEnemy.pickpocketKeys();
+                    knifeCount += pickpocketEnemy.pickpocketKnives();
 //                int n = rand.nextInt(3) + 1;
 //                if (n == 1) {
 //
@@ -474,6 +474,13 @@ public class ProjectGame extends Game {
                             if (currentEnemy.enemyBullet.collidesWith(player) && player.canGetHurt()) {
                                 damageThePlayer();
                                 currentEnemy.enemyBullet = null;
+                                break;
+                            }
+                            for (int j = 0; j < currentRoom.collisionArray.size(); j++) {
+                                if (currentEnemy.enemyBullet.collidesWith(currentRoom.collisionArray.get(j))) {
+                                    currentEnemy.enemyBullet = null;
+                                    break;
+                                }
                             }
 
                         }
@@ -482,12 +489,12 @@ public class ProjectGame extends Game {
 
                     for (int j = 0; j < player.playerBullets.size(); j++) {
                         Bullet bul = player.playerBullets.get(j);
-                        for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
-                            if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
-                                player.playerBullets.remove(j);
-                                break;
-                            }
-                        }
+//                        for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+//                            if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+//                                player.playerBullets.remove(j);
+//                                break;
+//                            }
+//                        }
                         if (bul != null) {
                             if (bul.collidesWith(enemies.get(i))) {
                                 enemies.get(i).dead = true;
@@ -499,11 +506,21 @@ public class ProjectGame extends Game {
                                     enemies.get(i).setDelay(90);
                                     enemies.get(i).setAnimationState("dying left", "dead left");
                                 }
-                                if(player.playerBullets.size() > j)
+                                if (player.playerBullets.size() > j)
                                     player.playerBullets.remove(j);
                             }
 
                         }
+                    }
+                }
+            }
+
+            for (int j = 0; j < player.playerBullets.size(); j++) {
+                Bullet bul = player.playerBullets.get(j);
+                for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+                    if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+                        player.playerBullets.remove(j);
+                        break;
                     }
                 }
             }
@@ -596,11 +613,11 @@ public class ProjectGame extends Game {
                 g.setColor(Color.RED);
                 g.drawString("BULLET HELL", 450, 120);
                 g.setColor(Color.WHITE);
-                g.drawString("Play", getUnscaledWidth() / 2 + 550, 210);
+                g.drawString("Play", getUnscaledWidth() / 2 + 580, 210);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 170, 180, 50);
 //                g.drawString("Help",getUnscaledWidth()/2+550,310);
 //                g.drawRect(getUnscaledWidth()/2+ 530,270,150,50);
-                g.drawString("Quit", getUnscaledWidth() / 2 + 550, 410);
+                g.drawString("Quit", getUnscaledWidth() / 2 + 580, 410);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
             }
         } else if (state == STATE.GAME) {
@@ -723,7 +740,7 @@ public class ProjectGame extends Game {
             double mouseX = e.getX();
             double mouseY = e.getY();
             if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 170 && mouseY <= 220) {
+                if (mouseY >= 200 && mouseY <= 260) {
                     state = STATE.GAME;
                 }
             }
@@ -736,22 +753,25 @@ public class ProjectGame extends Game {
             }
         } else if (state == STATE.GAME) {
             if (!player.isDead && knifeCount != 0) {
-                Bullet bul = new Bullet("bullet", "knife.png", 0.2);
+
                 double mouseX = e.getX();
                 double mouseY = e.getY();
-                double[] pressed = {mouseX, mouseY};
+                Bullet bul = new Bullet("bullet", "knife.png", 0.2, player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2, mouseX, mouseY);
+
 //                System.out.print(pressed[0]);
 
                 knifeCount--;
-                bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
-                bul.setEnd(mouseX, mouseY);
 
 
-                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
-                Tween bulletmovement = new Tween(bul, bulletPath);
-                bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX, 0.2);
-                bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
-                TweenJuggler.getInstance().add(bulletmovement);
+//                bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
+//                bul.setEnd(mouseX+this.getUnscaledWidth(), mouseY+this.getUnscaledHeight());
+
+
+//                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
+//                Tween bulletmovement = new Tween(bul, bulletPath);
+//                bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX+this.getUnscaledWidth(), 0.2);
+//                bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY+this.getUnscaledHeight(), 0.2);
+//                TweenJuggler.getInstance().add(bulletmovement);
 
                 player.playerBullets.add(bul);
 
@@ -791,21 +811,21 @@ public class ProjectGame extends Game {
     }
 
 
-    public void lootEnemy(Enemy enemy) {
-        keyCount += enemy.getKeyCount();
-        knifeCount += enemy.getKnifeCount();
-
-        if (enemy.getKeyCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
-        } else if (enemy.getKnifeCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
-        } else if (enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
-        } else if (enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
-            itemString = "inventory empty";
-        }
-        enemy.emptyEnemyInventory();
-    }
+//    public void lootEnemy(Enemy enemy) {
+//        keyCount += enemy.getKeyCount();
+//        knifeCount += enemy.getKnifeCount();
+//
+//        if (enemy.getKeyCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
+//        } else if (enemy.getKnifeCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
+//        } else if (enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
+//        } else if (enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
+//            itemString = "inventory empty";
+//        }
+//        enemy.emptyEnemyInventory();
+//    }
 
     public void switchRooms(Room original, Room next) {
 

@@ -20,6 +20,7 @@ import java.awt.event.ItemListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.Math.PI;
 
@@ -52,8 +53,9 @@ public class Enemy extends AnimatedSprite implements IEventListener {
 
 
     /*****Inventory Stuff*****/
-    int knifeCount;
+    boolean alreadyPickpocketed = false;
     int keyCount;
+    Random random;
 
     public Enemy(String id) {
         super(id, "", "");
@@ -362,6 +364,31 @@ public class Enemy extends AnimatedSprite implements IEventListener {
         }
     }
 
+    public int pickpocketKnives(){
+        if(alreadyPickpocketed) {
+            int chance = random.nextInt(101); //number between 0 and 1000
+            alreadyPickpocketed = true;
+            if (chance > 98) {
+                return 3;
+            }
+            if (chance > 95) {
+                return 2;
+            }
+            if (chance > 90) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public int pickpocketKeys(){
+        if(keyCount>0){
+            keyCount--;
+            return 1;
+        }
+        return 0;
+    }
+
     @Override
     public void draw(Graphics g)
     {
@@ -375,17 +402,17 @@ public class Enemy extends AnimatedSprite implements IEventListener {
 
     }
 
-    public void addKnife() {
-        knifeCount++;
-    }
+//    public void addKnife() {
+//        knifeCount++;
+//    }
 
     public void addKey() {
         keyCount++;
     }
 
-   public int getKnifeCount() {
-       return knifeCount;
-   }
+//   public int getKnifeCount() {
+//       return knifeCount;
+//   }
 
    public int getKeyCount() {
         return keyCount;
@@ -393,7 +420,7 @@ public class Enemy extends AnimatedSprite implements IEventListener {
 
    public void emptyEnemyInventory() {
         keyCount = 0;
-        knifeCount = 0;
+        //knifeCount = 0;
    }
 
 
