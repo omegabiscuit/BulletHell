@@ -71,6 +71,8 @@ public class ProjectGame extends Game {
 
     BrighamLevel myLevel3;
 
+    AlternatingSpikesLevel level4;
+
 
     ArrayList<Enemy> enemies;
 
@@ -151,7 +153,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
-        knifeCount = 4;
+        knifeCount = 25;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -196,6 +198,11 @@ public class ProjectGame extends Game {
             myLevel3.hide();
             addChild(myLevel3);
 
+            level4 = new AlternatingSpikesLevel("Room6");
+            level4.run();
+            level4.hide();
+            addChild(level4);
+
             bossLevel = new BossLevel("Room5", player);
             bossLevel.run();
             bossLevel.hide();
@@ -204,7 +211,8 @@ public class ProjectGame extends Game {
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0, myLevel2);
             myLevel2.mapDoorToRoom(0, myLevel3);
-            myLevel3.mapDoorToRoom(0, bossLevel);
+            myLevel3.mapDoorToRoom(0, level4);
+            level4.mapDoorToRoom(0, bossLevel);
             //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
@@ -418,6 +426,12 @@ public class ProjectGame extends Game {
                     myLevel3.hide();
                     addChild(myLevel3);
 
+                    level4 = new AlternatingSpikesLevel("Room6");
+                    level4.run();
+                    level4.hide();
+                    addChild(level4);
+
+
                     bossLevel = new BossLevel("Room5", player);
                     bossLevel.run();
                     bossLevel.hide();
@@ -426,7 +440,8 @@ public class ProjectGame extends Game {
                     myLevel.mapDoorToRoom(0, myLevel1);
                     myLevel1.mapDoorToRoom(0, myLevel2);
                     myLevel2.mapDoorToRoom(0, myLevel3);
-                    myLevel3.mapDoorToRoom(0, bossLevel);
+                    myLevel3.mapDoorToRoom(0, level4);
+                    level4.mapDoorToRoom(0, bossLevel);
                     currentRoom = myLevel;
 
                     enemies = currentRoom.enemies;
