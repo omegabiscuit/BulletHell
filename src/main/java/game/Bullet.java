@@ -18,8 +18,8 @@ public class Bullet extends Sprite implements IEventListener {
     double endValY;
     double startValX;
     double startValY;
-    int velocityX;
-    int velocityY;
+    double velocityX;
+    double velocityY;
 
     double shotTimer;
     double shotCap;
@@ -38,10 +38,15 @@ public class Bullet extends Sprite implements IEventListener {
 //        setStart(startX, startY);
 //        setEnd(endX,endY);
 
-        double angle = Math.atan2(endX - startX, endY-startY);
-        velocityX = (int)Math.cos(angle)*1;
-        velocityY = (int)Math.sin(angle)*1;
+        double length = (Math.sqrt(Math.pow(endX-startX,2)+Math.pow(endY-startY,2)));
 
+
+
+        velocityX = ((endX-startX)/length)*50;
+        velocityY = ((endY-startY)/length)*50;
+        setPositionX(startX);
+        setPositionY(startY);
+        System.out.println(velocityX);
 
 
         shotTimer = 0.0;
@@ -108,7 +113,8 @@ public class Bullet extends Sprite implements IEventListener {
         setPositionY(getPositionY()+velocityY);
         setRotation(getRotation() + 1);
 
-        System.out.println(getPositionX());
+//        if this.collidesWith()
+
     }
 
     public double getShotTimer() { return shotTimer; }
