@@ -31,34 +31,22 @@ public class ProjectGame extends Game {
     Event fadeOutEvent;
     Event die;
     Event reduceLife;
-    TweenEvent tweenEvent;
-    boolean pause = false;
     boolean complete = false;
     Event collidedEvent;
     Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
 
-    boolean start = false;
-
     Sprite background = new Sprite("Background", "background.png");
     Sprite menuScreen = new Sprite("menuScreen", "menu-screen.jpg");
     private Player player;
 
-    Heart life1 = new Heart("Heart", "heart.png");
-    Heart life2 = new Heart("Heart", "heart.png");
-    Heart life3 = new Heart("Heart", "heart.png");
 
     int keyCount;
     int knifeCount;
     String itemString = "";
     boolean pickpocket = false;
-    Rectangle2D cover;
-    //ArrayList<Rectangle2D> coverList;
 
     ///Level 0////
-
-
-    // int damageCap = 100;
 
     int currentLevel;
 
@@ -97,7 +85,16 @@ public class ProjectGame extends Game {
     boolean transitionPhase = false;
 
 
-    int x;
+    Sprite pressE;
+
+    Sprite findKey = new Sprite("findKey", "find_key.png");
+
+    Sprite getToRoom = new Sprite("getToRoom", "get_to_room.png");
+
+    Sprite killTurtle = new Sprite("Keith", "kill_turtle.png");
+
+
+    int currentQuestObjective;
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -107,20 +104,20 @@ public class ProjectGame extends Game {
         super("BulletHell", 1200, 900);
         die = new Event();
         backgroundMusic = new SoundManagerClass();
-        x = 0;
+        //x = 0;
         reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
         die.setEventType("playerDeath");
         fadeOutEvent.setEventType("FadeOut");
         reduceLife.setEventType("Collision");
-        this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
-        this.addEventListener(myQuestManager, die.getEventType());
-        this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
+
+
+
 
 
         currentLevel = 0;//0 = base , 3=brigham's level
@@ -138,7 +135,6 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-        //player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
         player = new Player("player", "resources/player_sheet.png", "idle_right");
         player.setSpriteSheetJson("resources/player_sheet.json");
         player.setDelay(100);
@@ -165,9 +161,24 @@ public class ProjectGame extends Game {
         player.setPositionX(550);
         player.setPositionY(700);
 
+        pressE = new Sprite("pressE", "pressE.png");
+        player.addChild(pressE);
+        pressE.setPositionY(-50);
+
 
         coin.setPositionY(250);
         coin.setPositionX(660);
+
+        findKey.setPositionX(500);
+        findKey.setPositionY(-20);
+
+        getToRoom.setPositionX(500);
+        getToRoom.setPositionY(-20);
+
+        killTurtle.setPositionX(500);
+        killTurtle.setPositionY(-20);
+
+
         //Rectangle2D rect = new Rectangle2D.Float(600,400,700,500);
         //coverList = new ArrayList<Rectangle2D>(); //list of cover sprites
         //coverList.add(rect);
@@ -219,6 +230,7 @@ public class ProjectGame extends Game {
             //myLevel2.mapDoorToRoom(0,myLevel3);
             //myLevel3.run();
             //myLevel3.hide();
+            currentQuestObjective = 0;
 
         }
 
@@ -438,11 +450,8 @@ public class ProjectGame extends Game {
                     knifeCount = 4;
                 } else {
                     state = STATE.PAUSE;
-                }
-            }
 
-            if (pressedKeys.contains("K")) {
-                state = STATE.PAUSE;
+                }
             }
             for (int i = 0; i < enemies.size(); i++) {
                 Enemy currentEnemy = enemies.get(i);
@@ -538,8 +547,15 @@ public class ProjectGame extends Game {
                     enemies = currentRoom.enemies;
                     queuedRoom = null;
                     transitionPhase = false;
+                    currentQuestObjective = 0;
                 }
             }
+        }
+        if (keyCount > 0){
+            currentQuestObjective = 1;
+        }
+        else if(currentRoom == bossLevel){
+            currentQuestObjective = 2;
         }
     }
 
@@ -619,6 +635,8 @@ public class ProjectGame extends Game {
 //                g.drawRect(getUnscaledWidth()/2+ 530,270,150,50);
                 g.drawString("Quit", getUnscaledWidth() / 2 + 580, 410);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
+
+
             }
         } else if (state == STATE.GAME) {
             if (background != null) {
@@ -634,6 +652,8 @@ public class ProjectGame extends Game {
             if (currentRoom != null) {
                 currentRoom.draw(g);
             }
+
+
 
 
             for (int i = 0; i < player.playerBullets.size(); i++) {
@@ -711,9 +731,20 @@ public class ProjectGame extends Game {
 
 
             if (pickpocket) {
-
-                g.drawString("Press E to pickpocket", 400, 400);
-
+                pressE.setTransparency(1);
+                //g.drawString("Press E to pickpocket", 400, 400);
+            }
+            else{
+                pressE.setTransparency(0);
+            }
+            if(currentQuestObjective == 0){
+                findKey.draw(g);
+            }
+            else if(currentQuestObjective ==1){
+                getToRoom.draw(g);
+            }
+            else if(currentQuestObjective == 2){
+                killTurtle.draw(g);
             }
         } else if (state == STATE.PAUSE) {
             if (menuScreen != null) {
@@ -730,6 +761,7 @@ public class ProjectGame extends Game {
                 g.drawString("Quit", getUnscaledWidth() / 2 + 550, 410);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
             }
+
         }
     }
 
@@ -799,6 +831,8 @@ public class ProjectGame extends Game {
 
             }
         }
+
+
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
