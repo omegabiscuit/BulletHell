@@ -58,6 +58,13 @@ public class AlternatingSpikesLevel extends Room{
     Sprite coverBottom8;
     Sprite coverShadow8;
 
+    Platform col1;
+    Platform col2;
+    Platform col3;
+    Platform col4;
+    Platform col5;
+    Platform col6;
+
     TreasureChest chest;
 
     Enemy enemy01;
@@ -120,7 +127,7 @@ public class AlternatingSpikesLevel extends Room{
         addChild(spikes4);
         spikeList.add(spikes4);
 
-        spikes5 = new SpikeTile("spikes", "resources/spikes.png", "idle up");
+        spikes5 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes5.setSpriteSheetJson("resources/spikes.json");
         spikes5.setPositionX(spikes4.getPositionX() - 128*2);
         spikes5.setPositionY(spikes4.getPositionY());
@@ -136,7 +143,7 @@ public class AlternatingSpikesLevel extends Room{
 
         spikes7 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes7.setSpriteSheetJson("resources/spikes.json");
-        spikes7.setPositionX(spikes5.getPositionX() + 128);
+        spikes7.setPositionX(spikes5.getPositionX() - 128);
         spikes7.setPositionY(spikes5.getPositionY() - 128);
         addChild(spikes7);
         spikeList.add(spikes7);
@@ -151,8 +158,8 @@ public class AlternatingSpikesLevel extends Room{
         cover1 = new Platform("tile", "cover_top_only_horizontal.png");
         cover1.setPositionX(spikes1.getPositionX());
         cover1.setPositionY(spikes1.getPositionY() - 128);
-        coverList.add(convertToCover(cover1));
         addChild(cover1);
+        coverList.add(convertToCover(cover1));
         collisionArray.add(cover1);
         coverBottom1 = new Sprite("corner", "cover_bottom.png");
         coverBottom1.setPositionX(cover1.getPositionX());
@@ -166,8 +173,8 @@ public class AlternatingSpikesLevel extends Room{
         cover2 = new Platform("tile", "cover_top_only_horizontal.png");
         cover2.setPositionX(cover1.getPositionX() - 128);
         cover2.setPositionY(cover1.getPositionY());
-        coverList.add(convertToCover(cover2));
         addChild(cover2);
+        coverList.add(convertToCover(cover2));
         collisionArray.add(cover2);
         coverBottom2 = new Sprite("corner", "cover_bottom.png");
         coverBottom2.setPositionX(cover2.getPositionX());
@@ -181,8 +188,8 @@ public class AlternatingSpikesLevel extends Room{
         cover3 = new Platform("tile", "cover_top_only_horizontal.png");
         cover3.setPositionX(cover2.getPositionX() - 128);
         cover3.setPositionY(cover2.getPositionY());
-        coverList.add(convertToCover(cover3));
         addChild(cover3);
+        coverList.add(convertToCover(cover3));
         collisionArray.add(cover3);
         coverBottom3 = new Sprite("corner", "cover_bottom.png");
         coverBottom3.setPositionX(cover3.getPositionX());
@@ -196,8 +203,8 @@ public class AlternatingSpikesLevel extends Room{
         cover4 = new Platform("tile", "cover_top_only_horizontal.png");
         cover4.setPositionX(cover3.getPositionX() - 128);
         cover4.setPositionY(cover3.getPositionY());
-        coverList.add(convertToCover(cover4));
         addChild(cover4);
+        coverList.add(convertToCover(cover4));
         collisionArray.add(cover4);
         coverBottom4 = new Sprite("corner", "cover_bottom.png");
         coverBottom4.setPositionX(cover4.getPositionX());
@@ -211,29 +218,30 @@ public class AlternatingSpikesLevel extends Room{
         cover5 = new Platform("tile", "cover_top_only_horizontal.png");
         cover5.setPositionX(cover3.getPositionX());
         cover5.setPositionY(cover3.getPositionY() - 128*2);
-        coverList.add(convertToCover(cover5));
         addChild(cover5);
+        coverList.add(convertToCover(cover5));
         collisionArray.add(cover5);
         coverBottom5 = new Sprite("corner", "cover_bottom.png");
         coverBottom5.setPositionX(cover5.getPositionX());
         coverBottom5.setPositionY(cover5.getPositionY() + cover5.getUnscaledHeight());
         addChild(coverBottom5);
-        coverShadow5 = new Sprite("corner", "cover_shadow_right_bottom.png");
+        coverShadow5 = new Sprite("corner", "cover_shadow_bottom.png");
         coverShadow5.setPositionX(cover5.getPositionX() - 16);
         coverShadow5.setPositionY(cover5.getPositionY());
         addChild(coverShadow5);
 
         cover6 = new Platform("tile", "cover_top_only_horizontal.png");
-        cover6.setPositionX(cover5.getPositionX() - 128);
+        cover6.setPositionX(cover5.getPositionX() + 128);
         cover6.setPositionY(cover5.getPositionY());
-        coverList.add(convertToCover(cover6));
+
         addChild(cover6);
+        coverList.add(convertToCover(cover6));
         collisionArray.add(cover6);
         coverBottom6 = new Sprite("corner", "cover_bottom.png");
         coverBottom6.setPositionX(cover6.getPositionX());
         coverBottom6.setPositionY(cover6.getPositionY() + cover6.getUnscaledHeight());
         addChild(coverBottom6);
-        coverShadow6 = new Sprite("corner", "cover_shadow_bottom.png");
+        coverShadow6 = new Sprite("corner", "cover_shadow_left_bottom.png");
         coverShadow6.setPositionX(cover6.getPositionX() - 16);
         coverShadow6.setPositionY(cover6.getPositionY());
         addChild(coverShadow6);
@@ -241,14 +249,15 @@ public class AlternatingSpikesLevel extends Room{
         cover7 = new Platform("tile", "cover_top_only_horizontal.png");
         cover7.setPositionX(cover5.getPositionX() + 128*2);
         cover7.setPositionY(cover5.getPositionY());
-        coverList.add(convertToCover(cover7));
+
         addChild(cover7);
+        coverList.add(convertToCover(cover7));
         collisionArray.add(cover7);
         coverBottom7 = new Sprite("corner", "cover_bottom.png");
         coverBottom7.setPositionX(cover7.getPositionX());
         coverBottom7.setPositionY(cover7.getPositionY() + cover7.getUnscaledHeight());
         addChild(coverBottom7);
-        coverShadow7 = new Sprite("corner", "cover_shadow_left_bottom.png");
+        coverShadow7 = new Sprite("corner", "cover_shadow_bottom.png");
         coverShadow7.setPositionX(cover7.getPositionX() - 16);
         coverShadow7.setPositionY(cover7.getPositionY());
         addChild(coverShadow7);
@@ -256,8 +265,8 @@ public class AlternatingSpikesLevel extends Room{
         cover8 = new Platform("tile", "cover_top_only_horizontal.png");
         cover8.setPositionX(cover5.getPositionX() + 128*3);
         cover8.setPositionY(cover5.getPositionY());
-        coverList.add(convertToCover(cover8));
         addChild(cover8);
+        coverList.add(convertToCover(cover8));
         collisionArray.add(cover8);
         coverBottom8 = new Sprite("corner", "cover_bottom.png");
         coverBottom8.setPositionX(cover8.getPositionX());
@@ -267,6 +276,48 @@ public class AlternatingSpikesLevel extends Room{
         coverShadow8.setPositionX(cover8.getPositionX() - 16);
         coverShadow8.setPositionY(cover8.getPositionY());
         addChild(coverShadow8);
+
+        col1 = new Platform("collider", "alpha_1x8.png");
+        col1.setPositionX(map.getPositionX() + 48 - 128);
+        col1.setPositionY(map.getPositionY());
+        addChild(col1);
+        coverList.add(convertToCover(col1));
+        collisionArray.add(col1);
+
+        col2 = new Platform("collider", "alpha_1x8.png");
+        col2.setPositionX(map.getPositionX() + map.getUnscaledWidth() - 48);
+        col2.setPositionY(map.getPositionY());
+        addChild(col2);
+        coverList.add(convertToCover(col2));
+        collisionArray.add(col2);
+
+        col3 = new Platform("collider", "alpha_3x1.png");
+        col3.setPositionX(map.getPositionX() - 84);
+        col3.setPositionY(map.getPositionY() + 48);
+        addChild(col3);
+        coverList.add(convertToCover(col3));
+        collisionArray.add(col3);
+
+        col4 = new Platform("collider", "alpha_8x1.png");
+        col4.setPositionX(map.getPositionX() - 128);
+        col4.setPositionY(map.getPositionY() + map.getUnscaledHeight() - 128);
+        addChild(col4);
+        coverList.add(convertToCover(col4));
+        collisionArray.add(col4);
+
+        col5 = new Platform("collider", "alpha_3x1.png");
+        col5.setPositionX(col3.getPositionX() + col3.getUnscaledWidth() + 128);
+        col5.setPositionY(col3.getPositionY());
+        addChild(col5);
+        coverList.add(convertToCover(col5));
+        collisionArray.add(col5);
+
+        col6 = new Platform("collider", "alpha_3x1.png");
+        col6.setPositionX(col3.getPositionX() + col3.getUnscaledWidth() - 128);
+        col6.setPositionY(col3.getPositionY() - 128);
+        addChild(col6);
+        coverList.add(convertToCover(col6));
+        collisionArray.add(col6);
 
 
         chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
@@ -280,7 +331,7 @@ public class AlternatingSpikesLevel extends Room{
         enemy01 = new Enemy("enemy", "resources/gator_sheet.png", "walk right");
         enemy01.setSpriteSheetJson("resources/gator_sheet.json");
         enemy01.setDelay(100);
-        enemy01.setPositionX(chest.getPositionX() - 128*4 - 40);
+        enemy01.setPositionX(chest.getPositionX() - 128*3 - 40);
         enemy01.setPositionY(chest.getPositionY());
         enemy01.addRoute(128*3, 0, 1, 2);
         enemy01.addRoute(-128*3, 0, 1, 4);
@@ -352,6 +403,14 @@ public class AlternatingSpikesLevel extends Room{
         cover8.draw(g);
         coverBottom8.draw(g);
         coverShadow8.draw(g);
+
+
+        col1.draw(g);
+        col2.draw(g);
+        col3.draw(g);
+        col4.draw(g);
+        col5.draw(g);
+        col6.draw(g);
     }
 
 
