@@ -284,7 +284,7 @@ public class AlternatingSpikesLevel extends Room{
         enemy01.setPositionY(chest.getPositionY());
         enemy01.addRoute(128*3, 0, 1, 2);
         enemy01.addRoute(-128*3, 0, 1, 4);
-        enemy01.addKnife();
+        //enemy01.addKnife();
         enemies.add(enemy01);
         addChild(enemy01);
     }

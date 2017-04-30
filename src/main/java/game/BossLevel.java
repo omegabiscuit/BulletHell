@@ -26,10 +26,11 @@ public class BossLevel extends Room {
     Platform collider5;
     Platform collider6;
 
+    Platform playerCollider;
+
     SpikeTile spikes1;
     SpikeTile spikes2;
     SpikeTile spikes3;
-    SpikeTile spikes4;
 
     Bullet missle1;
     Bullet missle2;
@@ -47,9 +48,13 @@ public class BossLevel extends Room {
 
     TurtleBoss turtleBoss;
 
+    Boolean complete;
+    Boolean intro;
+    Boolean loop;
+    Boolean phase2;
+
 
     GameClock missleClock;
-    Event explode;
     Event reduceLife;
     double missleLaunch;//time of last missle attack
 
@@ -63,6 +68,7 @@ public class BossLevel extends Room {
     TreasureChest chest;
     int chestTimer;
     SoundManagerClass soundManager;
+    SoundManagerClass backgroundMusic;
 
     public BossLevel(String id) {
         super(id);
@@ -77,6 +83,7 @@ public class BossLevel extends Room {
     public void run() {
 
         soundManager = new SoundManagerClass();
+        backgroundMusic = new SoundManagerClass();
 
         random = new Random();
         reduceLife = new Event();
@@ -91,6 +98,7 @@ public class BossLevel extends Room {
         turtleBoss.setSpriteSheetJson("resources/turtle_boss.json");
         turtleBoss.setPositionX(map.getPositionX() + 500);
         turtleBoss.setPositionY(map.getPositionY());
+        turtleBoss.setTransparency(0);
         addChild(turtleBoss);
 
 
@@ -120,13 +128,15 @@ public class BossLevel extends Room {
 
         missleClock = new GameClock();
         missleClock.resetGameClock();
-        missleLaunch = missleClock.getElapsedTime();
+        missleLaunch = missleClock.getElapsedTime()+4000;
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider2 = new Platform("collider2", "alpha_3x1.png");
         collider3 = new Platform("collider3", "alpha_1x6.png");
         collider4 = new Platform("collider4", "alpha_1x6.png");
         collider5 = new Platform("collider5", "alpha_3x1.png");
         collider6 = new Platform("collider6", "alpha_6x1.png");
+
+
 
         addChild(collider1);
         addChild(collider2);
@@ -174,12 +184,17 @@ public class BossLevel extends Room {
         addChild(spikes3);
         spikeList.add(spikes3);
 
+        complete = false;
+        phase2 = false;
+        loop = false;
+
         /****Treasure Chesty Stuff****/
         chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
         chest.setSpriteSheetJson("resources/treasure_chest.json");
         chest.setPositionX(turtleBoss.getPositionX() - 128*3);
         chest.setPositionY(turtleBoss.getPositionY() + 128*2);
         chest.placeItemInChest("knife");
+        chestTimer = -200;
         addChild(chest);
         chests.add(chest);
 
@@ -198,9 +213,36 @@ public class BossLevel extends Room {
 
     }
 
+    public void intro(){
+        backgroundMusic.playSoundEffect("resources/finalBossIntro.wav", 0);
+        TweenTransitions turtlePath = new TweenTransitions("linearTransition");
+        Tween turtleIntro = new Tween(turtleBoss, turtlePath);
+        turtleIntro.animate(TweenableParams.ALPHA, 0, 1, 4);
+        TweenJuggler.getInstance().add(turtleIntro);
+    }
+
     public void update() {
         super.update();
+        int tweenTime;
         turtleBoss.update();
+        if(!backgroundMusic.play() && loop == false){
+            loop = true;
+            backgroundMusic.playSoundEffect("resources/finalBossLoop.wav", 100);
+        }
+        if(turtleBoss.health < 4 && turtleBoss.health > 0 && phase2==false){
+            phase2 = true;
+            backgroundMusic.playSoundEffect("resources/finalBossPhase2.wav",100);
+        }
+        if(turtleBoss.health <=0 && complete == false){
+            complete = true;
+            backgroundMusic.playSoundEffect("resources/finalBossEnd.wav",0);
+        }
+        if(turtleBoss.health < 4){
+            tweenTime = 3;
+        }
+        else{
+            tweenTime = 4;
+        }
         if (map.getPositionY() >= 0) {
             if (missleClock.getElapsedTime() - missleLaunch > 5000 && !turtleBoss.isDead()) {
                 int offset = 0;
@@ -215,8 +257,8 @@ public class BossLevel extends Room {
                             missles.get(i).setEnd(map.getPositionX() + 30 + offset, 1300);
                             TweenTransitions misslePath = new TweenTransitions("linearTransition");
                             Tween misslemovement = new Tween(missles.get(i), misslePath);
-                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
-                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, tweenTime);
+                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, tweenTime);
                             TweenJuggler.getInstance().add(misslemovement);
                         }
                         offset += 80;
@@ -229,8 +271,8 @@ public class BossLevel extends Room {
                             missles.get(i).setEnd(1300, map.getPositionY() + 160 + offset);
                             TweenTransitions misslePath = new TweenTransitions("linearTransition");
                             Tween misslemovement = new Tween(missles.get(i), misslePath);
-                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
-                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, tweenTime);
+                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, tweenTime);
                             TweenJuggler.getInstance().add(misslemovement);
                         }
                         offset += 90;
@@ -243,8 +285,8 @@ public class BossLevel extends Room {
                             missles.get(i).setEnd(-50, map.getPositionY() + 160 + offset);
                             TweenTransitions misslePath = new TweenTransitions("linearTransition");
                             Tween misslemovement = new Tween(missles.get(i), misslePath);
-                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
-                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, tweenTime);
+                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, tweenTime);
                             TweenJuggler.getInstance().add(misslemovement);
                         }
                         offset += 90;
@@ -258,8 +300,8 @@ public class BossLevel extends Room {
                             missles.get(i).setEnd(map.getPositionX() + 30 + offset, -50);
                             TweenTransitions misslePath = new TweenTransitions("linearTransition");
                             Tween misslemovement = new Tween(missles.get(i), misslePath);
-                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, 4);
-                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, 4);
+                            misslemovement.animate(TweenableParams.X, missles.get(i).startValX, missles.get(i).endValX, tweenTime);
+                            misslemovement.animate(TweenableParams.Y, missles.get(i).startValY, missles.get(i).endValY, tweenTime);
                             TweenJuggler.getInstance().add(misslemovement);
                         }
                         offset += 80;

@@ -3,16 +3,10 @@ package game;
 
 
 import java.applet.AudioClip;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.*;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 import javafx.scene.control.Slider;
@@ -24,30 +18,37 @@ import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
 
 public class SoundManagerClass {
-    boolean play = false;
+    //boolean play = false;
     ContinuousAudioDataStream loop = null;
 
     private AudioClip song; // Sound player
 
     private URL songPath; // Sound path
 
-    Clip clip1;
+    Clip clip;
     FloatControl gainControl;
     Slider volumeSlider;
 
 
-    public void playSoundEffect(String file, float amount) {
+    public void playSoundEffect(final String url, int loop) {
+        if(clip != null){
+            if(clip.isRunning())
+            clip.stop();
+        }
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(file).getAbsoluteFile());
-            clip1 = AudioSystem.getClip();
-            clip1.open(audioInputStream);
-            gainControl = (FloatControl) clip1.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(amount);
-            clip1.start();
-
-        } catch (Exception e) {
+            File file = new File(url);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.loop(loop);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
+
     }
 
     public void playMusic(String filename) {
@@ -63,9 +64,21 @@ public class SoundManagerClass {
 
     }
 
-    public void setVolume(float amount) {
+    public void stop() {
+        if(clip!=null){
+            clip.stop();
+        }
 
+    }
 
+    public boolean play(){
+        if(clip!=null) {
+            if (clip.isActive()) {
+                return true;
+            }
+
+        }
+        return false;
     }
 }
 

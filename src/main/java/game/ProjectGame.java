@@ -259,7 +259,7 @@ public class ProjectGame extends Game {
         transitionYCurrent = 615;
 
 
-        backgroundMusic.playMusic("resources/oceanOperator.mp3");
+        backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
 
     }
 
@@ -558,6 +558,10 @@ public class ProjectGame extends Game {
 
                     queuedRoom.setDoneFading(false);
                     currentRoom.setDoneFading(false);
+                    if(queuedRoom == bossLevel){
+                        backgroundMusic.stop();
+                       bossLevel.intro();
+                    }
                     currentRoom = queuedRoom;
                     enemies = currentRoom.enemies;
                     queuedRoom = null;
@@ -642,7 +646,7 @@ public class ProjectGame extends Game {
                 menuScreen.draw(g);
                 g.setFont(new Font("Helvetica", Font.BOLD, 36));
                 g.setColor(Color.RED);
-                g.drawString("BULLET HELL", 450, 120);
+                g.drawString("Little Thief", 450, 120);
                 g.setColor(Color.WHITE);
                 g.drawString("Play", getUnscaledWidth() / 2 + 580, 210);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 170, 180, 50);

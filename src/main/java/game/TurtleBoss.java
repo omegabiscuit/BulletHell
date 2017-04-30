@@ -1,5 +1,9 @@
 package game;
 
+import engine.Tweens.Tween;
+import engine.Tweens.TweenJuggler;
+import engine.Tweens.TweenTransitions;
+import engine.Tweens.TweenableParams;
 import engine.display.AnimatedSprite;
 import engine.events.Event;
 import engine.events.IEventListener;
@@ -33,7 +37,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
         super(id, fileName, startState);
 
         setDelay(300);
-        health = 5;
+        health = 10;
         turtleDamageBuffer = 100;
         turtleDamageTimer = turtleDamageBuffer;
     }
@@ -47,6 +51,10 @@ public class TurtleBoss extends Enemy implements IEventListener {
             return false;
         }
         return true;
+    }
+
+    public void intro(){
+
     }
 
 
