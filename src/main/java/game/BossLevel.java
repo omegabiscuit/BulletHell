@@ -84,7 +84,7 @@ public class BossLevel extends Room {
 
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
-        map.setPositionY(-2450);
+        map.setPositionY(-3028);
         addChild(map);
 
         turtleBoss = new TurtleBoss("boss", "resources/turtle_boss.png", "idle");
