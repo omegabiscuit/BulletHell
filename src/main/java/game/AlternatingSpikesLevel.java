@@ -67,6 +67,8 @@ public class AlternatingSpikesLevel extends Room{
 
     TreasureChest chest;
 
+    Platform col7;
+
     Enemy enemy01;
 
 
@@ -318,6 +320,13 @@ public class AlternatingSpikesLevel extends Room{
         addChild(col6);
         coverList.add(convertToCover(col6));
         collisionArray.add(col6);
+
+        col7 = new Platform("collider", "alpha_3x1.png");
+        col7.setPositionX(490);
+        col7.setPositionY(220);
+        //addChild(col7);
+        coverList.add(convertToCover(col7));
+        collisionArray.add(col7);
 
 
         chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");

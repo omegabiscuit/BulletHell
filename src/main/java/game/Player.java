@@ -37,7 +37,6 @@ public class Player extends AnimatedSprite implements IEventListener {
     Heart life3;
     int lifeCount;
     Rectangle2D hitbox;
-    char key;
 
     private int playerDamageBuffer;
     private int playerDamageTimer;
@@ -55,8 +54,8 @@ public class Player extends AnimatedSprite implements IEventListener {
         lifeArray.add(life1);
         lifeArray.add(life2);
         lifeArray.add(life3);
-        lifeCount = lifeArray.size();
-
+//        lifeCount = lifeArray.size();
+        lifeCount = 20;
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
         knifeSounds.add("resources/knife1.mp3");
         knifeSounds.add("resources/knife2.mp3");
@@ -179,7 +178,13 @@ public class Player extends AnimatedSprite implements IEventListener {
     }
 
     public boolean feetCollideWith(DisplayObject object) {
-        Rectangle2D objRect = new Rectangle2D.Double(object.getPositionX(),object.getPositionY(),object.getUnscaledWidth(),object.getUnscaledHeight());
+        Rectangle2D objRect;
+        if(object.getId()=="spikes"){
+            objRect = new Rectangle2D.Double(object.getPositionX()+20,object.getPositionY()+20,object.getUnscaledWidth()-50,object.getUnscaledHeight()-35);
+        }
+        else {
+            objRect = new Rectangle2D.Double(object.getPositionX(), object.getPositionY(), object.getUnscaledWidth(), object.getUnscaledHeight());
+        }
         if(this.feetCollider.intersects(objRect)){
             return true;
         }
