@@ -76,7 +76,6 @@ public class TutorialLevel1 extends Room {
 
     LockedDoor door1;
 
-    SpikeTile spikes;
 
     Enemy enemy;
 
@@ -201,7 +200,7 @@ public class TutorialLevel1 extends Room {
         tile8.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight() * 4);
         addChild(tile8);
 
-        back1 = new Sprite("tile", "door_locked.png");
+        back1 = new Sprite("tile", "alpha_1x1.png");
         back1.setPositionX(tile1.getPositionX());
         back1.setPositionY(tile1.getPositionY() - tile1.getUnscaledHeight() * 5);
         addChild(back1);
@@ -324,12 +323,6 @@ public class TutorialLevel1 extends Room {
         addChild(collider8);
 
 
-        spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
-        spikes.setSpriteSheetJson("resources/spikes.json");
-        spikes.setPositionX(tile6.getPositionX());
-        spikes.setPositionY(tile6.getPositionY());
-        addChild(spikes);
-        spikeList.add(spikes);
 
 
         collider1 = new Platform("collider", "alpha_3x1.png");
@@ -430,8 +423,6 @@ public class TutorialLevel1 extends Room {
         back2.draw(g);
         back3.draw(g);
 
-        spikes.draw(g);
-
         coverShadow1.draw(g);
         coverShadow2.draw(g);
 
@@ -461,7 +452,6 @@ public class TutorialLevel1 extends Room {
 
     public void update() {
         super.update();
-        spikes.update();
 
         door1.update();
 
