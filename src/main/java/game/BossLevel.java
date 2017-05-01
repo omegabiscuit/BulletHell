@@ -90,7 +90,7 @@ public class BossLevel extends Room {
         reduceLife = new Event();
         reduceLife.setEventType("Collision");
 
-        map = new Sprite("map", "ahmedslevel.png");
+        map = new Sprite("map", "bossLevel.png");
         map.setPositionX(300);
         map.setPositionY(-3643);
         addChild(map);
@@ -240,6 +240,7 @@ public class BossLevel extends Room {
         }
         if (turtleBoss.health <= 0 && complete == false) {
             complete = true;
+            turtleBoss.setTransparency(0);
             backgroundMusic.playSoundEffect("resources/finalBossEnd.wav", 0);
         }
         if (turtleBoss.health < 4) {
