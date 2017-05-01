@@ -8,6 +8,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import com.sun.javafx.geom.Line2D;
 import com.sun.javafx.geom.Vec2d;
@@ -60,6 +61,8 @@ public class ProjectGame extends Game {
     BrighamLevel myLevel3;
 
     AlternatingSpikesLevel level4;
+
+    TutorialLevel1 tutorial;
 
 
     ArrayList<Enemy> enemies;
@@ -189,6 +192,10 @@ public class ProjectGame extends Game {
 
         if (currentLevel == 0) {
 
+            tutorial = new TutorialLevel1("Tutorial");
+            tutorial.run();
+            addChild(tutorial);
+
             myLevel = new Level0("Room1");
             myLevel.run();
             addChild(myLevel);
@@ -219,6 +226,7 @@ public class ProjectGame extends Game {
             bossLevel.hide();
             addChild(bossLevel);
 
+            tutorial.mapDoorToRoom(0,myLevel);
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0, myLevel2);
             myLevel2.mapDoorToRoom(0, myLevel3);
@@ -227,7 +235,7 @@ public class ProjectGame extends Game {
             //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
-            currentRoom = myLevel;
+            currentRoom = tutorial;
 
             //myLevel1.mapDoorToRoom(0,myLevel2);
 
@@ -287,6 +295,10 @@ public class ProjectGame extends Game {
         else if (state == STATE.GAME) {
             if (player != null && !player.isDead) {
                 player.update(pressedKeys);
+            }
+            if (player.getLifeCount() <= 0) {
+                complete = true;
+                player.isDead = true;
             }
 
 
@@ -383,7 +395,7 @@ public class ProjectGame extends Game {
 
                     if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_closed") {
                         if (keyCount > 0) {
-                            soundEffects.playMusic("resources/chains.wav");
+                            soundEffects.playSoundEffect("resources/chains.wav",0);
                             currentRoom.getDoors().get(i).setAnimationState("door_opening", "door_open");
                             itemString = "Door unlocked";
                             keyCount--;
@@ -418,8 +430,16 @@ public class ProjectGame extends Game {
 
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_P))) {
                 if (complete == true) {
+                    removeAll();
                     complete = false;
                     currentLevel = 0;
+
+
+                    tutorial = new TutorialLevel1("Tutorial");
+                    tutorial.run();
+                    addChild(tutorial);
+
+
                     myLevel = new Level0("Room1");
                     myLevel.run();
                     addChild(myLevel);
@@ -451,12 +471,13 @@ public class ProjectGame extends Game {
                     bossLevel.hide();
                     addChild(bossLevel);
 
+                    tutorial.mapDoorToRoom(0,myLevel);
                     myLevel.mapDoorToRoom(0, myLevel1);
                     myLevel1.mapDoorToRoom(0, myLevel2);
                     myLevel2.mapDoorToRoom(0, myLevel3);
                     myLevel3.mapDoorToRoom(0, level4);
                     level4.mapDoorToRoom(0, bossLevel);
-                    currentRoom = myLevel;
+                    currentRoom = tutorial;
 
                     enemies = currentRoom.enemies;
 
@@ -465,6 +486,8 @@ public class ProjectGame extends Game {
                     player.setPositionX(550);
                     player.setPositionY(700);
                     knifeCount = 4;
+                    backgroundMusic.stop();
+                    backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
                 } else {
                     state = STATE.PAUSE;
 
@@ -701,8 +724,13 @@ public class ProjectGame extends Game {
 
             g.setFont(new Font("ARIAL", Font.PLAIN, 48));
             if (complete == true || player.isDead) {
-                g.drawString("You are dead!", 400, 40);
-                g.drawString("Press P to play again", 400, 400);
+
+                Sprite gameOver = new Sprite("gameOver", "gameOver.png");
+                gameOver.setPositionX(300);
+                gameOver.setPositionY(300);
+                gameOver.draw(g);
+//                g.drawString("You are dead!", 400, 40);
+//                g.drawString("Press P to play again", 400, 400);
 
             }
 
@@ -915,7 +943,7 @@ public class ProjectGame extends Game {
             player.handleEvent(reduceLife);
             //player.setLifeCount(player.getLifeCount() - 1);
         }
-        if (player.getLifeCount() == 0) {
+        if (player.getLifeCount() <= 0) {
             complete = true;
             player.isDead = true;
         }

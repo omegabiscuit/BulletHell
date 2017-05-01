@@ -81,7 +81,7 @@ public class AlternatingSpikesLevel extends Room{
 
         map = new Sprite("map", "alternating_spikes_level.png");
         map.setPositionX(200);
-        map.setPositionY(-2450 - 100);
+        map.setPositionY(-2450 - 100 - 615);
         addChild(map);
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
@@ -335,7 +335,6 @@ public class AlternatingSpikesLevel extends Room{
         enemy01.setPositionY(chest.getPositionY());
         enemy01.addRoute(128*3, 0, 1, 2);
         enemy01.addRoute(-128*3, 0, 1, 4);
-        //enemy01.addKnife();
         enemies.add(enemy01);
         addChild(enemy01);
     }

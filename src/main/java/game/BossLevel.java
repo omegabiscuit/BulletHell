@@ -92,7 +92,7 @@ public class BossLevel extends Room {
 
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
-        map.setPositionY(-3028);
+        map.setPositionY(-3643);
         addChild(map);
 
         turtleBoss = new TurtleBoss("boss", "resources/turtle_boss.png", "idle");
@@ -220,6 +220,11 @@ public class BossLevel extends Room {
         TweenJuggler.getInstance().add(turtleIntro);
     }
 
+    private void phase2() {
+        turtleBoss.setDelay(150);
+        soundManager.playSoundEffect("resources/bossAngry.wav", 0);
+    }
+
     public void update() {
         super.update();
         int tweenTime;
@@ -230,6 +235,7 @@ public class BossLevel extends Room {
         }
         if (turtleBoss.health < 4 && turtleBoss.health > 0 && phase2 == false) {
             phase2 = true;
+            phase2();
             backgroundMusic.playSoundEffect("resources/finalBossPhase2.wav", 100);
         }
         if (turtleBoss.health <= 0 && complete == false) {
@@ -241,7 +247,7 @@ public class BossLevel extends Room {
         } else {
             tweenTime = 4;
         }
-        if (map.getPositionY() >= 0) {
+        if (map.getPositionY() >= 0 && !player.isDead) {
             if (missleClock.getElapsedTime() - missleLaunch > 5000 && !turtleBoss.isDead()) {
                 int offset = 0;
 
@@ -355,6 +361,7 @@ public class BossLevel extends Room {
         }
         if (player.getLifeCount() == 0) {
             player.isDead = true;
+            backgroundMusic.stop();
         }
     }
 

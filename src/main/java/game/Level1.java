@@ -93,7 +93,7 @@ public class Level1 extends Room {
 
         tile1 = new Sprite("tile", "tile_dark.png");
         tile1.setPositionX(512);
-        tile1.setPositionY(44);
+        tile1.setPositionY(-571);
         addChild(tile1);
 
         tile2 = new Sprite("tile", "dark_brick.png");

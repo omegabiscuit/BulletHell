@@ -101,7 +101,7 @@ public class Level0 extends Room {
         enemy01.setSpriteSheetJson("resources/gator_sheet.json");
         enemy01.setDelay(75);
         enemy01.setPositionX(250);
-        enemy01.setPositionY(550);
+        enemy01.setPositionY(590);
         enemy01.addRoute(0, 800, 2, 1);
         enemy01.addRoute(400, 0, 2, 2);
         enemy01.addRoute(0, -800, 2, 3);
@@ -114,12 +114,12 @@ public class Level0 extends Room {
         enemy02.setPositionX(700);
         enemy02.setPositionY(150);
         enemy02.addRoute(0, -800, 2, 3);
-        enemy02.addRoute(-400, 0, 2, 4);
+        enemy02.addRoute(-500, 0, 2, 4);
         enemy02.addRoute(0, 800, 2, 1);
-        enemy02.addRoute(400, 0, 2, 2);
+        enemy02.addRoute(500, 0, 2, 2);
         //enemy02.addKnife();
 
-        enemies = new ArrayList<>();
+
         enemies.add(enemy01);
         enemies.add(enemy02);
 
@@ -130,7 +130,7 @@ public class Level0 extends Room {
         //map stuff
         tile1 = new Sprite("tile1", "tile.png");
         tile1.setPositionX(256);
-        tile1.setPositionY(300);
+        tile1.setPositionY(-315);
         addChild(tile1);
 
         tile2 = new Sprite("tile2", "tile.png");
@@ -529,7 +529,5 @@ public class Level0 extends Room {
         //  tb.update();
     }
 
-    public ArrayList<Enemy> getEnemies() {
-        return this.enemies;
-    }
+
 }

@@ -37,6 +37,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
         super(id, fileName, startState);
 
         setDelay(300);
+        setTransparency(0);
         health = 10;
         turtleDamageBuffer = 100;
         turtleDamageTimer = turtleDamageBuffer;
@@ -53,9 +54,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
         return true;
     }
 
-    public void intro(){
 
-    }
 
 
     public void update() {

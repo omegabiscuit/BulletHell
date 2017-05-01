@@ -104,7 +104,7 @@ public class BrighamLevel extends Room {
         //map stuff
         map = new Sprite("map", "BrighamLevelFinal.png");
         map.setPositionX(200);
-        map.setPositionY(-1872);
+        map.setPositionY(-2487);
         addChild(map);
 
         spikes = new SpikeTile("spikes", "resources/spikes.png", "idle down");
