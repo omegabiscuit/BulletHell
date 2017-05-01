@@ -55,7 +55,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         lifeArray.add(life2);
         lifeArray.add(life3);
 //        lifeCount = lifeArray.size();
-        lifeCount = 3;
+        lifeCount = 30;
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
         knifeSounds.add("resources/knife1.mp3");
         knifeSounds.add("resources/knife2.mp3");
