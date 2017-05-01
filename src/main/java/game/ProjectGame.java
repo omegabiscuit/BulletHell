@@ -742,15 +742,16 @@ public class ProjectGame extends Game {
 
 
             g.setFont(new Font("ARIAL", Font.PLAIN, 48));
-            if (complete == true || player.isDead) {
+            if (complete == true && player.isDead) {
 
                 Sprite gameOver = new Sprite("gameOver", "gameOver.png");
                 gameOver.setPositionX(300);
                 gameOver.setPositionY(300);
                 gameOver.draw(g);
-//                g.drawString("You are dead!", 400, 40);
-//                g.drawString("Press P to play again", 400, 400);
 
+            }
+            else if(complete == true && !player.isDead){
+                //congrats screen
             }
 
 
@@ -959,7 +960,6 @@ public class ProjectGame extends Game {
         if (player.getLifeCount() != 0) {
             player.gotHurt();
             player.handleEvent(reduceLife);
-            //player.setLifeCount(player.getLifeCount() - 1);
         }
         if (player.getLifeCount() <= 0) {
             complete = true;
