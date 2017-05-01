@@ -314,7 +314,7 @@ public class AlternatingSpikesLevel extends Room{
 
         col6 = new Platform("collider", "alpha_3x1.png");
         col6.setPositionX(col3.getPositionX() + col3.getUnscaledWidth() - 128);
-        col6.setPositionY(col3.getPositionY() - 128);
+        col6.setPositionY(col3.getPositionY() - 96);
         addChild(col6);
         coverList.add(convertToCover(col6));
         collisionArray.add(col6);
