@@ -505,7 +505,8 @@ public class ProjectGame extends Game {
                     player.setLifeCount(3);
                     player.setPositionX(550);
                     player.setPositionY(700);
-                    knifeCount = 3;
+                    knifeCount = 4;
+                    keyCount = 0;
                     backgroundMusic.stop();
                     backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
                 } else {
@@ -953,22 +954,6 @@ public class ProjectGame extends Game {
 
     }
 
-
-//    public void lootEnemy(Enemy enemy) {
-//        keyCount += enemy.getKeyCount();
-//        knifeCount += enemy.getKnifeCount();
-//
-//        if (enemy.getKeyCount() > 0) {
-//            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
-//        } else if (enemy.getKnifeCount() > 0) {
-//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
-//        } else if (enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
-//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
-//        } else if (enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
-//            itemString = "inventory empty";
-//        }
-//        enemy.emptyEnemyInventory();
-//    }
 
     public void switchRooms(Room original, Room next) {
 
