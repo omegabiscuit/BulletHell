@@ -502,10 +502,10 @@ public class ProjectGame extends Game {
                     enemies = currentRoom.enemies;
 
                     player.isDead = false;
-                    player.setLifeCount(30);
+                    player.setLifeCount(3);
                     player.setPositionX(550);
                     player.setPositionY(700);
-                    knifeCount = 100;
+                    knifeCount = 3;
                     backgroundMusic.stop();
                     backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
                 } else {
