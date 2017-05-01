@@ -83,17 +83,16 @@ public class Enemy extends AnimatedSprite implements IEventListener {
         super(id, fileName, startState);
 
         pickpocketRect = new Rectangle((int)getPositionX(), (int)getPositionY(), getUnscaledWidth() + 110, getUnscaledHeight() + 110);
-      //  pickpocketRect.setLocation((int)getPositionX(), (int)getPositionY());
+        random = new Random();
+
         previousPositionX = getPositionX();
         previousPositionY = getPositionY();
 
-    //    pickpocketRect = new Rectangle(570, 300, getUnscaledWidth() + 110, getUnscaledHeight() + 110);
+
         knifeSounds.add("resources/knife3.mp3");
 
         exclamationPoint = new Sprite("exclamation","exclamation_point.png");
         exclamationPoint.setPositionX(40);
-//        exclamationPoint.setScaleX(.2);
-//        exclamationPoint.setScaleY(.2);
         this.addChild(exclamationPoint);
 
 
@@ -365,16 +364,16 @@ public class Enemy extends AnimatedSprite implements IEventListener {
     }
 
     public int pickpocketKnives(){
-        if(alreadyPickpocketed) {
+        if(!alreadyPickpocketed) {
             int chance = random.nextInt(101); //number between 0 and 1000
             alreadyPickpocketed = true;
-            if (chance > 98) {
+            if (chance > 80) {
                 return 3;
             }
-            if (chance > 95) {
+            if (chance > 70) {
                 return 2;
             }
-            if (chance > 90) {
+            if (chance >=50) {
                 return 1;
             }
         }

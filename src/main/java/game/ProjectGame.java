@@ -362,7 +362,9 @@ public class ProjectGame extends Game {
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_E))) {
                 if (pickpocket == true && pickpocketEnemy != null) {
                     keyCount += pickpocketEnemy.pickpocketKeys();
-                    knifeCount += pickpocketEnemy.pickpocketKnives();
+                    int knives = pickpocketEnemy.pickpocketKnives();
+                    knifeCount += knives;
+                    System.out.println(knives);
 //                int n = rand.nextInt(3) + 1;
 //                if (n == 1) {
 //
@@ -807,6 +809,8 @@ public class ProjectGame extends Game {
 
                 double mouseX = e.getX();
                 double mouseY = e.getY();
+                System.out.println(mouseX);
+                System.out.println(mouseY);
                 Bullet bul = new Bullet("bullet", "knife.png", 0.2, player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2, mouseX, mouseY);
 
 //                System.out.print(pressed[0]);

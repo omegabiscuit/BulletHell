@@ -10,6 +10,7 @@ import engine.util.GameClock;
 import engine.events.Event;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -59,16 +60,16 @@ public class BossLevel extends Room {
     double missleLaunch;//time of last missle attack
 
 
-
-
     public ArrayList<Bullet> missles;
-
+    SoundManagerClass soundManager;
+    SoundManagerClass backgroundMusic;
 
     /****Treasure Chesty Stuff****/
     TreasureChest chest;
     int chestTimer;
-    SoundManagerClass soundManager;
-    SoundManagerClass backgroundMusic;
+    int currentPosition;
+    int[][] treasureLocation;
+
 
     public BossLevel(String id) {
         super(id);
@@ -128,14 +129,13 @@ public class BossLevel extends Room {
 
         missleClock = new GameClock();
         missleClock.resetGameClock();
-        missleLaunch = missleClock.getElapsedTime()+4000;
+        missleLaunch = missleClock.getElapsedTime() + 4000;
         collider1 = new Platform("collider", "alpha_3x1.png");
         collider2 = new Platform("collider2", "alpha_3x1.png");
         collider3 = new Platform("collider3", "alpha_1x6.png");
         collider4 = new Platform("collider4", "alpha_1x6.png");
         collider5 = new Platform("collider5", "alpha_3x1.png");
         collider6 = new Platform("collider6", "alpha_6x1.png");
-
 
 
         addChild(collider1);
@@ -165,21 +165,21 @@ public class BossLevel extends Room {
 
         spikes1 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes1.setSpriteSheetJson("resources/spikes.json");
-        spikes1.setPositionX(map.getPositionX() + map.getUnscaledWidth()/2 - 128/2 - 4);
-        spikes1.setPositionY(map.getPositionY() + map.getUnscaledHeight()/2 + 32 - 8 - 2);
+        spikes1.setPositionX(map.getPositionX() + map.getUnscaledWidth() / 2 - 128 / 2 - 4);
+        spikes1.setPositionY(map.getPositionY() + map.getUnscaledHeight() / 2 + 32 - 8 - 2);
         addChild(spikes1);
         spikeList.add(spikes1);
 
         spikes2 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes2.setSpriteSheetJson("resources/spikes.json");
-        spikes2.setPositionX(spikes1.getPositionX() + 128*2);
+        spikes2.setPositionX(spikes1.getPositionX() + 128 * 2);
         spikes2.setPositionY(spikes1.getPositionY());
         addChild(spikes2);
         spikeList.add(spikes2);
 
         spikes3 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes3.setSpriteSheetJson("resources/spikes.json");
-        spikes3.setPositionX(spikes1.getPositionX() - 128*2);
+        spikes3.setPositionX(spikes1.getPositionX() - 128 * 2);
         spikes3.setPositionY(spikes1.getPositionY());
         addChild(spikes3);
         spikeList.add(spikes3);
@@ -191,17 +191,16 @@ public class BossLevel extends Room {
         /****Treasure Chesty Stuff****/
         chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
         chest.setSpriteSheetJson("resources/treasure_chest.json");
-        chest.setPositionX(turtleBoss.getPositionX() - 128*3);
-        chest.setPositionY(turtleBoss.getPositionY() + 128*2);
+        treasureLocation = new int[][]{{456, 365}, {464, 719}, {767, 740}};
+
+//        chest.setPositionX(turtleBoss.getPositionX() - 128*3);
+//        chest.setPositionY(turtleBoss.getPositionY() + 128*2);
+        chest.setPositionX(turtleBoss.getPositionX() - 128 * 3);
+        chest.setPositionY(turtleBoss.getPositionY() + 128 * 2);
         chest.placeItemInChest("knife");
         chestTimer = -200;
         addChild(chest);
         chests.add(chest);
-
-
-
-
-
 
 
         collisionArray.add(collider1);
@@ -213,7 +212,7 @@ public class BossLevel extends Room {
 
     }
 
-    public void intro(){
+    public void intro() {
         backgroundMusic.playSoundEffect("resources/finalBossIntro.wav", 0);
         TweenTransitions turtlePath = new TweenTransitions("linearTransition");
         Tween turtleIntro = new Tween(turtleBoss, turtlePath);
@@ -225,22 +224,21 @@ public class BossLevel extends Room {
         super.update();
         int tweenTime;
         turtleBoss.update();
-        if(!backgroundMusic.play() && loop == false){
+        if (!backgroundMusic.play() && loop == false) {
             loop = true;
             backgroundMusic.playSoundEffect("resources/finalBossLoop.wav", 100);
         }
-        if(turtleBoss.health < 4 && turtleBoss.health > 0 && phase2==false){
+        if (turtleBoss.health < 4 && turtleBoss.health > 0 && phase2 == false) {
             phase2 = true;
-            backgroundMusic.playSoundEffect("resources/finalBossPhase2.wav",100);
+            backgroundMusic.playSoundEffect("resources/finalBossPhase2.wav", 100);
         }
-        if(turtleBoss.health <=0 && complete == false){
+        if (turtleBoss.health <= 0 && complete == false) {
             complete = true;
-            backgroundMusic.playSoundEffect("resources/finalBossEnd.wav",0);
+            backgroundMusic.playSoundEffect("resources/finalBossEnd.wav", 0);
         }
-        if(turtleBoss.health < 4){
+        if (turtleBoss.health < 4) {
             tweenTime = 3;
-        }
-        else{
+        } else {
             tweenTime = 4;
         }
         if (map.getPositionY() >= 0) {
@@ -322,23 +320,20 @@ public class BossLevel extends Room {
                     break;
                 }
             }
-        }
-        else{
+        } else {
             missleLaunch = missleClock.getElapsedTime();
         }
 
 
-
         /****Treasure Chesty Stuff****/
-        if(chestTimer < 700) {
+        if (chestTimer < 700) {
             chestTimer++;
-        } else if(chestTimer >= 700 && chest.getStateName() == "open") {
+        } else if (chestTimer >= 700 && chest.getStateName() == "open") {
             chest = new TreasureChest("chest", "resources/treasure_chest.png", "closed");
             chest.setSpriteSheetJson("resources/treasure_chest.json");
-//            chest.setPositionX(random.nextInt((int)turtleBoss.getPositionX()-128)+map.getPositionX()+100);
-//            chest.setPositionY(random.nextInt((int)turtleBoss.getPositionY()-128)+map.getPositionY()+300);
-            chest.setPositionX(turtleBoss.getPositionX() - 128*3);
-            chest.setPositionY(turtleBoss.getPositionY() + 128*2);
+            currentPosition = random.nextInt(3);
+            chest.setPositionX(treasureLocation[currentPosition][0]);
+            chest.setPositionY(treasureLocation[currentPosition][1]);
             chest.placeItemInChest("knife");
             addChild(chest);
             chests.clear();
@@ -382,8 +377,6 @@ public class BossLevel extends Room {
         for (int i = 0; i < missles.size(); i++) {
             missles.get(i).draw(g);
         }
-
-
 
 
     }
