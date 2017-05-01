@@ -74,9 +74,9 @@ public class ProjectGame extends Game {
 
     SoundManagerClass soundEffects = new SoundManagerClass();
 
-    private enum STATE {MENU, GAME, PAUSE}
+    private enum STATE {MENU, GAME, PAUSE,COMPLETE}
 
-    ;
+
 
     private STATE state = STATE.MENU;
 
@@ -237,6 +237,8 @@ public class ProjectGame extends Game {
             bossLevel.hide();
             addChild(bossLevel);
 
+
+
             tutorial.mapDoorToRoom(0,myLevel);
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0, myLevel2);
@@ -318,6 +320,12 @@ public class ProjectGame extends Game {
                 transitionYCurrent += transitionYSpeed;
             }
 
+            if(complete && !player.isDead){
+                System.out.println("you won!");
+                state = STATE.COMPLETE;
+
+
+            }
 
             if (player != null && !player.isDead) {
 //                for (int i = 0; i < enemies.size(); i++) {
@@ -482,6 +490,7 @@ public class ProjectGame extends Game {
                     bossLevel.hide();
                     addChild(bossLevel);
 
+
                     tutorial.mapDoorToRoom(0,myLevel);
                     myLevel.mapDoorToRoom(0, myLevel1);
                     myLevel1.mapDoorToRoom(0, myLevel2);
@@ -493,10 +502,10 @@ public class ProjectGame extends Game {
                     enemies = currentRoom.enemies;
 
                     player.isDead = false;
-                    player.setLifeCount(3);
+                    player.setLifeCount(30);
                     player.setPositionX(550);
                     player.setPositionY(700);
-                    knifeCount = 4;
+                    knifeCount = 100;
                     backgroundMusic.stop();
                     backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
                 } else {
@@ -612,6 +621,13 @@ public class ProjectGame extends Game {
         else if(currentRoom == bossLevel){
             currentQuestObjective = 2;
         }
+
+        if(bossLevel.endgame==true){
+            state = STATE.COMPLETE;
+            System.out.println("you won!");
+            quitButton.setPositionX(300);
+
+        }
     }
 
 
@@ -689,7 +705,7 @@ public class ProjectGame extends Game {
 
                 g.drawString("TINY THIEF", 420, 120);
                 /*
-                g.setColor(Color.RED);
+                g.seolor(Color.RED);
                 g.drawString("PLAY", getUnscaledWidth()/2 + 533, 210);
                 g.drawRect(getUnscaledWidth() / 2 + 520, 170, 150, 50);
 //                g.drawString("Help",getUnscaledWidth()/2+550,310);
@@ -831,6 +847,18 @@ public class ProjectGame extends Game {
                 g.drawString("Game Paused: Press Play to Resume", 350, 120);
             }
 
+        }else if(state == STATE.COMPLETE){
+            if(menuScreen!=null) {
+                menuScreen.draw(g);
+
+                g.setFont(new Font("Papyrus", Font.BOLD, 34));
+                g.setColor(Color.RED);
+
+
+                quitButton.draw(g);
+
+                g.drawString("Congratulations, you won!", 350, 120);
+            }
         }
     }
 
@@ -899,7 +927,17 @@ public class ProjectGame extends Game {
                 }
 
             }
-        }
+        }else if(state == STATE.COMPLETE) {
+
+            double mouseX = e.getX();
+            double mouseY = e.getY();
+            if (mouseX >= quitButton.getPositionX() && mouseX <= quitButton.getPositionX() + quitButton.getUnscaledWidth()) {
+                if (mouseY >= quitButton.getPositionY() + 20 && mouseY <= quitButton.getPositionY() + quitButton.getUnscaledHeight() + 20) {
+
+                    System.exit(1);
+                }
+
+            }
 
 
 
@@ -910,6 +948,7 @@ public class ProjectGame extends Game {
         double maxWc = player.getCenterX() + (player.getUnscaledWidth() / 2);
         double maxHc = player.getCenterY() + player.getUnscaledHeight() / 2 + 20;
         */
+        }
 
     }
 

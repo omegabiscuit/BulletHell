@@ -70,6 +70,7 @@ public class BossLevel extends Room {
     int currentPosition;
     int[][] treasureLocation;
 
+    boolean endgame;
 
     public BossLevel(String id) {
         super(id);
@@ -78,6 +79,7 @@ public class BossLevel extends Room {
     public BossLevel(String id, Player player) {
         super(id);
         this.player = player;
+        endgame = false;
 
     }
 
@@ -239,7 +241,9 @@ public class BossLevel extends Room {
             backgroundMusic.playSoundEffect("resources/finalBossPhase2.wav", 100);
         }
         if (turtleBoss.health <= 0 && complete == false) {
+            endgame = true;
             complete = true;
+            System.out.println("here");
             backgroundMusic.playSoundEffect("resources/finalBossEnd.wav", 0);
         }
         if (turtleBoss.health < 4) {
