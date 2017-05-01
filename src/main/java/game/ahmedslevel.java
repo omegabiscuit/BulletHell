@@ -121,6 +121,7 @@ public class ahmedslevel extends Room {
         collider4 = new Platform("collider4", "alpha_1x6.png");
         collider5 = new Platform("collider5", "alpha_3x1.png");
         collider6 = new Platform("collider6", "alpha_1x6.png");
+        collider7 = new Platform("collider7", "alpha_1x6.png");
 
         cover1 = new Platform("cover1", "cover1.png");
         cover1.setPositionX(345);
@@ -272,12 +273,19 @@ public class ahmedslevel extends Room {
         collider5.setPositionX(220);
         collider5.setPositionY(map.getPositionY() + -10);
 
+        collider7.setPositionX(map.getPositionX());
+        collider7.setPositionY(map.getPositionY());
+
+
+
+
 
         addChild(collider1);
         addChild(collider2);
         addChild(collider3);
         addChild(collider4);
         addChild(collider5);
+        addChild(collider7);
 
         collisionArray.add(collider1);
         collisionArray.add(collider2);
@@ -314,6 +322,9 @@ public class ahmedslevel extends Room {
         map.draw(g);
 
         spikes.draw(g);
+//        Rectangle2D objRect = new Rectangle2D.Double(spikes.getPositionX()+20,spikes.getPositionY()+20,spikes.getUnscaledWidth()-50,spikes.getUnscaledHeight()-35);
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.draw(objRect);
         spikes2.draw(g);
 
         cover1.draw(g);

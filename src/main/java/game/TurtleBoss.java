@@ -38,7 +38,7 @@ public class TurtleBoss extends Enemy implements IEventListener {
 
         setDelay(300);
         setTransparency(0);
-        health = 10;
+        health = 8;
         turtleDamageBuffer = 100;
         turtleDamageTimer = turtleDamageBuffer;
     }
