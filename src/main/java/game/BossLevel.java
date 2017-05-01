@@ -165,7 +165,7 @@ public class BossLevel extends Room {
 
         spikes1 = new SpikeTile("spikes", "resources/spikes.png", "idle down");
         spikes1.setSpriteSheetJson("resources/spikes.json");
-        spikes1.setPositionX(map.getPositionX() + map.getUnscaledWidth() / 2 - 128 / 2 - 4);
+        spikes1.setPositionX(map.getPositionX() + map.getUnscaledWidth() / 2 - 128 / 2 );
         spikes1.setPositionY(map.getPositionY() + map.getUnscaledHeight() / 2 + 32 - 8 - 2);
         addChild(spikes1);
         spikeList.add(spikes1);

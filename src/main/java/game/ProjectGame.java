@@ -91,6 +91,8 @@ public class ProjectGame extends Game {
 
 
     Sprite pressE;
+    Sprite keyIcon = new Sprite("keyIcon", "key_icon.png");
+    Sprite knifeIcon = new Sprite("knifeIcon", "knife_icon.png");
 
     Sprite findKey = new Sprite("findKey", "find_key.png");
 
@@ -122,8 +124,11 @@ public class ProjectGame extends Game {
         throwKnife.setEventType("throwKnife");
 
 
+        keyIcon.setPositionX(200);
+        keyIcon.setPositionY(40);
 
-
+        knifeIcon.setPositionX(205);
+        knifeIcon.setPositionY(95);
 
         currentLevel = 0;//0 = base , 3=brigham's level
 
@@ -152,7 +157,7 @@ public class ProjectGame extends Game {
         player.getLifeArray().get(2).setPositionY(40);
         // player.setHasPhysics(true);
         keyCount = 0;
-        knifeCount = 25;
+        knifeCount = 4;
         // player.setHasPhysics(true);
 
         //  platform.setPositionX(50);
@@ -769,15 +774,18 @@ public class ProjectGame extends Game {
                 }
             }
 
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-            g.setColor(Color.RED);
-            g.drawString("--LIFE--", 400, 30);
+            g.setFont(new Font("Papyrus", Font.PLAIN, 34));
+            g.setColor(Color.WHITE);
+            //g.drawString("--LIFE--", 400, 30);
 
             // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
-            g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
-            g.drawString(itemString, 200, 90);
-            g.drawString("Knife Count: " + Integer.toString(knifeCount), 200, 150);
-
+           // g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
+            keyIcon.draw(g);
+            g.drawString("x" + Integer.toString(keyCount), 235, 75);
+           // g.drawString(itemString, 200, 90);
+           // g.drawString("Knife Count: " + Integer.toString(knifeCount), 200, 150);
+            knifeIcon.draw(g);
+            g.drawString("x" + Integer.toString(knifeCount), 235, 125);
 
             if (pickpocket) {
                 pressE.setTransparency(1);
