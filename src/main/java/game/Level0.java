@@ -6,7 +6,6 @@ import engine.display.Sprite;
 import engine.display.AnimatedSprite;
 
 
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -89,8 +88,7 @@ public class Level0 extends Room {
 
     LockedDoor door1;
 
-  // TurtleBoss tb;
-
+    // TurtleBoss tb;
 
 
     public Level0(String id) {
@@ -103,12 +101,11 @@ public class Level0 extends Room {
         enemy01.setSpriteSheetJson("resources/gator_sheet.json");
         enemy01.setDelay(75);
         enemy01.setPositionX(250);
-        enemy01.setPositionY(550);
+        enemy01.setPositionY(590);
         enemy01.addRoute(0, 800, 2, 1);
         enemy01.addRoute(400, 0, 2, 2);
         enemy01.addRoute(0, -800, 2, 3);
         enemy01.addRoute(-400, 0, 4, 4);
-
 
 
         enemy02 = new Enemy("enemy", "resources/gator_sheet.png", "idle left");
@@ -117,12 +114,12 @@ public class Level0 extends Room {
         enemy02.setPositionX(700);
         enemy02.setPositionY(150);
         enemy02.addRoute(0, -800, 2, 3);
-        enemy02.addRoute(-400, 0, 2, 4);
+        enemy02.addRoute(-500, 0, 2, 4);
         enemy02.addRoute(0, 800, 2, 1);
-        enemy02.addRoute(400, 0, 2, 2);
-        enemy02.addKnife();
+        enemy02.addRoute(500, 0, 2, 2);
+        //enemy02.addKnife();
 
-        enemies = new ArrayList<>();
+
         enemies.add(enemy01);
         enemies.add(enemy02);
 
@@ -133,7 +130,7 @@ public class Level0 extends Room {
         //map stuff
         tile1 = new Sprite("tile1", "tile.png");
         tile1.setPositionX(256);
-        tile1.setPositionY(300);
+        tile1.setPositionY(-315);
         addChild(tile1);
 
         tile2 = new Sprite("tile2", "tile.png");
@@ -263,9 +260,9 @@ public class Level0 extends Room {
         back2.setPositionY(ctile2.getPositionY() - ctile2.getUnscaledHeight());
         addChild(back2);
 
-      //  back3 = new Sprite("back", "door_locked.png");
-       // back3.setPositionX(ctile3.getPositionX());
-       // back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
+        //  back3 = new Sprite("back", "door_locked.png");
+        // back3.setPositionX(ctile3.getPositionX());
+        // back3.setPositionY(ctile3.getPositionY() - ctile3.getUnscaledHeight());
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
         door1.setSpriteSheetJson("resources/door_opening.json");
@@ -277,7 +274,7 @@ public class Level0 extends Room {
 
         collider8 = new Platform("collider", "alpha_3x1.png");
         collider8.setPositionX(door1.getPositionX() - tile1.getUnscaledWidth());
-        collider8.setPositionY(door1.getPositionY() - 3*tile1.getUnscaledHeight()/4);
+        collider8.setPositionY(door1.getPositionY() - 3 * tile1.getUnscaledHeight() / 4);
         addChild(collider8);
 
         back4 = new Sprite("back", "pillar_door_right.png");
@@ -461,7 +458,7 @@ public class Level0 extends Room {
         ctile4.draw(g);
         back1.draw(g);
         back2.draw(g);
-      //  back3.draw(g);
+        //  back3.draw(g);
         back4.draw(g);
 
 
@@ -516,7 +513,7 @@ public class Level0 extends Room {
         collider7.draw(g);
         collider8.draw(g);
 
-       // tb.draw(g);
+        // tb.draw(g);
 
         coverShadow1.draw(g);
 
@@ -529,10 +526,8 @@ public class Level0 extends Room {
     public void update() {
         super.update();
         door1.update();
-      //  tb.update();
+        //  tb.update();
     }
 
-    public ArrayList<Enemy> getEnemies(){
-        return this.enemies;
-    }
+
 }

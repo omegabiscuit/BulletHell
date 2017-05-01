@@ -76,7 +76,7 @@ public class ahmedslevel extends Room {
     public void run() {
         map = new Sprite("map", "ahmedslevel.png");
         map.setPositionX(300);
-        map.setPositionY(-1200);
+        map.setPositionY(-1815);
 //        coverList = new ArrayList<>();
 
         door1 = new LockedDoor("door", "resources/door_opening.png", "door_closed");
@@ -84,7 +84,7 @@ public class ahmedslevel extends Room {
         door1.setDelay(100);
 
         door1.setPositionX(600);
-        door1.setPositionY(-1150);
+        door1.setPositionY(-1765);
         addChild(door1);
 
 

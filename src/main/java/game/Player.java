@@ -45,6 +45,8 @@ public class Player extends AnimatedSprite implements IEventListener {
     Rectangle2D feetCollider;
     Random random;
 
+    Sprite pressE;
+
     public Player(String id, String fileName, String startState) {
         super(id, fileName, startState);
         life1 = new Heart("Heart", "heart.png");
@@ -54,6 +56,7 @@ public class Player extends AnimatedSprite implements IEventListener {
         lifeArray.add(life2);
         lifeArray.add(life3);
         lifeCount = lifeArray.size();
+
         hitbox = new Rectangle2D.Double(this.getPositionX()+5,this.getPositionY()+5,this.getUnscaledWidth()-5,this.getUnscaledHeight()-5);
         knifeSounds.add("resources/knife1.mp3");
         knifeSounds.add("resources/knife2.mp3");

@@ -8,6 +8,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import com.sun.javafx.geom.Line2D;
 import com.sun.javafx.geom.Vec2d;
@@ -31,34 +32,22 @@ public class ProjectGame extends Game {
     Event fadeOutEvent;
     Event die;
     Event reduceLife;
-    TweenEvent tweenEvent;
-    boolean pause = false;
     boolean complete = false;
     Event collidedEvent;
     Event throwKnife;
     Coin coin = new Coin("coin", "Coin4.png");
 
-    boolean start = false;
-
     Sprite background = new Sprite("Background", "background.png");
     Sprite menuScreen = new Sprite("menuScreen", "menu-screen.jpg");
     private Player player;
 
-    Heart life1 = new Heart("Heart", "heart.png");
-    Heart life2 = new Heart("Heart", "heart.png");
-    Heart life3 = new Heart("Heart", "heart.png");
 
     int keyCount;
     int knifeCount;
     String itemString = "";
     boolean pickpocket = false;
-    Rectangle2D cover;
-    //ArrayList<Rectangle2D> coverList;
 
     ///Level 0////
-
-
-    // int damageCap = 100;
 
     int currentLevel;
 
@@ -70,6 +59,10 @@ public class ProjectGame extends Game {
     BossLevel bossLevel;
 
     BrighamLevel myLevel3;
+
+    AlternatingSpikesLevel level4;
+
+    TutorialLevel1 tutorial;
 
 
     ArrayList<Enemy> enemies;
@@ -97,7 +90,20 @@ public class ProjectGame extends Game {
     boolean transitionPhase = false;
 
 
-    int x;
+    Sprite pressE;
+    Sprite keyIcon = new Sprite("keyIcon", "key_icon.png");
+    Sprite knifeIcon = new Sprite("knifeIcon", "knife_icon.png");
+
+    Sprite findKey = new Sprite("findKey", "find_key.png");
+
+    Sprite getToRoom = new Sprite("getToRoom", "get_to_room.png");
+
+    Sprite killTurtle = new Sprite("Keith", "kill_turtle.png");
+    Sprite playButton = new Sprite("play","play.png");
+    Sprite quitButton = new Sprite("quit","quit.png");
+
+
+    int currentQuestObjective;
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -107,21 +113,28 @@ public class ProjectGame extends Game {
         super("BulletHell", 1200, 900);
         die = new Event();
         backgroundMusic = new SoundManagerClass();
-        x = 0;
+        playButton.setPositionX(420);
+        playButton.setPositionY(180);
+        quitButton.setPositionX(623);
+        quitButton.setPositionY(181);
+        //x = 0;
         reduceLife = new Event();
         fadeOutEvent = new Event();
         PickedUpEvent = new Event();
         die.setEventType("playerDeath");
         fadeOutEvent.setEventType("FadeOut");
         reduceLife.setEventType("Collision");
-        this.addEventListener(myQuestManager, PickedUpEvent.getEventType());
-        this.addEventListener(myQuestManager, die.getEventType());
-        this.addEventListener(myQuestManager, reduceLife.getEventType());
         collidedEvent = new Event();
         collidedEvent.setEventType("CollidedEvent");
         throwKnife = new Event();
         throwKnife.setEventType("throwKnife");
 
+
+        keyIcon.setPositionX(200);
+        keyIcon.setPositionY(40);
+
+        knifeIcon.setPositionX(205);
+        knifeIcon.setPositionY(95);
 
         currentLevel = 0;//0 = base , 3=brigham's level
 
@@ -138,7 +151,6 @@ public class ProjectGame extends Game {
         background.setScaleY(5);
 
 
-        //player = new AnimatedSprite("player", "resources/player_sheet.png", "idle_right");
         player = new Player("player", "resources/player_sheet.png", "idle_right");
         player.setSpriteSheetJson("resources/player_sheet.json");
         player.setDelay(100);
@@ -165,9 +177,24 @@ public class ProjectGame extends Game {
         player.setPositionX(550);
         player.setPositionY(700);
 
+        pressE = new Sprite("pressE", "pressE.png");
+        player.addChild(pressE);
+        pressE.setPositionY(-50);
+
 
         coin.setPositionY(250);
         coin.setPositionX(660);
+
+        findKey.setPositionX(500);
+        findKey.setPositionY(-20);
+
+        getToRoom.setPositionX(500);
+        getToRoom.setPositionY(-20);
+
+        killTurtle.setPositionX(500);
+        killTurtle.setPositionY(-20);
+
+
         //Rectangle2D rect = new Rectangle2D.Float(600,400,700,500);
         //coverList = new ArrayList<Rectangle2D>(); //list of cover sprites
         //coverList.add(rect);
@@ -175,6 +202,10 @@ public class ProjectGame extends Game {
         ///////////////////////////////////////LEVEL 0 ////////////////////////////////////////////////////////////////
 
         if (currentLevel == 0) {
+
+            tutorial = new TutorialLevel1("Tutorial");
+            tutorial.run();
+            addChild(tutorial);
 
             myLevel = new Level0("Room1");
             myLevel.run();
@@ -196,19 +227,26 @@ public class ProjectGame extends Game {
             myLevel3.hide();
             addChild(myLevel3);
 
+            level4 = new AlternatingSpikesLevel("Room6");
+            level4.run();
+            level4.hide();
+            addChild(level4);
+
             bossLevel = new BossLevel("Room5", player);
             bossLevel.run();
             bossLevel.hide();
             addChild(bossLevel);
 
+            tutorial.mapDoorToRoom(0,myLevel);
             myLevel.mapDoorToRoom(0, myLevel1);
             myLevel1.mapDoorToRoom(0, myLevel2);
             myLevel2.mapDoorToRoom(0, myLevel3);
-            myLevel3.mapDoorToRoom(0, bossLevel);
+            myLevel3.mapDoorToRoom(0, level4);
+            level4.mapDoorToRoom(0, bossLevel);
             //myLevel3.mapDoorToRoom(0,bossLevel);
 
 
-            currentRoom = myLevel;
+            currentRoom = tutorial;
 
             //myLevel1.mapDoorToRoom(0,myLevel2);
 
@@ -219,6 +257,7 @@ public class ProjectGame extends Game {
             //myLevel2.mapDoorToRoom(0,myLevel3);
             //myLevel3.run();
             //myLevel3.hide();
+            currentQuestObjective = 0;
 
         }
 
@@ -239,7 +278,7 @@ public class ProjectGame extends Game {
         transitionYCurrent = 615;
 
 
-        backgroundMusic.playMusic("resources/oceanOperator.mp3");
+        backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
 
     }
 
@@ -267,6 +306,10 @@ public class ProjectGame extends Game {
         else if (state == STATE.GAME) {
             if (player != null && !player.isDead) {
                 player.update(pressedKeys);
+            }
+            if (player.getLifeCount() <= 0) {
+                complete = true;
+                player.isDead = true;
             }
 
 
@@ -324,7 +367,7 @@ public class ProjectGame extends Game {
                 if (!pickpocket)
                     pickpocketEnemy = null;
             }
-            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))){
+            if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_W))) {
                 for (int i = 0; i < currentRoom.getDoors().size(); i++) {
                     if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_open" && transitionPhase == false) {
                         transitionPhase = true;
@@ -341,8 +384,10 @@ public class ProjectGame extends Game {
 
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_E))) {
                 if (pickpocket == true && pickpocketEnemy != null) {
-
-                    lootEnemy(pickpocketEnemy);
+                    keyCount += pickpocketEnemy.pickpocketKeys();
+                    int knives = pickpocketEnemy.pickpocketKnives();
+                    knifeCount += knives;
+                    System.out.println(knives);
 //                int n = rand.nextInt(3) + 1;
 //                if (n == 1) {
 //
@@ -361,7 +406,7 @@ public class ProjectGame extends Game {
 
                     if (player.getHitBox().intersects(currentRoom.getDoors().get(i).getDoorCollider()) && currentRoom.getDoors().get(i).stateName == "door_closed") {
                         if (keyCount > 0) {
-                            soundEffects.playMusic("resources/chains.wav");
+                            soundEffects.playSoundEffect("resources/chains.wav",0);
                             currentRoom.getDoors().get(i).setAnimationState("door_opening", "door_open");
                             itemString = "Door unlocked";
                             keyCount--;
@@ -396,8 +441,16 @@ public class ProjectGame extends Game {
 
             if (pressedKeys.contains(KeyEvent.getKeyText(KeyEvent.VK_P))) {
                 if (complete == true) {
+                    removeAll();
                     complete = false;
                     currentLevel = 0;
+
+
+                    tutorial = new TutorialLevel1("Tutorial");
+                    tutorial.run();
+                    addChild(tutorial);
+
+
                     myLevel = new Level0("Room1");
                     myLevel.run();
                     addChild(myLevel);
@@ -418,16 +471,24 @@ public class ProjectGame extends Game {
                     myLevel3.hide();
                     addChild(myLevel3);
 
+                    level4 = new AlternatingSpikesLevel("Room6");
+                    level4.run();
+                    level4.hide();
+                    addChild(level4);
+
+
                     bossLevel = new BossLevel("Room5", player);
                     bossLevel.run();
                     bossLevel.hide();
                     addChild(bossLevel);
 
+                    tutorial.mapDoorToRoom(0,myLevel);
                     myLevel.mapDoorToRoom(0, myLevel1);
                     myLevel1.mapDoorToRoom(0, myLevel2);
                     myLevel2.mapDoorToRoom(0, myLevel3);
-                    myLevel3.mapDoorToRoom(0, bossLevel);
-                    currentRoom = myLevel;
+                    myLevel3.mapDoorToRoom(0, level4);
+                    level4.mapDoorToRoom(0, bossLevel);
+                    currentRoom = tutorial;
 
                     enemies = currentRoom.enemies;
 
@@ -436,13 +497,12 @@ public class ProjectGame extends Game {
                     player.setPositionX(550);
                     player.setPositionY(700);
                     knifeCount = 4;
+                    backgroundMusic.stop();
+                    backgroundMusic.playSoundEffect("resources/oceanOperator.wav", 100);
                 } else {
                     state = STATE.PAUSE;
-                }
-            }
 
-            if (pressedKeys.contains("K")) {
-                state = STATE.PAUSE;
+                }
             }
             for (int i = 0; i < enemies.size(); i++) {
                 Enemy currentEnemy = enemies.get(i);
@@ -474,6 +534,13 @@ public class ProjectGame extends Game {
                             if (currentEnemy.enemyBullet.collidesWith(player) && player.canGetHurt()) {
                                 damageThePlayer();
                                 currentEnemy.enemyBullet = null;
+                                break;
+                            }
+                            for (int j = 0; j < currentRoom.collisionArray.size(); j++) {
+                                if (currentEnemy.enemyBullet.collidesWith(currentRoom.collisionArray.get(j))) {
+                                    currentEnemy.enemyBullet = null;
+                                    break;
+                                }
                             }
 
                         }
@@ -482,12 +549,12 @@ public class ProjectGame extends Game {
 
                     for (int j = 0; j < player.playerBullets.size(); j++) {
                         Bullet bul = player.playerBullets.get(j);
-                        for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
-                            if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
-                                player.playerBullets.remove(j);
-                                break;
-                            }
-                        }
+//                        for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+//                            if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+//                                player.playerBullets.remove(j);
+//                                break;
+//                            }
+//                        }
                         if (bul != null) {
                             if (bul.collidesWith(enemies.get(i))) {
                                 enemies.get(i).dead = true;
@@ -499,11 +566,21 @@ public class ProjectGame extends Game {
                                     enemies.get(i).setDelay(90);
                                     enemies.get(i).setAnimationState("dying left", "dead left");
                                 }
-                                if(player.playerBullets.size() > j)
+                                if (player.playerBullets.size() > j)
                                     player.playerBullets.remove(j);
                             }
 
                         }
+                    }
+                }
+            }
+
+            for (int j = 0; j < player.playerBullets.size(); j++) {
+                Bullet bul = player.playerBullets.get(j);
+                for (int k = 0; k < currentRoom.collisionArray.size(); k++) {
+                    if (bul.collidesWith(currentRoom.collisionArray.get(k))) {
+                        player.playerBullets.remove(j);
+                        break;
                     }
                 }
             }
@@ -517,12 +594,23 @@ public class ProjectGame extends Game {
 
                     queuedRoom.setDoneFading(false);
                     currentRoom.setDoneFading(false);
+                    if(queuedRoom == bossLevel){
+                        backgroundMusic.stop();
+                       bossLevel.intro();
+                    }
                     currentRoom = queuedRoom;
                     enemies = currentRoom.enemies;
                     queuedRoom = null;
                     transitionPhase = false;
+                    currentQuestObjective = 0;
                 }
             }
+        }
+        if (keyCount > 0){
+            currentQuestObjective = 1;
+        }
+        else if(currentRoom == bossLevel){
+            currentQuestObjective = 2;
         }
     }
 
@@ -592,16 +680,26 @@ public class ProjectGame extends Game {
         if (state == STATE.MENU) {
             if (menuScreen != null) {
                 menuScreen.draw(g);
-                g.setFont(new Font("Helvetica", Font.BOLD, 36));
+                g.setFont(new Font("Papyrus", Font.BOLD, 48));
                 g.setColor(Color.RED);
-                g.drawString("TINY THIEF", 450, 120);
-                g.setColor(Color.WHITE);
-                g.drawString("Play", 470, 210);
-                g.drawRect(getUnscaledWidth() / 2 + 480, 170, 180, 50);
+
+
+                playButton.draw(g);
+                quitButton.draw(g);
+
+                g.drawString("TINY THIEF", 420, 120);
+                /*
+                g.setColor(Color.RED);
+                g.drawString("PLAY", getUnscaledWidth()/2 + 533, 210);
+                g.drawRect(getUnscaledWidth() / 2 + 520, 170, 150, 50);
 //                g.drawString("Help",getUnscaledWidth()/2+550,310);
 //                g.drawRect(getUnscaledWidth()/2+ 530,270,150,50);
-                g.drawString("Quit", getUnscaledWidth() / 2 + 570, 350);
+                g.drawString("QUIT", getUnscaledWidth() / 2 + 563, 300);
                 g.drawRect(getUnscaledWidth() / 2 + 530, 320, 150, 50);
+        */
+
+
+
             }
         } else if (state == STATE.GAME) {
             if (background != null) {
@@ -617,6 +715,8 @@ public class ProjectGame extends Game {
             if (currentRoom != null) {
                 currentRoom.draw(g);
             }
+
+
 
 
             for (int i = 0; i < player.playerBullets.size(); i++) {
@@ -643,8 +743,13 @@ public class ProjectGame extends Game {
 
             g.setFont(new Font("ARIAL", Font.PLAIN, 48));
             if (complete == true || player.isDead) {
-                g.drawString("You are dead!", 400, 40);
-                g.drawString("Press P to play again", 400, 400);
+
+                Sprite gameOver = new Sprite("gameOver", "gameOver.png");
+                gameOver.setPositionX(300);
+                gameOver.setPositionY(300);
+                gameOver.draw(g);
+//                g.drawString("You are dead!", 400, 40);
+//                g.drawString("Press P to play again", 400, 400);
 
             }
 
@@ -683,36 +788,49 @@ public class ProjectGame extends Game {
                 }
             }
 
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-            g.setColor(Color.RED);
-            g.drawString("--LIFE--", 400, 30);
+            g.setFont(new Font("Papyrus", Font.PLAIN, 34));
+            g.setColor(Color.WHITE);
+            //g.drawString("--LIFE--", 400, 30);
 
             // g.drawString("Coin Count: " + Integer.toString(coinCount),200,30);
-            g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
-            g.drawString(itemString, 200, 90);
-            g.drawString("Knife Count: " + Integer.toString(knifeCount), 200, 150);
-
+           // g.drawString("Key Count: " + Integer.toString(keyCount), 200, 60);
+            keyIcon.draw(g);
+            g.drawString("x" + Integer.toString(keyCount), 235, 75);
+           // g.drawString(itemString, 200, 90);
+           // g.drawString("Knife Count: " + Integer.toString(knifeCount), 200, 150);
+            knifeIcon.draw(g);
+            g.drawString("x" + Integer.toString(knifeCount), 235, 125);
 
             if (pickpocket) {
-
-                g.drawString("Press E to pickpocket", 400, 400);
-
+                pressE.setTransparency(1);
+                //g.drawString("Press E to pickpocket", 400, 400);
+            }
+            else{
+                pressE.setTransparency(0);
+            }
+            if(currentQuestObjective == 0){
+                findKey.draw(g);
+            }
+            else if(currentQuestObjective ==1){
+                getToRoom.draw(g);
+            }
+            else if(currentQuestObjective == 2){
+                killTurtle.draw(g);
             }
         } else if (state == STATE.PAUSE) {
             if (menuScreen != null) {
                 menuScreen.draw(g);
-                g.setFont(new Font("Helvetica", Font.BOLD, 36));
+                menuScreen.draw(g);
+                g.setFont(new Font("Papyrus", Font.BOLD, 34));
                 g.setColor(Color.RED);
-                g.drawString("GAME PAUSED", 450, 120);
 
-                g.setColor(Color.WHITE);
-                g.drawString("Resume", getUnscaledWidth() / 2 + 550, 210);
-                g.drawRect(getUnscaledWidth() / 2 + 530, 170, 180, 50);
-//                g.drawString("Help", getUnscaledWidth() / 2 + 550, 310);
-//                g.drawRect(getUnscaledWidth() / 2 + 530, 270, 150, 50);
-                g.drawString("Quit", getUnscaledWidth() / 2 + 550, 410);
-                g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
+
+                playButton.draw(g);
+                quitButton.draw(g);
+
+                g.drawString("Game Paused: Press Play to Resume", 350, 120);
             }
+
         }
     }
 
@@ -722,13 +840,15 @@ public class ProjectGame extends Game {
         if (state == STATE.MENU) {
             double mouseX = e.getX();
             double mouseY = e.getY();
-            if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 200 && mouseY <= 260) {
+
+            if (mouseX >= playButton.getPositionX() && mouseX <=playButton.getPositionX()+ playButton.getUnscaledWidth()) {
+                if (mouseY >= playButton.getPositionY()+20 && mouseY <= playButton.getPositionY() + playButton.getUnscaledHeight()+20) {
                     state = STATE.GAME;
+                    System.out.println("pressed");
                 }
             }
-            if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 380 && mouseY <= 450) {
+            if (mouseX >= quitButton.getPositionX() && mouseX <= quitButton.getPositionX()+quitButton.getUnscaledWidth()) {
+                if (mouseY >= quitButton.getPositionY()+20 && mouseY <= quitButton.getPositionY()+quitButton.getUnscaledHeight()+20) {
 
                     System.exit(1);
                 }
@@ -736,22 +856,27 @@ public class ProjectGame extends Game {
             }
         } else if (state == STATE.GAME) {
             if (!player.isDead && knifeCount != 0) {
-                Bullet bul = new Bullet("bullet", "knife.png", 0.2);
+
                 double mouseX = e.getX();
                 double mouseY = e.getY();
-                double[] pressed = {mouseX, mouseY};
+                System.out.println(mouseX);
+                System.out.println(mouseY);
+                Bullet bul = new Bullet("bullet", "knife.png", 0.2, player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2, mouseX, mouseY);
+
 //                System.out.print(pressed[0]);
 
                 knifeCount--;
-                bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
-                bul.setEnd(mouseX, mouseY);
 
 
-                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
-                Tween bulletmovement = new Tween(bul, bulletPath);
-                bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX, 0.2);
-                bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY, 0.2);
-                TweenJuggler.getInstance().add(bulletmovement);
+//                bul.setStart(player.getPositionX() + player.getUnscaledWidth() / 2, player.getPositionY() + player.getUnscaledHeight() / 2);
+//                bul.setEnd(mouseX+this.getUnscaledWidth(), mouseY+this.getUnscaledHeight());
+
+
+//                TweenTransitions bulletPath = new TweenTransitions("linearTransition");
+//                Tween bulletmovement = new Tween(bul, bulletPath);
+//                bulletmovement.animate(TweenableParams.X, bul.startValX, bul.endValX+this.getUnscaledWidth(), 0.2);
+//                bulletmovement.animate(TweenableParams.Y, bul.startValY, bul.endValY+this.getUnscaledHeight(), 0.2);
+//                TweenJuggler.getInstance().add(bulletmovement);
 
                 player.playerBullets.add(bul);
 
@@ -761,24 +886,22 @@ public class ProjectGame extends Game {
             double mouseX = e.getX();
             double mouseY = e.getY();
 
-            if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 170 && mouseY <= 220) {
+            if (mouseX >= playButton.getPositionX() && mouseX <=playButton.getPositionX()+ playButton.getUnscaledWidth()) {
+                if (mouseY >= playButton.getPositionY()+20 && mouseY <= playButton.getPositionY() + playButton.getUnscaledHeight()+20) {
                     state = STATE.GAME;
+                    System.out.println("pressed");
                 }
             }
-            if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 270 && mouseY <= 320) {
-                    System.out.println("help button");
-                }
-            }
-            if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 370 && mouseY <= 420) {
-                    System.out.println("quit");
+            if (mouseX >= quitButton.getPositionX() && mouseX <= quitButton.getPositionX()+quitButton.getUnscaledWidth()) {
+                if (mouseY >= quitButton.getPositionY()+20 && mouseY <= quitButton.getPositionY()+quitButton.getUnscaledHeight()+20) {
+
                     System.exit(1);
                 }
 
             }
         }
+
+
 
         /*
         double minWc = player.getCenterX() - (player.getUnscaledWidth() / 2);
@@ -791,21 +914,21 @@ public class ProjectGame extends Game {
     }
 
 
-    public void lootEnemy(Enemy enemy) {
-        keyCount += enemy.getKeyCount();
-        knifeCount += enemy.getKnifeCount();
-
-        if (enemy.getKeyCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
-        } else if (enemy.getKnifeCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
-        } else if (enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
-            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
-        } else if (enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
-            itemString = "inventory empty";
-        }
-        enemy.emptyEnemyInventory();
-    }
+//    public void lootEnemy(Enemy enemy) {
+//        keyCount += enemy.getKeyCount();
+//        knifeCount += enemy.getKnifeCount();
+//
+//        if (enemy.getKeyCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKeyCount()) + " key";
+//        } else if (enemy.getKnifeCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife";
+//        } else if (enemy.getKnifeCount() > 0 && enemy.getKeyCount() > 0) {
+//            itemString = "+" + Integer.toString(enemy.getKnifeCount()) + " knife & +" + Integer.toString(enemy.getKeyCount()) + " key";
+//        } else if (enemy.getKnifeCount() == 0 && enemy.getKeyCount() == 0) {
+//            itemString = "inventory empty";
+//        }
+//        enemy.emptyEnemyInventory();
+//    }
 
     public void switchRooms(Room original, Room next) {
 
@@ -838,7 +961,7 @@ public class ProjectGame extends Game {
             player.handleEvent(reduceLife);
             //player.setLifeCount(player.getLifeCount() - 1);
         }
-        if (player.getLifeCount() == 0) {
+        if (player.getLifeCount() <= 0) {
             complete = true;
             player.isDead = true;
         }
