@@ -594,14 +594,14 @@ public class ProjectGame extends Game {
                 menuScreen.draw(g);
                 g.setFont(new Font("Helvetica", Font.BOLD, 36));
                 g.setColor(Color.RED);
-                g.drawString("BULLET HELL", 450, 120);
+                g.drawString("TINY THIEF", 450, 120);
                 g.setColor(Color.WHITE);
-                g.drawString("Play", getUnscaledWidth() / 2 + 550, 210);
-                g.drawRect(getUnscaledWidth() / 2 + 530, 170, 180, 50);
+                g.drawString("Play", 470, 210);
+                g.drawRect(getUnscaledWidth() / 2 + 480, 170, 180, 50);
 //                g.drawString("Help",getUnscaledWidth()/2+550,310);
 //                g.drawRect(getUnscaledWidth()/2+ 530,270,150,50);
-                g.drawString("Quit", getUnscaledWidth() / 2 + 550, 410);
-                g.drawRect(getUnscaledWidth() / 2 + 530, 370, 150, 50);
+                g.drawString("Quit", getUnscaledWidth() / 2 + 570, 350);
+                g.drawRect(getUnscaledWidth() / 2 + 530, 320, 150, 50);
             }
         } else if (state == STATE.GAME) {
             if (background != null) {
@@ -723,7 +723,7 @@ public class ProjectGame extends Game {
             double mouseX = e.getX();
             double mouseY = e.getY();
             if (mouseX >= getUnscaledWidth() / 2 + 530 && mouseX <= getUnscaledWidth() / 2 + 680) {
-                if (mouseY >= 170 && mouseY <= 220) {
+                if (mouseY >= 200 && mouseY <= 260) {
                     state = STATE.GAME;
                 }
             }
