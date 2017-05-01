@@ -623,11 +623,13 @@ public class ProjectGame extends Game {
             currentQuestObjective = 2;
         }
 
-        if(bossLevel.endgame==true){
-            state = STATE.COMPLETE;
-            System.out.println("you won!");
-            quitButton.setPositionX(300);
+        if(bossLevel != null) {
+            if (bossLevel.endgame == true) {
+                state = STATE.COMPLETE;
+                System.out.println("you won!");
+                quitButton.setPositionX(300);
 
+            }
         }
     }
 
