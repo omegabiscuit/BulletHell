@@ -1,5 +1,5 @@
 BulletHell
-
+You can now check out the game at https://alphacider.itch.io/tiny-thief!
 MEMBERS:bb3uc, ay6xp, tlr8cn
 
 If you can't get the program to run, please follow these steps
